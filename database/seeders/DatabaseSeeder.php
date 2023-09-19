@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use \App\Models\User;
+
+use function Laravel\Prompts\password;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,9 +17,12 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        User::create([
+            'name' => 'bryan',
+            'email' => 'bryan@test.com',
+            'roles' => 'SUPERADMIN',
+            'password' => bcrypt('12345678'),
+            'active' => true
+        ]);
     }
 }

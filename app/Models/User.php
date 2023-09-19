@@ -42,4 +42,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Relasi
+    public function event()
+    {
+        return $this->hasMany(Event::class);
+    }
 }
