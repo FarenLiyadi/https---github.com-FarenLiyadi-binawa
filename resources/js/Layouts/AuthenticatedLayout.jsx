@@ -28,7 +28,7 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
-                                <NavLink>Event</NavLink>
+                                <NavLink href="/event">Event</NavLink>
                             </div>
                         </div>
 

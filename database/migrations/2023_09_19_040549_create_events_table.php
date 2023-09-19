@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('last_update_by');
             $table->string('nama_event');
+            $table->string('slug')->unique();
             $table->string('tempat_event');
             $table->date('tanggal_deadline');
             $table->json('peserta')->nullable();

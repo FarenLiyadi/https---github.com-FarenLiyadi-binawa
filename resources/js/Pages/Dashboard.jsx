@@ -17,13 +17,13 @@ export default function Dashboard({ auth }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            You're logged in!
+                            You're logged in as {auth.user.roles}
                         </div>
                     </div>
                 </div>
             </div>
 
-            {auth.user.roles == "ADMIN" ? (
+            {auth.user.roles == "USER" ? (
                 ""
             ) : (
                 <div className="">
