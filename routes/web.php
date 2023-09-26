@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsenController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
@@ -38,6 +39,7 @@ Route::resource('/event', EventController::class)->middleware(['auth', 'verified
 Route::resource('/peserta', PesertaController::class)->middleware(['auth', 'verified']);
 
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');
+Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'verified']);;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

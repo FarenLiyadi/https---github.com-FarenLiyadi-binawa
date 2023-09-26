@@ -41,6 +41,7 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Ranking
                                 </NavLink>
+                                <NavLink href="/latihan">Latihan</NavLink>
                             </div>
                         </div>
 
