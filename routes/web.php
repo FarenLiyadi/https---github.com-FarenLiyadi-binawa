@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BiographyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::resource('/biography', BiographyController::class)->middleware(['auth', 'verified']);
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
 Route::get('/join-event', [EventController::class, 'join']);
 

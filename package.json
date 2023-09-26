@@ -20,6 +20,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "react-dropdown": "^1.11.0",
+        "react-icons": "^4.11.0",
         "slug": "^8.2.3"
     }
 }

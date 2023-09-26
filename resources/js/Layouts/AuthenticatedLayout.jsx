@@ -28,6 +28,7 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+                                <NavLink href="/biography">Biography</NavLink>
                                 <NavLink href="/event">Event</NavLink>
                             </div>
                         </div>
