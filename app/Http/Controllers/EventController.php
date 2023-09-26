@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Inertia\Inertia;
 use App\Models\Event;
-use App\Http\Requests\StoreEventRequest;
-use App\Http\Requests\UpdateEventRequest;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 
 class EventController extends Controller
 {
@@ -63,7 +64,8 @@ class EventController extends Controller
     public function show(Event $event)
     {
         return Inertia::render('Event/ShowEvent', [
-            'event' => $event
+            'event' => $event,
+            'users' => User::where('roles', '=', 'USER')->get()
         ]);
     }
 

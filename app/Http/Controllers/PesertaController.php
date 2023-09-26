@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Inertia\Inertia;
 use App\Models\Peserta;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePesertaRequest;
@@ -75,24 +77,64 @@ class PesertaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Peserta $peserta)
+    public function edit(Peserta $peserta, $id)
     {
-        //
+        $peserta = Peserta::where('id', $id)->get();
+        return Inertia::render('Peserta/EditPeserta', [
+            'peserta' => $peserta
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePesertaRequest $request, Peserta $peserta)
+    public function update(Request $request, Peserta $peserta, $id)
     {
-        //
+        if ($request->has('prevSkor')) {
+            $user = User::where('id', $request->user_id)->get();
+            $prevSkor = (int)$request->prevSkor;
+            $userSkor = $user[0]->total_skor;
+            $newSkor = $request->skor;
+            $finalSkor = (($userSkor - $prevSkor) + $newSkor);
+
+            User::where('id', $user[0]->id)->update(['total_skor' => $finalSkor]);
+        }
+
+        $validatedData = $request->validate([
+            'user_id' => 'required',
+            'event_id' => 'required',
+            'approve' => 'required',
+            'approve_by' => 'required',
+            'skor' => 'required',
+            'keterangan' => 'nullable',
+        ]);
+
+        Peserta::where('id', $id)->update($validatedData);
+
+        if ($request->has('prevSkor')) {
+
+            return redirect('/event')->with([
+                'message' => "Peserta successfully updated!",
+                'type' => 'success'
+            ]);
+        }
+
+        return back()->with([
+            'message' => "Peserta successfully updated!",
+            'type' => 'success'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Peserta $peserta)
+    public function destroy(Peserta $peserta, $id)
     {
-        //
+        Peserta::destroy($id);
+
+        return back()->with([
+            'message' => "Request successfully deleted!",
+            'type' => 'success'
+        ]);
     }
 }
