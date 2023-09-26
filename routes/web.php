@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\AbsenController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\LatihanController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\BiographyController;
-use App\Http\Controllers\LatihanController;
+use App\Http\Controllers\LanggananController;
+use App\Http\Controllers\PembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,10 +41,15 @@ Route::resource('/biography', BiographyController::class)->middleware(['auth', '
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
 Route::resource('/peserta', PesertaController::class)->middleware(['auth', 'verified']);
 Route::resource('/latihan', LatihanController::class)->middleware(['auth', 'verified']);
+Route::resource('/pembayaran', PembayaranController::class)->middleware(['auth', 'verified']);
 
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');
+Route::get('/langganan', [LanggananController::class, 'index']);
+Route::post('/langganan', [LanggananController::class, 'update']);
+
 Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'verified']);;
 Route::post('/delete-absen', [AbsenController::class, 'delete'])->middleware(['auth', 'verified']);;
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

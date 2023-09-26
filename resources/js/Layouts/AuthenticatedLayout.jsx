@@ -29,19 +29,11 @@ export default function Authenticated({ user, header, children }) {
                                     Dashboard
                                 </NavLink>
                                 <NavLink href="/biography">Biography</NavLink>
-                                <NavLink
-                                    href="/event"
-                                    active={route().current("event.index")}
-                                >
-                                    Event
-                                </NavLink>
-                                <NavLink
-                                    href="/ranking"
-                                    active={route().current("ranking")}
-                                >
-                                    Ranking
-                                </NavLink>
+                                <NavLink href="/event">Event</NavLink>
+                                <NavLink href="/ranking">Ranking</NavLink>
                                 <NavLink href="/latihan">Latihan</NavLink>
+                                <NavLink href="/pembayaran">Pembayaran</NavLink>
+                                <NavLink href="/langganan">Langganan</NavLink>
                             </div>
                         </div>
 
