@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\BiographyController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PesertaController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BiographyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('/biography', BiographyController::class)->middleware(['auth', 'verified']);
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
-
+Route::resource('/peserta', PesertaController::class)->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

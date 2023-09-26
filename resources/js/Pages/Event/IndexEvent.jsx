@@ -4,8 +4,9 @@ import { Head, Link, router } from "@inertiajs/react";
 export default function IndexEvent({ auth, event }) {
     const date = new Date();
 
-    console.log(event);
+    console.log("event", event);
 
+    // Funtion untuk merender button untuk user
     function checkRequest(data) {
         if (data.peserta.length > 0) {
             const isUserInEvent = data.peserta.find(
@@ -53,8 +54,8 @@ export default function IndexEvent({ auth, event }) {
             skor: 0,
             keterangan: "",
         };
-        console.log(data);
-        // router.post("/peserta", data);
+
+        router.post("/peserta", data);
     }
 
     return (

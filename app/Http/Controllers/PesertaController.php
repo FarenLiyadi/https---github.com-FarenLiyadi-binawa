@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Peserta;
+use Illuminate\Http\Request;
 use App\Http\Requests\StorePesertaRequest;
 use App\Http\Requests\UpdatePesertaRequest;
 
@@ -27,9 +28,40 @@ class PesertaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePesertaRequest $request)
+    public function store(Request $request)
     {
-        //
+        // Jika req dari multi
+        if ($request->has('multi')) {
+
+            for ($i = 0; $i < $request->multi; $i++) {
+
+                $validatedData = validator($request[$i], [
+                    'user_id' => 'required',
+                    'event_id' => 'required',
+                    'approve' => 'required',
+                    'approve_by' => 'nullable',
+                    'skor' => 'required',
+                    'keterangan' => 'nullable',
+                ])->validate();
+
+                Peserta::create($validatedData);
+            }
+        } else {
+            $validatedData = $request->validate([
+                'user_id' => 'required',
+                'event_id' => 'required',
+                'approve' => 'required',
+                'approve_by' => 'nullable',
+                'skor' => 'required',
+                'keterangan' => 'nullable',
+            ]);
+            Peserta::create($validatedData);
+        }
+
+        return back()->with([
+            'message' => "Request successfully sent!",
+            'type' => 'success'
+        ]);
     }
 
     /**

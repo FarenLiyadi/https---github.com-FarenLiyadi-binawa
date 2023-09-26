@@ -12,7 +12,14 @@ class Event extends Model
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
-    protected $with = ['lastUpdateBy'];
+    protected $with = ['lastUpdateBy',  'peserta'];
+
+    //Scope Filter
+    public function scopeFilter($query)
+    {
+        $dateNow = now()->toDateString();
+        return $query->where('tanggal_deadline', '>', $dateNow)->orderBy('tanggal_deadline', 'asc');
+    }
 
     // Sluggable
     public function getRouteKeyName()
@@ -33,5 +40,9 @@ class Event extends Model
     public function lastUpdateBy()
     {
         return $this->belongsTo(User::class, 'last_update_by');
+    }
+    public function peserta()
+    {
+        return $this->hasMany(Peserta::class);
     }
 }

@@ -9,6 +9,7 @@ class Peserta extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $with = ['user', 'approveBy'];
 
     // Relasi
     public function user()

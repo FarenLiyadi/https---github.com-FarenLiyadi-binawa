@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Models\Peserta;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,7 +20,8 @@ class EventController extends Controller
 
         if ($user->roles == "USER") {
             return Inertia::render('Event/IndexEvent', [
-                'event' => Event::filter()->get()
+                'event' => Event::filter()->get(),
+                'peserta' => Peserta::where('user_id', $user->id)->get()
             ]);
         };
         return Inertia::render('Event/IndexEvent', [
