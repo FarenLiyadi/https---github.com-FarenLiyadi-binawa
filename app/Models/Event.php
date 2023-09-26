@@ -12,6 +12,7 @@ class Event extends Model
     use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
+    protected $with = ['lastUpdateBy'];
 
     // Sluggable
     public function getRouteKeyName()
@@ -32,14 +33,5 @@ class Event extends Model
     public function lastUpdateBy()
     {
         return $this->belongsTo(User::class, 'last_update_by');
-    }
-
-    //JSON
-    protected function peserta(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => json_decode($value, true),
-            set: fn ($value) => json_encode($value),
-        );
     }
 }

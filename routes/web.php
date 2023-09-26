@@ -33,7 +33,7 @@ Route::get('/dashboard', function () {
 
 Route::resource('/biography', BiographyController::class)->middleware(['auth', 'verified']);
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
-Route::get('/join-event', [EventController::class, 'join']);
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('pesertas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('last_update_by');
-            $table->string('nama_event');
-            $table->string('slug')->unique();
-            $table->string('tempat_event');
-            $table->date('tanggal_deadline');
+            $table->foreignId('user_id');
+            $table->foreignId('event_id');
+            $table->foreignId('approve_by')->nullable();
+            $table->boolean('approve');
+            $table->integer('skor')->default(0);
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('pesertas');
     }
 };

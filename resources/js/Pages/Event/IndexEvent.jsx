@@ -1,38 +1,39 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
-import { useState } from "react";
 
 export default function IndexEvent({ auth, event }) {
-    function checkRequest(data) {
-        let enlisted = false;
+    const date = new Date();
 
-        // Mengecek Jika data peserta sudah ada atau tidak
+    console.log(event);
+
+    function checkRequest(data) {
         if (data.peserta.length > 0) {
-            for (let i = 0; i < data.peserta.length; i++) {
-                if (data.peserta[i].user_id == auth.user.id) {
-                    enlisted = true;
-                }
+            const isUserInEvent = data.peserta.find(
+                (peserta) => peserta.user_id === auth.user.id
+            );
+            if (isUserInEvent) {
+                return (
+                    <button
+                        disabled
+                        className={`${
+                            isUserInEvent.approve
+                                ? "bg-green-600"
+                                : "bg-slate-600"
+                        }  cursor-not-allowed text-white font-bold px-5 py-2 rounded-lg`}
+                    >
+                        {isUserInEvent.approve ? "Joined" : "Requested"}
+                    </button>
+                );
             }
         }
-        if (enlisted) {
-            return (
-                <button
-                    disabled
-                    className="bg-slate-600 cursor-not-allowed text-white font-bold px-5 py-2 rounded-lg"
-                >
-                    Requested
-                </button>
-            );
-        } else {
-            return (
-                <button
-                    onClick={(e) => handleRequestJoin(e, data.slug)}
-                    className="bg-blue-600 text-white font-bold px-5 py-2 rounded-lg"
-                >
-                    Request Join
-                </button>
-            );
-        }
+        return (
+            <button
+                onClick={(e) => handleRequestJoin(e, data)}
+                className="bg-blue-600 text-white font-bold px-5 py-2 rounded-lg"
+            >
+                Request Join
+            </button>
+        );
     }
 
     function handleDelete(e, slug) {
@@ -42,17 +43,18 @@ export default function IndexEvent({ auth, event }) {
         }
     }
 
-    function handleRequestJoin(e, slug) {
+    function handleRequestJoin(e, event) {
         e.preventDefault();
         const data = {
             user_id: auth.user.id,
+            event_id: event.id,
             approve: false,
             approve_by: "",
             skor: 0,
             keterangan: "",
         };
-        router.put(`/event/${slug}?join=true`, data);
-        // router.get(`/join-event?event_id=${id}`, data);
+        console.log(data);
+        // router.post("/peserta", data);
     }
 
     return (
@@ -92,6 +94,9 @@ export default function IndexEvent({ auth, event }) {
                             <div className="p-6 text-gray-900">
                                 {event.length > 0
                                     ? event.map((data, key) => {
+                                          const eventDate = new Date(
+                                              data.tanggal_deadline
+                                          );
                                           return (
                                               <div
                                                   key={key}
@@ -106,6 +111,13 @@ export default function IndexEvent({ auth, event }) {
                                                       Deadline Registrasi:{" "}
                                                       {data.tanggal_deadline}
                                                   </p>
+                                                  {eventDate < date ? (
+                                                      <p className="font-bold text-red-600">
+                                                          Expired!
+                                                      </p>
+                                                  ) : (
+                                                      ""
+                                                  )}
                                                   {auth.user.roles == "USER" ? (
                                                       <div>
                                                           {/* Funtion untuk

@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import { useState } from "react";
 import slug from "slug";
 
@@ -13,19 +13,17 @@ export default function EditEvent({ auth, event }) {
     function submitHandler(e) {
         e.preventDefault();
 
-        const pesertaObject = {};
-
         const data = {
             last_update_by: auth.user.id,
             nama_event: namaEvent,
             slug: slug(namaEvent),
             tempat_event: tempatEvent,
             tanggal_deadline: tanggalDeadline,
-            peserta: pesertaObject,
         };
-        console.log(data);
+
         router.put(`/event/${event.slug}`, data);
     }
+
     return (
         <AuthenticatedLayout
             user={auth.user}

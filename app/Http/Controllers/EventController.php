@@ -15,9 +15,15 @@ class EventController extends Controller
      */
     public function index()
     {
-        // dd("Index Event");
+        $user = auth()->user();
+
+        if ($user->roles == "USER") {
+            return Inertia::render('Event/IndexEvent', [
+                'event' => Event::filter()->get()
+            ]);
+        };
         return Inertia::render('Event/IndexEvent', [
-            'event' => Event::all()
+            'event' => Event::orderBy('tanggal_deadline', 'asc')->get()
         ]);
     }
 
@@ -40,7 +46,6 @@ class EventController extends Controller
             'slug' => 'required|unique:events',
             'tempat_event' => 'required',
             'tanggal_deadline' => 'required',
-            'peserta' => 'nullable',
         ]);
 
         Event::create($validatedData);
@@ -75,33 +80,11 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        if ($request->join) {
-
-
-            $data = [
-                [
-                    "user_id" => $request->user_id,
-                    "approve" => $request->approve,
-                    "approve_by" => $request->approve_by,
-                    "skor" => $request->skor,
-                    "keterangan" => $request->keterangan,
-                ], ...$event->peserta
-            ];
-            // dd($data);
-
-            Event::where('id', $event->id)->update(['peserta' => $data]);
-
-            return redirect('/event')->with([
-                'message' => "Request end successfully!",
-                'type' => 'success'
-            ]);
-        }
         $rules = [
             'last_update_by' => 'required',
             'nama_event' => 'required',
             'tempat_event' => 'required',
             'tanggal_deadline' => 'required',
-            'peserta' => 'nullable',
         ];
 
         // Mengecek apakah slug yang baru(request) tidak sama dengan slug yang lalu
@@ -128,27 +111,6 @@ class EventController extends Controller
 
         return redirect('/event')->with([
             'message' => "Event successfully deleted!",
-            'type' => 'success'
-        ]);
-    }
-
-    public function join(Request $request, Event $event)
-    {
-        // dd($request);
-
-        $data = [
-            "user_id" => $request->user_id,
-            "approve" => $request->approve,
-            "approve_by" => $request->approve_by,
-            "skor" => $request->skor,
-            "keterangan" => $request->keterangan,
-        ];
-
-
-        Event::where('id', $request->event_id)->update(['peserta' => $data]);
-
-        return redirect('/event')->with([
-            'message' => "Request end successfully!",
             'type' => 'success'
         ]);
     }
