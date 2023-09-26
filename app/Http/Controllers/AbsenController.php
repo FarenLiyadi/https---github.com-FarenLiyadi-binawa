@@ -26,4 +26,15 @@ class AbsenController extends Controller
             'type' => 'success'
         ]);
     }
+
+    public function delete(Request $request)
+    {
+        for ($i = 0; $i < $request->length; $i++) {
+            Absen::destroy($request[$i]);
+        }
+        return back()->with([
+            'message' => "Request successfully sent!",
+            'type' => 'success'
+        ]);
+    }
 }

@@ -65,7 +65,7 @@ class EventController extends Controller
     {
         return Inertia::render('Event/ShowEvent', [
             'event' => $event,
-            'users' => User::where('roles', '=', 'USER')->get()
+            'users' => User::where('roles', '=', 'USER')->orderBy('name', 'asc')->get()
         ]);
     }
 

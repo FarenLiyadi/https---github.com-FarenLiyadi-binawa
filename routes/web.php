@@ -9,6 +9,7 @@ use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\BiographyController;
+use App\Http\Controllers\LatihanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,11 @@ Route::get('/dashboard', function () {
 Route::resource('/biography', BiographyController::class)->middleware(['auth', 'verified']);
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
 Route::resource('/peserta', PesertaController::class)->middleware(['auth', 'verified']);
+Route::resource('/latihan', LatihanController::class)->middleware(['auth', 'verified']);
 
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');
 Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'verified']);;
+Route::post('/delete-absen', [AbsenController::class, 'delete'])->middleware(['auth', 'verified']);;
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
