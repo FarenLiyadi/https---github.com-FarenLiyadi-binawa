@@ -30,7 +30,7 @@ export default function Ranking({ auth, users }) {
                                         {user.name}
                                     </p>
                                     <p className="font-bold text-slate-400">
-                                        <spam>Poin </spam>
+                                        <span>Poin </span>
                                         {user.total_skor}
                                     </p>
                                 </div>

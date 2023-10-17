@@ -1,10 +1,32 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 
-export default function IndexLangganan({ auth, users }) {
+export default function IndexLangganan({ auth, users, pembayaran }) {
+    let deactivated = false;
+
+    function checkStatus() {
+        const today = new Date();
+        const tanggal_akhir = new Date(pembayaran[0].tanggal_akhir);
+
+        // Jika Akun User Tidak Aktif
+        if (!auth.user.active) {
+            // Belum Lewat Tanggal Member
+            // berarti di nonaktifkan oleh Admin
+            if (tanggal_akhir > today) {
+                deactivated = true;
+            }
+        }
+    }
+
+    checkStatus();
+
     function handleActivate(e) {
         e.preventDefault();
-        router.get("/pembayaran/create");
+        if (deactivated) {
+            alert("Akun anda dinonaktifkan, silahkan hubungi Admin");
+        } else {
+            router.get("/pembayaran/create");
+        }
     }
 
     function handleLangganan(e, value, user_id) {
@@ -67,6 +89,17 @@ export default function IndexLangganan({ auth, users }) {
                                         >
                                             Activate
                                         </button>
+                                    )}
+
+                                    {deactivated ? (
+                                        <div>
+                                            <p className="text-red-500">
+                                                Akun dinonaktifkan oleh admin!
+                                            </p>
+                                            <p>Silahkan hubungi admin</p>
+                                        </div>
+                                    ) : (
+                                        ""
                                     )}
                                 </div>
                             </div>

@@ -18,7 +18,8 @@ class PembayaranController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user->role == 'USER') {
+
+        if ($user->roles === 'USER') {
             return Inertia::render('Pembayaran/IndexPembayaran', [
                 'pembayaran' => Pembayaran::where('user_id', '=', $user->id)->get()
             ]);

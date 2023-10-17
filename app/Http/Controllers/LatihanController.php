@@ -17,9 +17,16 @@ class LatihanController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Latihan/IndexLatihan", [
-            "latihan" => Latihan::orderBy("tanggal", 'asc')->get()
-        ]);
+        $user = auth()->user();
+        if ($user->roles === 'USER') {
+            return Inertia::render("Latihan/IndexLatihan", [
+                "absen" => Absen::where('user_id', '=', $user->id)->get()
+            ]);
+        } else {
+            return Inertia::render("Latihan/IndexLatihan", [
+                "latihan" => Latihan::orderBy("tanggal", 'asc')->get()
+            ]);
+        }
     }
 
     /**

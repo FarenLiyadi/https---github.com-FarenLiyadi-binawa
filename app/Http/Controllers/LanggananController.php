@@ -5,16 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
 class LanggananController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Langganan/IndexLangganan', [
+        $user = auth()->user();
 
-            'users' => User::where('roles', '=', 'USER')->get()
-        ]);
+        if ($user->roles == "USER") {
+            return Inertia::render('Langganan/IndexLangganan', [
+                'pembayaran' => Pembayaran::where('user_id', '=', $user->id)->get()
+            ]);
+        } else {
+
+            return Inertia::render('Langganan/IndexLangganan', [
+
+                'users' => User::where('roles', '=', 'USER')->get(),
+            ]);
+        }
     }
 
     public function update(Request $request)
