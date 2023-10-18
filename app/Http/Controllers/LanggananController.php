@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class LanggananController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->only('update');
+    }
     public function index()
     {
         $user = auth()->user();
