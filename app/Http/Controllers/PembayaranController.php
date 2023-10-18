@@ -21,7 +21,7 @@ class PembayaranController extends Controller
 
         if ($user->roles === 'USER') {
             return Inertia::render('Pembayaran/IndexPembayaran', [
-                'pembayaran' => Pembayaran::where('user_id', '=', $user->id)->get()
+                'pembayaran' => Pembayaran::where('user_id', '=', $user->id)->orderBy("tanggal_pembayaran", 'desc')->get()
             ]);
         } else {
             return Inertia::render('Pembayaran/IndexPembayaran', [

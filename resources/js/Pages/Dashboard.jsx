@@ -1,7 +1,40 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, users, pembayaran }) {
+    const [flag, setFlag] = useState(false);
+    const today = new Date();
+    const ids = [];
+
+    useEffect(() => {
+        const flag = localStorage.getItem("flag");
+
+        // First time Visiting website
+        if (!flag) {
+            console.log("Peeriksa Mmbership");
+
+            for (let i = 0; i < pembayaran.length; i++) {
+                let user = pembayaran[i].user;
+                const tanggal_akhir = new Date(pembayaran[i].tanggal_akhir);
+
+                console.log(pembayaran[i]);
+                if (user.active) {
+                    console.log("Aktif");
+                    if (tanggal_akhir < today) {
+                        console.log("Masa Member Lewat");
+                        ids.push(user.id);
+                    }
+                }
+            }
+
+            console.log("id", ids);
+            localStorage.setItem("flag", true);
+
+            router.post(`/membership?length=${ids.length}`, ids);
+        }
+    }, []);
+
     return (
         <AuthenticatedLayout
             user={auth.user}

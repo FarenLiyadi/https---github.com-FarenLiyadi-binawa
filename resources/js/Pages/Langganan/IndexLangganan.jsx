@@ -3,22 +3,21 @@ import { Head, router } from "@inertiajs/react";
 
 export default function IndexLangganan({ auth, users, pembayaran }) {
     let deactivated = false;
-
+    console.log(pembayaran);
     function checkStatus() {
-        const today = new Date();
-        const tanggal_akhir = new Date(pembayaran[0].tanggal_akhir);
-
-        // Jika Akun User Tidak Aktif
-        if (!auth.user.active) {
-            // Belum Lewat Tanggal Member
-            // berarti di nonaktifkan oleh Admin
-            if (tanggal_akhir > today) {
-                deactivated = true;
+        if (pembayaran.length > 0) {
+            const today = new Date();
+            const tanggal_akhir = new Date(pembayaran[0].tanggal_akhir);
+            // Jika Akun User Tidak Aktif
+            if (!auth.user.active) {
+                // Belum Lewat Tanggal Member
+                // berarti di nonaktifkan oleh Admin
+                if (tanggal_akhir > today) {
+                    deactivated = true;
+                }
             }
         }
     }
-
-    checkStatus();
 
     function handleActivate(e) {
         e.preventDefault();
@@ -52,59 +51,63 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
 
             <div className="py-12">
                 {auth.user.roles == "USER" ? (
-                    <div className="py-2">
-                        <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                            <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                <div className="p-6 text-gray-900">
-                                    <h1 className="text-xl font-bold">
-                                        Langganan
-                                    </h1>
-                                    <p className="capitalize">
-                                        {auth.user.name}
-                                    </p>
-                                    <p>
-                                        Status:{" "}
+                    <>
+                        {checkStatus()}
+                        <div className="py-2">
+                            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                                <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                    <div className="p-6 text-gray-900">
+                                        <h1 className="text-xl font-bold">
+                                            Langganan
+                                        </h1>
+                                        <p className="capitalize">
+                                            {auth.user.name}
+                                        </p>
+                                        <p>
+                                            Status:{" "}
+                                            {auth.user.active ? (
+                                                <span className="text-green-400">
+                                                    Active
+                                                </span>
+                                            ) : (
+                                                <span className="text-red-500">
+                                                    Not Active
+                                                </span>
+                                            )}
+                                        </p>
+
                                         {auth.user.active ? (
-                                            <span className="text-green-400">
+                                            <button
+                                                className="bg-slate-500 hover:bg-slate-700 py-1 px-3 my-1 text-white cursor-not-allowed rounded-md"
+                                                disabled
+                                            >
                                                 Active
-                                            </span>
+                                            </button>
                                         ) : (
-                                            <span className="text-red-500">
-                                                Not Active
-                                            </span>
+                                            <button
+                                                onClick={handleActivate}
+                                                className="bg-green-500 hover:bg-green-700 py-1 px-3 my-1 text-white rounded-md"
+                                            >
+                                                Activate
+                                            </button>
                                         )}
-                                    </p>
 
-                                    {auth.user.active ? (
-                                        <button
-                                            className="bg-slate-500 hover:bg-slate-700 py-1 px-3 my-1 text-white cursor-not-allowed rounded-md"
-                                            disabled
-                                        >
-                                            Active
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={handleActivate}
-                                            className="bg-green-500 hover:bg-green-700 py-1 px-3 my-1 text-white rounded-md"
-                                        >
-                                            Activate
-                                        </button>
-                                    )}
-
-                                    {deactivated ? (
-                                        <div>
-                                            <p className="text-red-500">
-                                                Akun dinonaktifkan oleh admin!
-                                            </p>
-                                            <p>Silahkan hubungi admin</p>
-                                        </div>
-                                    ) : (
-                                        ""
-                                    )}
+                                        {deactivated ? (
+                                            <div>
+                                                <p className="text-red-500">
+                                                    Akun dinonaktifkan oleh
+                                                    admin!
+                                                </p>
+                                                <p>Silahkan hubungi admin</p>
+                                            </div>
+                                        ) : (
+                                            ""
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </>
                 ) : (
                     <div>
                         <div className="py-2">
