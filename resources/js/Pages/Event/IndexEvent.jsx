@@ -3,13 +3,14 @@ import { Head, Link, router } from "@inertiajs/react";
 
 export default function IndexEvent({ auth, event }) {
     const date = new Date();
-
     // Funtion untuk merender button untuk user
     function checkRequest(data) {
         if (data.peserta.length > 0) {
             const isUserInEvent = data.peserta.find(
                 (peserta) => peserta.user_id === auth.user.id
             );
+
+            // Render Button jika sudah request/join
             if (isUserInEvent) {
                 return (
                     <button
@@ -25,6 +26,20 @@ export default function IndexEvent({ auth, event }) {
                 );
             }
         }
+
+        // Render button jika masa member habis
+        if (!auth.user.active) {
+            return (
+                <button
+                    onClick={() => router.get("/langganan")}
+                    className="bg-yellow-500 text-white font-bold px-5 py-2 rounded-lg"
+                >
+                    Membership End
+                </button>
+            );
+        }
+
+        // Render button jika belum request dan memer masih aktif
         return (
             <button
                 onClick={(e) => handleRequestJoin(e, data)}
