@@ -2,7 +2,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 
 export default function IndexPembayaran({ auth, pembayaran }) {
-    console.log(pembayaran);
     return (
         <AuthenticatedLayout
             user={auth.user}

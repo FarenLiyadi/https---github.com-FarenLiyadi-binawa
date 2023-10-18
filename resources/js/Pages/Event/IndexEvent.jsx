@@ -4,8 +4,6 @@ import { Head, Link, router } from "@inertiajs/react";
 export default function IndexEvent({ auth, event }) {
     const date = new Date();
 
-    console.log("event", event);
-
     // Funtion untuk merender button untuk user
     function checkRequest(data) {
         if (data.peserta.length > 0) {

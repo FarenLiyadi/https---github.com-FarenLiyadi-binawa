@@ -3,7 +3,7 @@ import { Head, router } from "@inertiajs/react";
 
 export default function IndexLangganan({ auth, users, pembayaran }) {
     let deactivated = false;
-    console.log(pembayaran);
+
     function checkStatus() {
         if (pembayaran.length > 0) {
             const today = new Date();

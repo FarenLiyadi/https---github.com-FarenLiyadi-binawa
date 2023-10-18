@@ -12,15 +12,11 @@ export default function Dashboard({ auth, users, pembayaran }) {
 
         // First time Visiting website
         if (!flag) {
-            console.log("Peeriksa Mmbership");
-
             for (let i = 0; i < pembayaran.length; i++) {
                 let user = pembayaran[i].user;
                 const tanggal_akhir = new Date(pembayaran[i].tanggal_akhir);
 
-                console.log(pembayaran[i]);
                 if (user.active) {
-                    console.log("Aktif");
                     if (tanggal_akhir < today) {
                         console.log("Masa Member Lewat");
                         ids.push(user.id);
@@ -28,8 +24,8 @@ export default function Dashboard({ auth, users, pembayaran }) {
                 }
             }
 
-            console.log("id", ids);
             localStorage.setItem("flag", true);
+            setFlag(true);
 
             router.post(`/membership?length=${ids.length}`, ids);
         }
