@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_event');
             $table->string('slug')->unique();
             $table->string('tempat_event');
+            $table->string('poster_url')->nullable();
             $table->date('tanggal_deadline');
             $table->timestamps();
         });

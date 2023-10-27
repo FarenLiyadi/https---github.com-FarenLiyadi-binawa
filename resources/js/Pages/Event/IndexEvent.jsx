@@ -1,7 +1,9 @@
+import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 
 export default function IndexEvent({ auth, event }) {
+    console.log(event.data);
     const date = new Date();
     // Funtion untuk merender button untuk user
     function checkRequest(data) {
@@ -106,8 +108,8 @@ export default function IndexEvent({ auth, event }) {
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900">
-                                {event.length > 0
-                                    ? event.map((data, key) => {
+                                {event.data.length > 0
+                                    ? event.data.map((data, key) => {
                                           const eventDate = new Date(
                                               data.tanggal_deadline
                                           );
@@ -116,14 +118,31 @@ export default function IndexEvent({ auth, event }) {
                                                   key={key}
                                                   className="my-3 grid grid-rows gap-2 bg-slate-300 p-4 rounded-md"
                                               >
+                                                  <div className="flex justify-center">
+                                                      <img
+                                                          src={data.poster_url}
+                                                          className="w-56  text-center"
+                                                          alt=""
+                                                      />
+                                                  </div>
                                                   <p>{data.nama_event}</p>
                                                   <p>
                                                       Lokasi:{" "}
                                                       {data.tempat_event}
                                                   </p>
                                                   <p>
-                                                      Deadline Registrasi:{" "}
-                                                      {data.tanggal_deadline}
+                                                      Deadline Registrasi: {}
+                                                      {new Date(
+                                                          data.tanggal_deadline
+                                                      ).toLocaleDateString(
+                                                          "id-ID",
+                                                          {
+                                                              weekday: "long",
+                                                              day: "2-digit",
+                                                              month: "long",
+                                                              year: "numeric",
+                                                          }
+                                                      )}
                                                   </p>
                                                   {eventDate < date ? (
                                                       <p className="font-bold text-red-600">
@@ -173,6 +192,9 @@ export default function IndexEvent({ auth, event }) {
                                       })
                                     : "No Event"}
                             </div>
+                        </div>
+                        <div className="flex w-full justify-center pt-10">
+                            <Pagination class="mt-6" links={event.meta} />
                         </div>
                     </div>
                 </div>

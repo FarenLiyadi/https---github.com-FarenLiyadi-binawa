@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UsersCollection;
 use App\Models\User;
 use Inertia\Inertia;
 
@@ -26,7 +27,8 @@ class LanggananController extends Controller
 
             return Inertia::render('Langganan/IndexLangganan', [
 
-                'users' => User::where('roles', '=', 'USER')->get(),
+                // 'users' => User::where('roles', '=', 'USER')->get(),
+                'users' => new UsersCollection(User::where("roles","USER")->latest()->paginate(20))
             ]);
         }
     }

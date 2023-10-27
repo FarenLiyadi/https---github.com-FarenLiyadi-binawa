@@ -25,8 +25,16 @@ use App\Http\Controllers\PembayaranController;
 |
 */
 
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return view('landing', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -35,6 +43,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/', [DashboardController::class, 'landing'])->name('landing');
 
 Route::resource('/biography', BiographyController::class)->middleware(['auth', 'verified']);
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
@@ -43,12 +52,12 @@ Route::resource('/latihan', LatihanController::class)->middleware(['auth', 'veri
 Route::resource('/pembayaran', PembayaranController::class)->middleware(['auth', 'verified']);
 
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');
-Route::get('/langganan', [LanggananController::class, 'index']);
+Route::get('/langganan', [LanggananController::class, 'index'])->name('langganan');
 Route::post('/langganan', [LanggananController::class, 'update']);
 Route::post('/membership', [LanggananController::class, 'membershipEnd']);
 
 Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'verified']);;
-Route::post('/delete-absen', [AbsenController::class, 'delete'])->middleware(['auth', 'verified']);;
+Route::post('/delete-absen', [AbsenController::class, 'delete'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {

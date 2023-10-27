@@ -7,6 +7,7 @@ export default function CreateEvent({ auth }) {
     const [namaEvent, setNamaEvent] = useState("");
     const [tempatEvent, setTempatEvent] = useState("");
     const [tanggalDeadline, setTanggalDeadline] = useState();
+    const [posterUrl, setPosterUrl] = useState("");
 
     function submitHandler(e) {
         e.preventDefault();
@@ -17,6 +18,7 @@ export default function CreateEvent({ auth }) {
             slug: slug(namaEvent),
             tempat_event: tempatEvent,
             tanggal_deadline: tanggalDeadline,
+            poster_url: posterUrl,
         };
 
         router.post("/event", data);
@@ -88,6 +90,20 @@ export default function CreateEvent({ auth }) {
                                                     e.target.value
                                                 );
                                             }}
+                                        />
+                                    </div>
+
+                                    <div className="mt-2">
+                                        <label className="" id="poster_url">
+                                            Masukkan Foto Poster
+                                        </label>
+                                        <input
+                                            type="file"
+                                            className="w-full px-4 py-2"
+                                            name="PosterUrl"
+                                            onChange={(e) =>
+                                                setPosterUrl(e.target.files[0])
+                                            }
                                         />
                                     </div>
 

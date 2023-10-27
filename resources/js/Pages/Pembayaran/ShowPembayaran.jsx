@@ -81,12 +81,21 @@ export default function ShowPembayaran({ auth, pembayaran }) {
                             <p>
                                 Metode Pembayaran: {pembayaran.jenis_pembayaran}
                             </p>
-                            <p>{pembayaran.tanggal_pembayaran}</p>
+                            <p>
+                                {new Date(
+                                    pembayaran.tanggal_pembayaran
+                                ).toLocaleDateString("id-ID", {
+                                    weekday: "long",
+                                    day: "2-digit",
+                                    month: "long",
+                                    year: "numeric",
+                                })}
+                            </p>
                             <div className="w-96 h-auto mb-3">
                                 <p>Bukti Pembayaran</p>
                                 <img
-                                    className="rounded-lg"
-                                    src={`/${pembayaran.bukti_pembayaran}`}
+                                    className="rounded-lg w-56"
+                                    src={`/storage/${pembayaran.bukti_pembayaran}`}
                                     alt={`Bukti Pembayaran ${pembayaran.user.name}`}
                                 />
                             </div>

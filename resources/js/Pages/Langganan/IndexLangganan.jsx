@@ -1,3 +1,4 @@
+import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 
@@ -77,19 +78,33 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                                         </p>
 
                                         {auth.user.active ? (
-                                            <button
-                                                className="bg-slate-500 hover:bg-slate-700 py-1 px-3 my-1 text-white cursor-not-allowed rounded-md"
-                                                disabled
-                                            >
-                                                Active
-                                            </button>
+                                            <div className="flex gap-3">
+                                                <button
+                                                    className="bg-slate-500 hover:bg-slate-700 py-1 px-3 my-1 text-white cursor-not-allowed rounded-md"
+                                                    disabled
+                                                >
+                                                    Active
+                                                </button>
+                                                <button
+                                                    onClick={() =>
+                                                        router.get(
+                                                            "/pembayaran/create"
+                                                        )
+                                                    }
+                                                    className="bg-yellow-600 hover:bg-yellow-700 py-1 px-3 my-1 text-white rounded-md"
+                                                >
+                                                    Tambah Pembayaran Lagi
+                                                </button>
+                                            </div>
                                         ) : (
-                                            <button
-                                                onClick={handleActivate}
-                                                className="bg-green-500 hover:bg-green-700 py-1 px-3 my-1 text-white rounded-md"
-                                            >
-                                                Activate
-                                            </button>
+                                            <div className="">
+                                                <button
+                                                    onClick={handleActivate}
+                                                    className="bg-green-500 hover:bg-green-700 py-1 px-3 my-1 text-white rounded-md"
+                                                >
+                                                    Activate
+                                                </button>
+                                            </div>
                                         )}
 
                                         {deactivated ? (
@@ -117,7 +132,7 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                                         <h1 className="text-xl font-bold">
                                             Users
                                         </h1>
-                                        {users.map((user, index) => {
+                                        {users.data.map((user, index) => {
                                             return (
                                                 <div
                                                     className=" my-2 "
@@ -173,6 +188,9 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="flex w-full justify-center pt-10">
+                            <Pagination class="mt-6" links={users.meta} />
                         </div>
                     </div>
                 )}

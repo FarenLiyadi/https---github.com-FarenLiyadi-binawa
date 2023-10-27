@@ -12,11 +12,12 @@ export default function EditBiography({ biography, auth }) {
     console.log(biography[0].nama_lengkap);
     const { data, setData, post, processing, errors, reset } = useForm({
         id: biography[0].id,
-        user_id: auth.user.id,
+        user_id: biography[0].user_id,
         nama_lengkap: biography[0].nama_lengkap,
         nik: biography[0].nik,
         nisn: biography[0].nisn,
         tempat_lahir: biography[0].tempat_lahir,
+        tanggal_lahir: biography[0].tanggal_lahir,
         jenis_kelamin: biography[0].jenis_kelamin,
         agama: biography[0].agama,
         nama_ayah: biography[0].nama_ayah,
@@ -60,297 +61,368 @@ export default function EditBiography({ biography, auth }) {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight uppercase">
-                    EDIT Biodata {auth.user.name}
+                    EDIT Biodata{" "}
+                    {auth.user.roles == "USER"
+                        ? auth.user.name
+                        : biography[0].user.name}
                 </h2>
             }
         >
-            <div className="container flex justify-center items-center flex-col pt-4">
-                <form onSubmit={submit} className="lg:w-1/2 w-3/4">
-                    <div className="w-full">
-                        <InputLabel
-                            htmlFor="nama_lengkap"
-                            value="Nama Lengkap"
-                        />
+            <div className="w-full">
+                <div className="container flex justify-center items-center flex-col pt-4 mx-auto  ">
+                    <form
+                        onSubmit={submit}
+                        className="flex justify-center flex-col lg:w-full w-3/4"
+                    >
+                        <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="nama_lengkap"
+                                    value="Nama Lengkap"
+                                />
 
-                        <TextInput
-                            id="nama_lengkap"
-                            type="text"
-                            name="nama_lengkap"
-                            value={data.nama_lengkap}
-                            className="mt-1 block w-full"
-                            autoComplete="nama_lengkap"
-                            onChange={(e) =>
-                                setData("nama_lengkap", e.target.value)
-                            }
-                        />
+                                <TextInput
+                                    id="nama_lengkap"
+                                    type="text"
+                                    name="nama_lengkap"
+                                    value={data.nama_lengkap}
+                                    className="mt-1 block w-full"
+                                    autoComplete="nama_lengkap"
+                                    onChange={(e) =>
+                                        setData("nama_lengkap", e.target.value)
+                                    }
+                                />
 
-                        <InputError
-                            message={errors.nama_lengkap}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel htmlFor="NIK" value="NIK" />
+                                <InputError
+                                    message={errors.nama_lengkap}
+                                    className="mt-2"
+                                />
+                            </div>
+                            <div className="lg:w-1/3">
+                                <InputLabel htmlFor="NIK" value="NIK" />
 
-                        <TextInput
-                            id="NIK"
-                            type="text"
-                            name="nik"
-                            value={data.nik}
-                            className="mt-1 block w-full"
-                            autoComplete="nik"
-                            onChange={(e) => setData("nik", e.target.value)}
-                        />
+                                <TextInput
+                                    id="NIK"
+                                    type="text"
+                                    name="nik"
+                                    value={data.nik}
+                                    className="mt-1 block w-full"
+                                    autoComplete="nik"
+                                    onChange={(e) =>
+                                        setData("nik", e.target.value)
+                                    }
+                                />
 
-                        <InputError message={errors.nik} className="mt-2" />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel htmlFor="nisn" value="NISN" />
+                                <InputError
+                                    message={errors.nik}
+                                    className="mt-2"
+                                />
+                            </div>
+                            <div className="lg:w-1/3">
+                                <InputLabel htmlFor="nisn" value="NISN" />
 
-                        <TextInput
-                            id="nisn"
-                            type="text"
-                            name="nisn"
-                            value={data.nisn}
-                            className="mt-1 block w-full"
-                            autoComplete="nisn"
-                            onChange={(e) => setData("nisn", e.target.value)}
-                        />
+                                <TextInput
+                                    id="nisn"
+                                    type="text"
+                                    name="nisn"
+                                    value={data.nisn}
+                                    className="mt-1 block w-full"
+                                    autoComplete="nisn"
+                                    onChange={(e) =>
+                                        setData("nisn", e.target.value)
+                                    }
+                                />
 
-                        <InputError message={errors.nisn} className="mt-2" />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel
-                            htmlFor="tempat_lahir"
-                            value="Tempat Lahir"
-                        />
+                                <InputError
+                                    message={errors.nisn}
+                                    className="mt-2"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="tempat_lahir"
+                                    value="Tempat Lahir"
+                                />
 
-                        <TextInput
-                            id="tempat_lahir"
-                            type="text"
-                            name="tempat_lahir"
-                            value={data.tempat_lahir}
-                            className="mt-1 block w-full"
-                            autoComplete="tempat_lahir"
-                            onChange={(e) =>
-                                setData("tempat_lahir", e.target.value)
-                            }
-                        />
+                                <TextInput
+                                    id="tempat_lahir"
+                                    type="text"
+                                    name="tempat_lahir"
+                                    value={data.tempat_lahir}
+                                    className="mt-1 block w-full"
+                                    autoComplete="tempat_lahir"
+                                    onChange={(e) =>
+                                        setData("tempat_lahir", e.target.value)
+                                    }
+                                />
 
-                        <InputError
-                            message={errors.tempat_lahir}
-                            className="mt-2"
-                        />
-                    </div>
+                                <InputError
+                                    message={errors.tempat_lahir}
+                                    className="mt-2"
+                                />
+                            </div>
 
-                    <div className="w-full">
-                        <InputLabel htmlFor="agama" value="Agama" />
-                        <ReactDropdown
-                            options={options}
-                            value={biography[0].agama}
-                            placeholder="Pilih Agama"
-                            className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
-                            onChange={(e) => setData("agama", e.value)}
-                        />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel
-                            htmlFor="jenis_kelamin"
-                            value="Jenis Kelamin"
-                        />
-                        <ReactDropdown
-                            options={options2}
-                            value={biography[0].jenis_kelamin}
-                            placeholder="Pilih Jenis Kelamin"
-                            className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
-                            onChange={(e) => setData("jenis_kelamin", e.value)}
-                        />
-                    </div>
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="tanggal_lahir"
+                                    value="Tanggal Lahir"
+                                />
 
-                    <div className="w-full">
-                        <InputLabel htmlFor="nama_ayah" value="Nama Ayah" />
+                                <TextInput
+                                    id="tanggal_lahir"
+                                    type="date"
+                                    name="tanggal_lahir"
+                                    value={data.tanggal_lahir}
+                                    className="mt-1 block w-full"
+                                    autoComplete="tanggal_lahir"
+                                    onChange={(e) =>
+                                        setData("tanggal_lahir", e.target.value)
+                                    }
+                                />
 
-                        <TextInput
-                            id="nama_ayah"
-                            type="text"
-                            name="nama_ayah"
-                            value={data.nama_ayah}
-                            className="mt-1 block w-full"
-                            autoComplete="nama_ayah"
-                            onChange={(e) =>
-                                setData("nama_ayah", e.target.value)
-                            }
-                        />
+                                <InputError
+                                    message={errors.tanggal_lahir}
+                                    className="mt-2"
+                                />
+                            </div>
 
-                        <InputError
-                            message={errors.nama_ayah}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel htmlFor="nama_ibu" value="Nama Ibu" />
+                            <div className="lg:w-1/3">
+                                <InputLabel htmlFor="agama" value="Agama" />
+                                <ReactDropdown
+                                    options={options}
+                                    value={biography[0].agama}
+                                    placeholder="Pilih Agama"
+                                    className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md "
+                                    onChange={(e) => setData("agama", e.value)}
+                                />
+                            </div>
+                        </div>
+                        <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="jenis_kelamin"
+                                    value="Jenis Kelamin"
+                                />
+                                <ReactDropdown
+                                    options={options2}
+                                    value={biography[0].jenis_kelamin}
+                                    placeholder="Pilih Jenis Kelamin"
+                                    className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
+                                    onChange={(e) =>
+                                        setData("jenis_kelamin", e.value)
+                                    }
+                                />
+                            </div>
 
-                        <TextInput
-                            id="nama_ibu"
-                            type="text"
-                            name="nama_ibu"
-                            value={data.nama_ibu}
-                            className="mt-1 block w-full"
-                            autoComplete="nama_ibu"
-                            onChange={(e) =>
-                                setData("nama_ibu", e.target.value)
-                            }
-                        />
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="nama_ayah"
+                                    value="Nama Ayah"
+                                />
 
-                        <InputError
-                            message={errors.nama_ibu}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel
-                            htmlFor="pekerjaan_ayah"
-                            value="Pekerjaan Ayah"
-                        />
+                                <TextInput
+                                    id="nama_ayah"
+                                    type="text"
+                                    name="nama_ayah"
+                                    value={data.nama_ayah}
+                                    className="mt-1 block w-full"
+                                    autoComplete="nama_ayah"
+                                    onChange={(e) =>
+                                        setData("nama_ayah", e.target.value)
+                                    }
+                                />
 
-                        <TextInput
-                            id="pekerjaan_ayah"
-                            type="text"
-                            name="pekerjaan_ayah"
-                            value={data.pekerjaan_ayah}
-                            className="mt-1 block w-full"
-                            autoComplete="pekerjaan_ayah"
-                            onChange={(e) =>
-                                setData("pekerjaan_ayah", e.target.value)
-                            }
-                        />
+                                <InputError
+                                    message={errors.nama_ayah}
+                                    className="mt-2"
+                                />
+                            </div>
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="nama_ibu"
+                                    value="Nama Ibu"
+                                />
 
-                        <InputError
-                            message={errors.pekerjaan_ayah}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel
-                            htmlFor="pekerjaan_ibu"
-                            value="Pekerjaan Ibu"
-                        />
+                                <TextInput
+                                    id="nama_ibu"
+                                    type="text"
+                                    name="nama_ibu"
+                                    value={data.nama_ibu}
+                                    className="mt-1 block w-full"
+                                    autoComplete="nama_ibu"
+                                    onChange={(e) =>
+                                        setData("nama_ibu", e.target.value)
+                                    }
+                                />
 
-                        <TextInput
-                            id="pekerjaan_ibu"
-                            type="text"
-                            name="pekerjaan_ibu"
-                            value={data.pekerjaan_ibu}
-                            className="mt-1 block w-full"
-                            autoComplete="pekerjaan_ibu"
-                            onChange={(e) =>
-                                setData("pekerjaan_ibu", e.target.value)
-                            }
-                        />
+                                <InputError
+                                    message={errors.nama_ibu}
+                                    className="mt-2"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="pekerjaan_ayah"
+                                    value="Pekerjaan Ayah"
+                                />
 
-                        <InputError
-                            message={errors.pekerjaan_ibu}
-                            className="mt-2"
-                        />
-                    </div>
+                                <TextInput
+                                    id="pekerjaan_ayah"
+                                    type="text"
+                                    name="pekerjaan_ayah"
+                                    value={data.pekerjaan_ayah}
+                                    className="mt-1 block w-full"
+                                    autoComplete="pekerjaan_ayah"
+                                    onChange={(e) =>
+                                        setData(
+                                            "pekerjaan_ayah",
+                                            e.target.value
+                                        )
+                                    }
+                                />
 
-                    <div className="w-full">
-                        <InputLabel
-                            htmlFor="tinggi_badan"
-                            value="Tinggi Badan (cm)"
-                        />
+                                <InputError
+                                    message={errors.pekerjaan_ayah}
+                                    className="mt-2"
+                                />
+                            </div>
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="pekerjaan_ibu"
+                                    value="Pekerjaan Ibu"
+                                />
 
-                        <TextInput
-                            id="tinggi_badan"
-                            type="text"
-                            name="tinggi_badan"
-                            value={data.tinggi_badan}
-                            className="mt-1 block w-full"
-                            autoComplete="tinggi_badan"
-                            onChange={(e) =>
-                                setData("tinggi_badan", e.target.value)
-                            }
-                        />
+                                <TextInput
+                                    id="pekerjaan_ibu"
+                                    type="text"
+                                    name="pekerjaan_ibu"
+                                    value={data.pekerjaan_ibu}
+                                    className="mt-1 block w-full"
+                                    autoComplete="pekerjaan_ibu"
+                                    onChange={(e) =>
+                                        setData("pekerjaan_ibu", e.target.value)
+                                    }
+                                />
 
-                        <InputError
-                            message={errors.tinggi_badan}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel
-                            htmlFor="berat_badan"
-                            value="Berat Badan (kg)"
-                        />
+                                <InputError
+                                    message={errors.pekerjaan_ibu}
+                                    className="mt-2"
+                                />
+                            </div>
 
-                        <TextInput
-                            id="berat_badan"
-                            type="text"
-                            name="berat_badan"
-                            value={data.berat_badan}
-                            className="mt-1 block w-full"
-                            autoComplete="berat_badan"
-                            onChange={(e) =>
-                                setData("berat_badan", e.target.value)
-                            }
-                        />
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="tinggi_badan"
+                                    value="Tinggi Badan (cm)"
+                                />
 
-                        <InputError
-                            message={errors.berat_badan}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel htmlFor="tangan" value="Tangan" />
-                        <ReactDropdown
-                            options={options3}
-                            value={biography[0].tangan}
-                            placeholder="Pilih Tangan Pemain"
-                            className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
-                            onChange={(e) => setData("tangan", e.value)}
-                        />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel htmlFor="alamat" value="Alamat" />
+                                <TextInput
+                                    id="tinggi_badan"
+                                    type="text"
+                                    name="tinggi_badan"
+                                    value={data.tinggi_badan}
+                                    className="mt-1 block w-full"
+                                    autoComplete="tinggi_badan"
+                                    onChange={(e) =>
+                                        setData("tinggi_badan", e.target.value)
+                                    }
+                                />
 
-                        <TextInput
-                            id="alamat"
-                            type="text"
-                            name="alamat"
-                            value={data.alamat}
-                            className="mt-1 block w-full"
-                            autoComplete="alamat"
-                            onChange={(e) => setData("alamat", e.target.value)}
-                        />
+                                <InputError
+                                    message={errors.tinggi_badan}
+                                    className="mt-2"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="berat_badan"
+                                    value="Berat Badan (kg)"
+                                />
 
-                        <InputError message={errors.alamat} className="mt-2" />
-                    </div>
-                    <div className="w-full">
-                        <InputLabel htmlFor="no_telp" value="No Telp" />
+                                <TextInput
+                                    id="berat_badan"
+                                    type="text"
+                                    name="berat_badan"
+                                    value={data.berat_badan}
+                                    className="mt-1 block w-full"
+                                    autoComplete="berat_badan"
+                                    onChange={(e) =>
+                                        setData("berat_badan", e.target.value)
+                                    }
+                                />
 
-                        <TextInput
-                            id="no_telp"
-                            type="text"
-                            name="no_telp"
-                            value={data.no_telp}
-                            className="mt-1 block w-full"
-                            autoComplete="no_telp"
-                            onChange={(e) => setData("no_telp", e.target.value)}
-                        />
+                                <InputError
+                                    message={errors.berat_badan}
+                                    className="mt-2"
+                                />
+                            </div>
+                            <div className="lg:w-1/3">
+                                <InputLabel htmlFor="tangan" value="Tangan" />
+                                <ReactDropdown
+                                    options={options3}
+                                    value={biography[0].tangan}
+                                    placeholder="Pilih Tangan Pemain"
+                                    className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
+                                    onChange={(e) => setData("tangan", e.value)}
+                                />
+                            </div>
+                            <div className="lg:w-1/3">
+                                <InputLabel htmlFor="alamat" value="Alamat" />
 
-                        <InputError message={errors.no_telp} className="mt-2" />
-                    </div>
+                                <TextInput
+                                    id="alamat"
+                                    type="text"
+                                    name="alamat"
+                                    value={data.alamat}
+                                    className="mt-1 block w-full"
+                                    autoComplete="alamat"
+                                    onChange={(e) =>
+                                        setData("alamat", e.target.value)
+                                    }
+                                />
 
-                    {auth.user.roles == "USER" && (
-                        <div className="">
+                                <InputError
+                                    message={errors.alamat}
+                                    className="mt-2"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex w-full flex-col  lg:flex-row gap-3 mt-2">
+                            <div className="lg:w-1/3">
+                                <InputLabel htmlFor="no_telp" value="No Telp" />
+
+                                <TextInput
+                                    id="no_telp"
+                                    type="text"
+                                    name="no_telp"
+                                    value={data.no_telp}
+                                    className="mt-1 block w-full"
+                                    autoComplete="no_telp"
+                                    onChange={(e) =>
+                                        setData("no_telp", e.target.value)
+                                    }
+                                />
+
+                                <InputError
+                                    message={errors.no_telp}
+                                    className="mt-2"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex w-full flex-col lg:flex-row gap-3">
                             <div className="mt-2">
                                 <label className="" id="pas_foto">
                                     Edit Pas Foto 4 x 6
                                 </label>
                                 {biography[0].pas_foto != null && (
                                     <img
-                                        className="rounded-t-lg "
-                                        sizes="30px"
+                                        className="rounded-t-lg w-64"
                                         src={
                                             biography[0].pas_foto == null
                                                 ? `/no-photo.png`
@@ -378,8 +450,7 @@ export default function EditBiography({ biography, auth }) {
                                 </label>
                                 {biography[0].kartu_keluarga != null && (
                                     <img
-                                        className="rounded-t-lg "
-                                        sizes="30px"
+                                        className="rounded-t-lg w-64"
                                         src={`/${biography[0].kartu_keluarga}`}
                                         alt=""
                                     />
@@ -405,8 +476,7 @@ export default function EditBiography({ biography, auth }) {
                                 </label>
                                 {biography[0].akte_kelahiran != null && (
                                     <img
-                                        className="rounded-t-lg "
-                                        sizes="30px"
+                                        className="rounded-t-lg w-64"
                                         src={`/${biography[0].akte_kelahiran}`}
                                         alt=""
                                     />
@@ -432,8 +502,7 @@ export default function EditBiography({ biography, auth }) {
                                 </label>
                                 {biography[0].ktp != null && (
                                     <img
-                                        className="rounded-t-lg "
-                                        sizes="30px"
+                                        className="rounded-t-lg w-64"
                                         src={`/${biography[0].ktp}`}
                                         alt=""
                                     />
@@ -456,8 +525,7 @@ export default function EditBiography({ biography, auth }) {
                                 </label>
                                 {biography[0].rapor != null && (
                                     <img
-                                        className="rounded-t-lg "
-                                        sizes="30px"
+                                        className="rounded-t-lg w-64"
                                         src={`/${biography[0].rapor}`}
                                         alt=""
                                     />
@@ -475,14 +543,14 @@ export default function EditBiography({ biography, auth }) {
                                 </span>
                             </div>
                         </div>
-                    )}
 
-                    <div className="flex items-center justify-center m-10">
-                        <PrimaryButton disabled={processing}>
-                            Edit Biography
-                        </PrimaryButton>
-                    </div>
-                </form>
+                        <div className="flex items-center justify-center m-10">
+                            <PrimaryButton disabled={processing}>
+                                Edit Biography
+                            </PrimaryButton>
+                        </div>
+                    </form>
+                </div>
             </div>
         </Authenticated>
     );

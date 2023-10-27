@@ -9,6 +9,7 @@ use App\Models\Latihan;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreLatihanRequest;
 use App\Http\Requests\UpdateLatihanRequest;
+use App\Http\Resources\UsersCollection;
 
 class LatihanController extends Controller
 {
@@ -28,7 +29,8 @@ class LatihanController extends Controller
             ]);
         } else {
             return Inertia::render("Latihan/IndexLatihan", [
-                "latihan" => Latihan::orderBy("tanggal", 'asc')->get()
+                // "latihan" => Latihan::orderBy("tanggal", 'asc')->get()
+                'latihan' => new UsersCollection(Latihan::orderBy('tanggal', 'desc')->paginate(1))
             ]);
         }
     }

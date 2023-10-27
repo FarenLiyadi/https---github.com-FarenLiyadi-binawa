@@ -16,9 +16,9 @@ export default function Authenticated({ user, header, children }) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
-                                <Link href="/">
+                                <a href="/">
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
+                                </a>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -28,12 +28,62 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
-                                <NavLink href="/biography">Biography</NavLink>
-                                <NavLink href="/event">Event</NavLink>
-                                <NavLink href="/ranking">Ranking</NavLink>
-                                <NavLink href="/latihan">Latihan</NavLink>
-                                <NavLink href="/pembayaran">Pembayaran</NavLink>
-                                <NavLink href="/langganan">Langganan</NavLink>
+                                <NavLink
+                                    href="/biography"
+                                    active={
+                                        route().current("biography.index") ||
+                                        route().current("biography.create") ||
+                                        route().current("biography.show") ||
+                                        route().current("biography.edit")
+                                    }
+                                >
+                                    Biography
+                                </NavLink>
+                                <NavLink
+                                    href="/event"
+                                    active={
+                                        route().current("event.index") ||
+                                        route().current("event.create") ||
+                                        route().current("event.show") ||
+                                        route().current("event.edit")
+                                    }
+                                >
+                                    Event
+                                </NavLink>
+                                <NavLink
+                                    href="/ranking"
+                                    active={route().current("ranking")}
+                                >
+                                    Ranking
+                                </NavLink>
+                                <NavLink
+                                    href="/latihan"
+                                    active={
+                                        route().current("latihan.index") ||
+                                        route().current("latihan.create") ||
+                                        route().current("latihan.edit") ||
+                                        route().current("latihan.show")
+                                    }
+                                >
+                                    Latihan
+                                </NavLink>
+                                <NavLink
+                                    href="/pembayaran"
+                                    active={
+                                        route().current("pembayaran.index") ||
+                                        route().current("pembayaran.create") ||
+                                        route().current("pembayaran.show") ||
+                                        route().current("pembayaran.edit")
+                                    }
+                                >
+                                    Pembayaran
+                                </NavLink>
+                                <NavLink
+                                    href="/langganan"
+                                    active={route().current("langganan")}
+                                >
+                                    Langganan
+                                </NavLink>
                             </div>
                         </div>
 

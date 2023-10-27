@@ -17,17 +17,23 @@ class MemberOn
     public function handle(Request $request, Closure $next): Response
     {
         $user = auth()->user();
-
+    
 
         if ($user->roles === 'USER') {
 
             $pembayaran = Pembayaran::where('user_id', $user->id)->latest()->first();
+            
 
-            $today = date('Y-m-d');
-            $tanggal_akhir = date($pembayaran->tanggal_akhir);
+            $today2 = date('Y-m-d');
+            $today = date('Y-m-d', strtotime('+3 days', strtotime($today2)));
+            $tanggal_akhir = null;
+            if($pembayaran != null){
 
+                $tanggal_akhir = date($pembayaran->tanggal_akhir);
+            }
+// dd($today);
             // Jika User masih Aktif
-            if ($user->active) {
+            if ($user->active && $tanggal_akhir >$today) {
                 // Tolak Permintaan
                 return back();
             } else {

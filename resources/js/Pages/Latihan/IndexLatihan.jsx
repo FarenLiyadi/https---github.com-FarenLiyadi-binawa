@@ -1,3 +1,4 @@
+import Pagination from "@/Components/Pagination";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 
@@ -34,7 +35,16 @@ export default function IndexLatihan({ auth, latihan, absen }) {
                                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                         <div className="p-6 text-gray-900 grid grid-row gap-1">
                                             <p>{data.latihan.keterangan}</p>
-                                            <p>{data.latihan.tanggal}</p>
+                                            <p>
+                                                {new Date(
+                                                    data.latihan.tanggal
+                                                ).toLocaleDateString("id-ID", {
+                                                    weekday: "long",
+                                                    day: "2-digit",
+                                                    month: "long",
+                                                    year: "numeric",
+                                                })}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +65,7 @@ export default function IndexLatihan({ auth, latihan, absen }) {
                                 </div>
                             </div>
                         </div>
-                        {latihan.map((data, index) => {
+                        {latihan.data.map((data, index) => {
                             return (
                                 <div
                                     key={index}
@@ -64,7 +74,16 @@ export default function IndexLatihan({ auth, latihan, absen }) {
                                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                         <div className="p-6 text-gray-900 grid grid-row gap-1">
                                             <p>{data.keterangan}</p>
-                                            <p>{data.tanggal}</p>
+                                            <p>
+                                                {new Date(
+                                                    data.tanggal
+                                                ).toLocaleDateString("id-ID", {
+                                                    weekday: "long",
+                                                    day: "2-digit",
+                                                    month: "long",
+                                                    year: "numeric",
+                                                })}
+                                            </p>
 
                                             <div className="flex gap-2">
                                                 <Link
@@ -85,6 +104,9 @@ export default function IndexLatihan({ auth, latihan, absen }) {
                                 </div>
                             );
                         })}
+                        <div className="flex w-full justify-center pt-10">
+                            <Pagination class="mt-6" links={latihan.meta} />
+                        </div>
                     </>
                 )}
             </div>

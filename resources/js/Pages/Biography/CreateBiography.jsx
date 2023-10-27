@@ -14,6 +14,7 @@ export default function CreateBiography({ auth }) {
         nama_lengkap: "",
         nik: "",
         nisn: "",
+        tanggal_lahir: "",
         tempat_lahir: "",
         jenis_kelamin: "",
         agama: "",
@@ -36,7 +37,7 @@ export default function CreateBiography({ auth }) {
     const submit = (e) => {
         e.preventDefault();
         router.post(`/biography`, {
-            _method: "POST",
+            _method: "post",
             ...data,
         });
     };
@@ -136,6 +137,29 @@ export default function CreateBiography({ auth }) {
 
                         <InputError
                             message={errors.tempat_lahir}
+                            className="mt-2"
+                        />
+                    </div>
+                    <div className="w-full">
+                        <InputLabel
+                            htmlFor="tanggal_lahir"
+                            value="Tanggal Lahir"
+                        />
+
+                        <TextInput
+                            id="tanggal_lahir"
+                            type="date"
+                            name="tanggal_lahir"
+                            value={data.tanggal_lahir}
+                            className="mt-1 block w-full"
+                            autoComplete="tanggal_lahir"
+                            onChange={(e) =>
+                                setData("tanggal_lahir", e.target.value)
+                            }
+                        />
+
+                        <InputError
+                            message={errors.tanggal_lahir}
                             className="mt-2"
                         />
                     </div>

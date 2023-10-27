@@ -1,11 +1,12 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import slug from "slug";
 
 export default function EditEvent({ auth, event }) {
     const [namaEvent, setNamaEvent] = useState(event.nama_event);
     const [tempatEvent, setTempatEvent] = useState(event.tempat_event);
+    const [posterUrl, setPosterUrl] = useState(event.poster_url);
     const [tanggalDeadline, setTanggalDeadline] = useState(
         event.tanggal_deadline
     );
@@ -19,9 +20,14 @@ export default function EditEvent({ auth, event }) {
             slug: slug(namaEvent),
             tempat_event: tempatEvent,
             tanggal_deadline: tanggalDeadline,
+            poster_url: posterUrl,
         };
 
-        router.put(`/event/${event.slug}`, data);
+        // router.put(`/event/${event.slug}`, data);
+        router.post(`/event/${event.slug}`, {
+            _method: "put",
+            ...data,
+        });
     }
 
     return (
@@ -95,6 +101,29 @@ export default function EditEvent({ auth, event }) {
                                                 );
                                             }}
                                         />
+
+                                        <div className="flex justify-center">
+                                            <img
+                                                src={`/${posterUrl}`}
+                                                className="w-56  text-center"
+                                                alt=""
+                                            />
+                                        </div>
+                                        <div className="mt-2">
+                                            <label className="" id="poster_url">
+                                                Edit Foto Poster
+                                            </label>
+                                            <input
+                                                type="file"
+                                                className="w-full px-4 py-2"
+                                                name="posterUrl"
+                                                onChange={(e) =>
+                                                    setPosterUrl(
+                                                        e.target.files[0]
+                                                    )
+                                                }
+                                            />
+                                        </div>
                                     </div>
 
                                     <button

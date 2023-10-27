@@ -66,8 +66,8 @@ export default function AdminBiography(props) {
                                                               .nama_lengkap
                                                             ? e.biography
                                                                   .nama_lengkap
-                                                            : "NOT SET"
-                                                        : "NOT SET"}
+                                                            : e.user.name
+                                                        : e.name}
                                                 </td>
 
                                                 <td className="whitespace-nowrap px-6 py-4">

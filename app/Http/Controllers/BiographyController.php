@@ -19,7 +19,7 @@ class BiographyController extends Controller
     {
         if(Auth::user()->roles == "USER"){
             return Inertia::render('Biography/IndexBiography',[
-                'biography' => Biography::where("user_id",Auth::user()->id)->get(),
+                'biography' => Biography::with('user')->where("user_id",Auth::user()->id)->get(),
             ]);
         }
         else{
@@ -51,6 +51,7 @@ class BiographyController extends Controller
             'nik'=>'nullable',
             'nisn'=>'nullable',
             'tempat_lahir'=>'nullable',
+            'tanggal_lahir'=>'nullable',
             'jenis_kelamin'=>'nullable',
             'agama'=>'nullable',
             'nama_ayah'=>'nullable',
@@ -140,7 +141,9 @@ class BiographyController extends Controller
      */
     public function show(string $id)
     {
-        dd($id);
+        return Inertia::render('Biography/IndexBiography',[
+            'biography' => Biography::with('user')->where("user_id",$id)->get(),
+        ]);
       
     }
 
@@ -152,7 +155,7 @@ class BiographyController extends Controller
         // dd($id);
         
         return Inertia::render('Biography/EditBiography',[
-            'biography'=> Biography::where("id",$id)->get(),
+            'biography'=> Biography::with('user')->where("id",$id)->get(),
         ]);
 
     }
@@ -162,6 +165,7 @@ class BiographyController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // dd($id);
         $biography = Biography::where('id',$id)->first();
         // dd($id);
 
@@ -171,6 +175,7 @@ class BiographyController extends Controller
             'nik'=>'nullable',
             'nisn'=>'nullable',
             'tempat_lahir'=>'nullable',
+            'tanggal_lahir'=>'nullable',
             'jenis_kelamin'=>'nullable',
             'agama'=>'nullable',
             'nama_ayah'=>'nullable',

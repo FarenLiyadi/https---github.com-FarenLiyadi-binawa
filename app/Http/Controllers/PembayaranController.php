@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
+use App\Http\Resources\UsersCollection;
 
 class PembayaranController extends Controller
 {
@@ -29,7 +30,8 @@ class PembayaranController extends Controller
             ]);
         } else {
             return Inertia::render('Pembayaran/IndexPembayaran', [
-                'pembayaran' => Pembayaran::all()
+                // 'pembayaran' => Pembayaran::all()
+                'pembayaran' => new UsersCollection(Pembayaran::latest()->paginate(1))
             ]);
         }
     }
@@ -56,7 +58,7 @@ class PembayaranController extends Controller
             'tanggal_akhir' => 'nullable',
             'approved_by' => 'nullable',
             'approve' => 'required',
-            'bukti_pembayaran' => 'required',
+            'bukti_pembayaran' => 'required','nullable',
         ]);
 
         // dd($request->file('bukti_pembayaran'));
