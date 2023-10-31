@@ -44,6 +44,7 @@ Route::get('/', function () {
 });
 
 Route::get('/graph', [PembayaranController::class, 'grafik'])->middleware(['auth', 'verified', 'admin']);
+Route::get('/ranking-detail', [RankingController::class, 'show']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 // Route::get('/', [DashboardController::class, 'landing'])->name('landing');

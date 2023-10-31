@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 
 export default function Ranking({ auth, users }) {
     return (
@@ -32,6 +32,12 @@ export default function Ranking({ auth, users }) {
                                         <span>Poin </span>
                                         {user.total_skor}
                                     </p>
+
+                                    <Link
+                                        href={`/ranking-detail?id=${user.id}`}
+                                    >
+                                        Lihat
+                                    </Link>
                                 </div>
                             </div>
                         </div>
