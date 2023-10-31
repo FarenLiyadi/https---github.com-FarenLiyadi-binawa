@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function CreatePembayaran({ auth }) {
     const [keterangan, setKeterangan] = useState("");
+    const [nominal, setNominal] = useState(0);
     const [jenisPembayaran, setJenisPembayaran] = useState("Tunai");
     const [tanggalPembayaran, setTanggalPembayaran] = useState("");
     const [buktiPembayaran, setBuktiPembayaran] = useState(null);
@@ -14,6 +15,7 @@ export default function CreatePembayaran({ auth }) {
         const data = {
             user_id: auth.user.id,
             keterangan: keterangan,
+            nominal: nominal,
             jenis_pembayaran: jenisPembayaran,
             tanggal_pembayaran: tanggalPembayaran,
             approved_by: auth.user.id,
@@ -58,6 +60,21 @@ export default function CreatePembayaran({ auth }) {
                                             required
                                             onChange={(e) => {
                                                 setKeterangan(e.target.value);
+                                            }}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="nominal">Nominal</label>
+                                        <input
+                                            className="w-full rounded-lg mt-2"
+                                            type="number"
+                                            id="nominal"
+                                            name="nominal"
+                                            placeholder="350000"
+                                            min={0}
+                                            required
+                                            onChange={(e) => {
+                                                setNominal(e.target.value);
                                             }}
                                         />
                                     </div>

@@ -52,13 +52,14 @@ class PembayaranController extends Controller
         $validatedData = $request->validate([
             'user_id' => 'required',
             'keterangan' => 'required',
+            'nominal' => 'required',
             'jenis_pembayaran' => 'required',
             'tanggal_pembayaran' => 'required',
             'tanggal_awal' => 'nullable',
             'tanggal_akhir' => 'nullable',
             'approved_by' => 'nullable',
             'approve' => 'required',
-            'bukti_pembayaran' => 'required','nullable',
+            'bukti_pembayaran' => 'nullable',
         ]);
 
         // dd($request->file('bukti_pembayaran'));
@@ -111,7 +112,7 @@ class PembayaranController extends Controller
             'tanggal_akhir' => 'required',
             'approved_by' => 'required',
             'approve' => 'required',
-            'bukti_pembayaran' => 'required',
+            'bukti_pembayaran' => 'nullable',
         ]);
 
         Pembayaran::where('id', $pembayaran->id)->update($validatedData);

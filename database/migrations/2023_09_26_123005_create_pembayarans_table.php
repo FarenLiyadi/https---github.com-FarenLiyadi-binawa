@@ -16,12 +16,13 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('approved_by');
             $table->string('keterangan');
+            $table->integer('nominal');
             $table->string('jenis_pembayaran');
             $table->date('tanggal_pembayaran');
             $table->date('tanggal_awal')->nullable();
             $table->date('tanggal_akhir')->nullable();
             $table->boolean('approve')->default(false);
-            $table->string('bukti_pembayaran');
+            $table->string('bukti_pembayaran')->nullable();
             $table->timestamps();
         });
     }

@@ -2,8 +2,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
 
 export default function ShowPembayaran({ auth, pembayaran }) {
-    console.log(pembayaran);
-
     function formattedDate(date) {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -51,8 +49,6 @@ export default function ShowPembayaran({ auth, pembayaran }) {
             bukti_pembayaran: pembayaran.bukti_pembayaran,
         };
 
-        console.log(data);
-
         router.put(`/pembayaran/${pembayaran.id}`, data);
     }
 
@@ -91,16 +87,21 @@ export default function ShowPembayaran({ auth, pembayaran }) {
                                     year: "numeric",
                                 })}
                             </p>
-                            <div className="w-96 h-auto mb-3">
-                                <p>Bukti Pembayaran</p>
-                                <img
-                                    className="rounded-lg w-56"
-                                    src={`/storage/${pembayaran.bukti_pembayaran}`}
-                                    alt={`Bukti Pembayaran ${pembayaran.user.name}`}
-                                />
-                            </div>
+                            {pembayaran.bukti_pembayaran ? (
+                                <div className="w-96 h-auto">
+                                    <p>Bukti Pembayaran</p>
+                                    <img
+                                        className="rounded-lg w-56"
+                                        src={`/storage/${pembayaran.bukti_pembayaran}`}
+                                        alt={`Bukti Pembayaran ${pembayaran.user.name}`}
+                                    />
+                                </div>
+                            ) : (
+                                ""
+                            )}
+
                             {pembayaran.approve ? (
-                                <div>
+                                <div className="mt-3">
                                     <span className="text-green-500 font-bold">
                                         Done
                                     </span>
@@ -112,7 +113,7 @@ export default function ShowPembayaran({ auth, pembayaran }) {
                             ) : (
                                 <button
                                     onClick={handleApprove}
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-lg"
+                                    className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-lg"
                                 >
                                     Approve
                                 </button>
