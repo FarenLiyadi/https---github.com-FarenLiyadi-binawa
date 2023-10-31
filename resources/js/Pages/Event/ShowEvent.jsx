@@ -5,8 +5,6 @@ import { useState } from "react";
 export default function ShowEvent({ auth, event, users }) {
     const [memberId, setMemberId] = useState([]);
 
-    console.log(users);
-
     function renderListUser(user) {
         // Mengecek apakah user.id ada dalam event.peserta
         const isUserInEvent = event.peserta.some(
@@ -183,7 +181,9 @@ export default function ShowEvent({ auth, event, users }) {
         >
             <Head title="Detail Event" />
 
-            {auth.user.roles == "ADMIN" ? (
+            {auth.user.roles == "USER" ? (
+                ""
+            ) : (
                 <>
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2">
                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -247,8 +247,6 @@ export default function ShowEvent({ auth, event, users }) {
                         </div>
                     </div>
                 </>
-            ) : (
-                ""
             )}
         </AuthenticatedLayout>
     );
