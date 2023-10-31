@@ -42,6 +42,8 @@ Route::get('/', function () {
     ]);
 });
 
+// Route::get('/grafik', [GraphController::class,'index']);
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 // Route::get('/', [DashboardController::class, 'landing'])->name('landing');
 
