@@ -1,6 +1,7 @@
 <?php
 
 use Inertia\Inertia;
+use App\Models\Pembayaran;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\AbsenController;
@@ -42,7 +43,7 @@ Route::get('/', function () {
     ]);
 });
 
-// Route::get('/grafik', [GraphController::class,'index']);
+Route::get('/graph', [PembayaranController::class, 'grafik'])->middleware(['auth', 'verified', 'admin']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 // Route::get('/', [DashboardController::class, 'landing'])->name('landing');

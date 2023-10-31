@@ -84,6 +84,16 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Langganan
                                 </NavLink>
+                                {user.roles == "USER" ? (
+                                    ""
+                                ) : (
+                                    <NavLink
+                                        href="/graph"
+                                        active={route().current("graph")}
+                                    >
+                                        Grafik
+                                    </NavLink>
+                                )}
                             </div>
                         </div>
 

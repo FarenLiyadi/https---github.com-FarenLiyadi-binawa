@@ -131,4 +131,11 @@ class PembayaranController extends Controller
     {
         //
     }
+
+    public function grafik()
+    {
+        return Inertia::render('Grafik', [
+            'pembayaran' => Pembayaran::all()
+        ]);
+    }
 }
