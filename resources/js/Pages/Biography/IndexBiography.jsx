@@ -43,9 +43,9 @@ export default function IndexBiography({ biography, auth, errors }) {
                                     Edit Biodata KAMU
                                 </PrimaryButton>
                             </div>
-                            <div className="lg:w-full w-3/4">
-                                <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
-                                    <div className="mt-2">
+                            <div className="lg:w-full w-3/4 ">
+                                <div className="flex justify-center mx-auto">
+                                    <div className="mt-2 ">
                                         <label className="" id="pas_foto">
                                             Pas Foto 4 x 6
                                         </label>
@@ -63,70 +63,6 @@ export default function IndexBiography({ biography, auth, errors }) {
                                         ) : (
                                             <h1 className="text-red-500">
                                                 PAS FOTO BELUM ADA
-                                            </h1>
-                                        )}
-                                    </div>
-                                    <div className="mt-2">
-                                        <label className="" id="kartu_keluarga">
-                                            Foto Kartu Keluarga
-                                        </label>
-                                        {biography[0].kartu_keluarga != null ? (
-                                            <img
-                                                className="rounded-t-lg w-64"
-                                                src={`/${biography[0].kartu_keluarga}`}
-                                                alt=""
-                                            />
-                                        ) : (
-                                            <h1 className="text-red-500">
-                                                FOTO KARTU KELUARGA BELUM ADA
-                                            </h1>
-                                        )}
-                                    </div>
-                                    <div className="mt-2">
-                                        <label className="" id="akte_kelahiran">
-                                            Foto Akte Kelahiran
-                                        </label>
-                                        {biography[0].akte_kelahiran != null ? (
-                                            <img
-                                                className="rounded-t-lg w-64"
-                                                src={`/${biography[0].akte_kelahiran}`}
-                                                alt=""
-                                            />
-                                        ) : (
-                                            <h1 className="text-red-500">
-                                                FOTO AKTE KELAHIRAN BELUM ADA
-                                            </h1>
-                                        )}
-                                    </div>
-                                    <div className="mt-2">
-                                        <label className="" id="ktp">
-                                            Foto KTP
-                                        </label>
-                                        {biography[0].ktp != null ? (
-                                            <img
-                                                className="rounded-t-lg w-64"
-                                                src={`/${biography[0].ktp}`}
-                                                alt=""
-                                            />
-                                        ) : (
-                                            <h1 className="text-red-500">
-                                                FOTO KTP BELUM ADA
-                                            </h1>
-                                        )}
-                                    </div>
-                                    <div className="mt-2">
-                                        <label className="" id="rapor">
-                                            Foto rapor
-                                        </label>
-                                        {biography[0].rapor != null ? (
-                                            <img
-                                                className="rounded-t-lg w-64"
-                                                src={`/${biography[0].rapor}`}
-                                                alt=""
-                                            />
-                                        ) : (
-                                            <h1 className="text-red-500">
-                                                FOTO RAPOR BELUM ADA
                                             </h1>
                                         )}
                                     </div>
@@ -552,6 +488,72 @@ export default function IndexBiography({ biography, auth, errors }) {
                                             message={errors.no_telp}
                                             className="mt-2"
                                         />
+                                    </div>
+                                </div>
+                                <div className="flex w-full flex-col lg:flex-row gap-5 mt-2">
+                                    <div className="mt-2">
+                                        <label className="" id="kartu_keluarga">
+                                            Foto Kartu Keluarga
+                                        </label>
+                                        {biography[0].kartu_keluarga != null ? (
+                                            <img
+                                                className="rounded-t-lg w-64"
+                                                src={`/${biography[0].kartu_keluarga}`}
+                                                alt=""
+                                            />
+                                        ) : (
+                                            <h1 className="text-red-500">
+                                                FOTO KARTU KELUARGA BELUM ADA
+                                            </h1>
+                                        )}
+                                    </div>
+                                    <div className="mt-2">
+                                        <label className="" id="akte_kelahiran">
+                                            Foto Akte Kelahiran
+                                        </label>
+                                        {biography[0].akte_kelahiran != null ? (
+                                            <img
+                                                className="rounded-t-lg w-64"
+                                                src={`/${biography[0].akte_kelahiran}`}
+                                                alt=""
+                                            />
+                                        ) : (
+                                            <h1 className="text-red-500">
+                                                FOTO AKTE KELAHIRAN BELUM ADA
+                                            </h1>
+                                        )}
+                                    </div>
+                                    <div className="mt-2">
+                                        <label className="" id="ktp">
+                                            Foto KTP
+                                        </label>
+                                        {biography[0].ktp != null ? (
+                                            <img
+                                                className="rounded-t-lg w-64"
+                                                src={`/${biography[0].ktp}`}
+                                                alt=""
+                                            />
+                                        ) : (
+                                            <h1 className="text-red-500">
+                                                FOTO KTP BELUM ADA
+                                            </h1>
+                                        )}
+                                    </div>
+                                    <div className="mt-2">
+                                        <label className="" id="rapor">
+                                            Foto rapor
+                                        </label>
+                                        {biography[0].rapor != null ? (
+                                            <img
+                                                className="rounded-t-lg w-64"
+                                                src={`/${biography[0].rapor}`}
+                                                alt=""
+                                            />
+                                        ) : (
+                                            <h1 className="text-red-500">
+                                                FOTO RAPOR BELUM ADA
+                                            </h1>
+                                        )}
                                     </div>
                                 </div>
                             </div>

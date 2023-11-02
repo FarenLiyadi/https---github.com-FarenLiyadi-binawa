@@ -69,11 +69,41 @@ export default function EditBiography({ biography, auth }) {
             }
         >
             <div className="w-full">
-                <div className="container flex justify-center items-center flex-col pt-4 mx-auto  ">
+                <div className="container flex justify-center items-center flex-col pt-4 mx-auto px-20 ">
                     <form
                         onSubmit={submit}
                         className="flex justify-center flex-col lg:w-full w-3/4"
                     >
+                        <div className=" flex justify-center mx-auto">
+                            <div className="mt-2">
+                                <label className="" id="pas_foto">
+                                    Edit Pas Foto 4 x 6
+                                </label>
+                                {biography[0].pas_foto != null && (
+                                    <img
+                                        className="rounded-t-lg w-64"
+                                        src={
+                                            biography[0].pas_foto == null
+                                                ? `/no-photo.png`
+                                                : `/${biography[0].pas_foto}`
+                                        }
+                                        alt=""
+                                    />
+                                )}
+
+                                <input
+                                    type="file"
+                                    className="w-full px-4 py-2"
+                                    name="pas_foto"
+                                    onChange={(e) =>
+                                        setData("pas_foto", e.target.files[0])
+                                    }
+                                />
+                                <span className="text-red-600">
+                                    {errors.pas_foto}
+                                </span>
+                            </div>
+                        </div>
                         <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
                             <div className="lg:w-1/3">
                                 <InputLabel
@@ -416,34 +446,6 @@ export default function EditBiography({ biography, auth }) {
                             </div>
                         </div>
                         <div className="flex w-full flex-col lg:flex-row gap-3">
-                            <div className="mt-2">
-                                <label className="" id="pas_foto">
-                                    Edit Pas Foto 4 x 6
-                                </label>
-                                {biography[0].pas_foto != null && (
-                                    <img
-                                        className="rounded-t-lg w-64"
-                                        src={
-                                            biography[0].pas_foto == null
-                                                ? `/no-photo.png`
-                                                : `/${biography[0].pas_foto}`
-                                        }
-                                        alt=""
-                                    />
-                                )}
-
-                                <input
-                                    type="file"
-                                    className="w-full px-4 py-2"
-                                    name="pas_foto"
-                                    onChange={(e) =>
-                                        setData("pas_foto", e.target.files[0])
-                                    }
-                                />
-                                <span className="text-red-600">
-                                    {errors.pas_foto}
-                                </span>
-                            </div>
                             <div className="mt-2">
                                 <label className="" id="kartu_keluarga">
                                     Edit Foto Kartu Keluarga
