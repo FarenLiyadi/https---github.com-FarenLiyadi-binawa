@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Biography;
+use App\Models\CompanyModel;
 use App\Models\Event;
 use App\Models\User;
 use Inertia\Inertia;
@@ -55,5 +56,9 @@ class DashboardController extends Controller
             'users' => "",
            
         ]);
+    }
+
+    public function admin_landing(){
+      
     }
 }

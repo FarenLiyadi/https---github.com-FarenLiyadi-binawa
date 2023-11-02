@@ -11,9 +11,11 @@ use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\BiographyController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanggananController;
 use App\Http\Controllers\PembayaranController;
+use App\Models\CompanyModel;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,16 +42,19 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'harga'=>CompanyModel::get(),
     ]);
 });
 
-Route::get('/graph', [PembayaranController::class, 'grafik'])->middleware(['auth', 'verified', 'admin']);
+Route::get('/graph', [PembayaranController::class, 'grafik'])->middleware(['auth', 'verified', 'admin'])->name("graph");
 Route::get('/ranking-detail', [RankingController::class, 'show']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 // Route::get('/', [DashboardController::class, 'landing'])->name('landing');
 
 Route::resource('/biography', BiographyController::class)->middleware(['auth', 'verified']);
+// Route::get('/adminlanding', [DashboardController::class,'admin_landing'])->middleware(['auth', 'verified','admin'])->name('company');
+Route::resource('/adminlanding', CompanyController::class)->middleware(['auth', 'verified','admin']);
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
 Route::resource('/peserta', PesertaController::class)->middleware(['auth', 'verified']);
 Route::resource('/latihan', LatihanController::class)->middleware(['auth', 'verified']);

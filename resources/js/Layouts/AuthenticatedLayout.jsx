@@ -17,7 +17,9 @@ export default function Authenticated({ user, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <a href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <h1 className=" text-2xl text-black font-bold">
+                                        PB BINAWA
+                                    </h1>
                                 </a>
                             </div>
 
@@ -125,6 +127,18 @@ export default function Authenticated({ user, header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        {user.roles == "ADMIN" ? (
+                                            <Dropdown.Link
+                                                href={route(
+                                                    "adminlanding.index"
+                                                )}
+                                            >
+                                                CompanyProfile
+                                            </Dropdown.Link>
+                                        ) : (
+                                            ""
+                                        )}
+
                                         <Dropdown.Link
                                             href={route("profile.edit")}
                                         >
@@ -211,6 +225,16 @@ export default function Authenticated({ user, header, children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
+                            {user.roles == "ADMIN" ? (
+                                <ResponsiveNavLink
+                                    href={route("adminlanding.index")}
+                                >
+                                    CompanyProfile
+                                </ResponsiveNavLink>
+                            ) : (
+                                ""
+                            )}
+
                             <ResponsiveNavLink href={route("profile.edit")}>
                                 Profile
                             </ResponsiveNavLink>

@@ -124,73 +124,114 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                         </div>
                     </>
                 ) : (
-                    <div>
-                        <div className="py-2">
-                            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                                <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                    <div className="p-6 text-gray-900">
-                                        <h1 className="text-xl font-bold">
-                                            Users
-                                        </h1>
-                                        {users.data.map((user, index) => {
-                                            return (
-                                                <div
-                                                    className=" my-2 "
-                                                    key={index}
+                    <div className=" flex flex-col">
+                        <div className="overflow-x-auto px-4">
+                            <div className="inline-block min-w-full py-2 px-3">
+                                <div className="overflow-hidden">
+                                    <table className="min-w-full text-left text-sm font-light">
+                                        <thead className="border-b font-medium dark:border-neutral-500">
+                                            <tr>
+                                                <th
+                                                    scope="col"
+                                                    className="px-6 py-4 uppercase"
                                                 >
-                                                    <div>
-                                                        <p className="capitalize">
-                                                            {user.name}
-                                                        </p>
-                                                        <p>
-                                                            Status Member:{" "}
-                                                            {user.active ? (
-                                                                <span className="text-green-400 font-bold">
-                                                                    Active
-                                                                </span>
-                                                            ) : (
-                                                                <span className="text-red-500 font-bold">
-                                                                    Not Active
-                                                                </span>
-                                                            )}
-                                                        </p>
-                                                        {user.active ? (
-                                                            <button
-                                                                onClick={(e) =>
-                                                                    handleLangganan(
-                                                                        e,
-                                                                        false,
-                                                                        user.id
-                                                                    )
-                                                                }
-                                                                className="bg-red-500 hover:bg-red-700 py-1 px-3 my-1 text-white rounded-md"
-                                                            >
-                                                                Disabled
-                                                            </button>
-                                                        ) : (
-                                                            <button
-                                                                onClick={(e) =>
-                                                                    handleLangganan(
-                                                                        e,
-                                                                        true,
-                                                                        user.id
-                                                                    )
-                                                                }
-                                                                className="bg-green-500 hover:bg-green-700 py-1 px-3 my-1 text-white rounded-md"
-                                                            >
-                                                                Activate Member
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            );
-                                        })}
+                                                    Name
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-6 py-4 uppercase"
+                                                >
+                                                    Status
+                                                </th>
+
+                                                <th
+                                                    scope="col"
+                                                    className="text-center px-6 py-4 uppercase"
+                                                >
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {users.data.map((user, index) => {
+                                                return (
+                                                    <tr
+                                                        key={index}
+                                                        className={`border-b hover:bg-neutral-400 dark:border-neutral-500  ${
+                                                            (index + 1) % 2 == 0
+                                                                ? "bg-neutral-200"
+                                                                : "bg-white"
+                                                        }`}
+                                                    >
+                                                        <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                            {user.name !== null
+                                                                ? user.name
+                                                                : "NOT SET"}
+                                                        </td>
+                                                        <td className="whitespace-nowrap px-6 py-4">
+                                                            <p>
+                                                                {user.active ? (
+                                                                    <span className="text-green-400 font-bold">
+                                                                        Active
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="text-red-500 font-bold">
+                                                                        Not
+                                                                        Active
+                                                                    </span>
+                                                                )}
+                                                            </p>
+                                                        </td>
+
+                                                        <td className="whitespace-nowrap px-6 py-4">
+                                                            <div className="flex flex-col gap-3 items-center justify-center">
+                                                                {user.active ? (
+                                                                    <button
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleLangganan(
+                                                                                e,
+                                                                                false,
+                                                                                user.id
+                                                                            )
+                                                                        }
+                                                                        className="bg-red-500 hover:bg-red-700 py-1 px-3 my-1 text-white rounded-md"
+                                                                    >
+                                                                        Disabled
+                                                                    </button>
+                                                                ) : (
+                                                                    <button
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            handleLangganan(
+                                                                                e,
+                                                                                true,
+                                                                                user.id
+                                                                            )
+                                                                        }
+                                                                        className="bg-green-500 hover:bg-green-700 py-1 px-3 my-1 text-white rounded-md"
+                                                                    >
+                                                                        Activate
+                                                                        Member
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
+                                    <div className="flex w-full justify-center pt-10">
+                                        <Pagination
+                                            class="mt-6"
+                                            links={users.meta}
+                                        />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="flex w-full justify-center pt-10">
-                            <Pagination class="mt-6" links={users.meta} />
                         </div>
                     </div>
                 )}
