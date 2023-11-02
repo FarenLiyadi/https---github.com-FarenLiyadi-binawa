@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
+
 use Inertia\Inertia;
 
 class BiographyController extends Controller
@@ -199,7 +202,7 @@ class BiographyController extends Controller
 
         if($request->file('pas_foto')!=null){
             $pas_foto = $request->file('pas_foto');
-                if($biography->pas_foto !=null && File::exist(public_path('pas_foto/',$biography->pas_foto))){
+                if($biography->pas_foto !=null && File::exists(public_path('pas_foto/',$biography->pas_foto))){
                     File::delete(public_path($biography->pas_foto));
                 }
             $nama_pas_foto = 'pas_foto/binawa_pas_foto'.date('Ymdhis').'.'.$request->file('pas_foto')->getClientOriginalExtension();
@@ -214,7 +217,7 @@ class BiographyController extends Controller
         
         if($request->file('kartu_keluarga')!=null){
             $kartu_keluarga = $request->file('kartu_keluarga');
-                if($biography->kartu_keluarga !=null && File::exist(public_path('kartu_keluarga/',$biography->kartu_keluarga))){
+                if($biography->kartu_keluarga !=null && File::exists(public_path('kartu_keluarga/',$biography->kartu_keluarga))){
                     File::delete(public_path($biography->kartu_keluarga));
                 }
             $nama_kartu_keluarga = 'kartu_keluarga/binawa_kartu_keluarga'.date('Ymdhis').'.'.$request->file('kartu_keluarga')->getClientOriginalExtension();
@@ -228,7 +231,7 @@ class BiographyController extends Controller
 
         if($request->file('akte_kelahiran')!=null){
             $akte_kelahiran = $request->file('akte_kelahiran');
-                if($biography->akte_kelahiran !=null && File::exist(public_path('akte_kelahiran/',$biography->akte_kelahiran))){
+                if($biography->akte_kelahiran !=null && File::exists(public_path('akte_kelahiran/',$biography->akte_kelahiran))){
                     File::delete(public_path($biography->akte_kelahiran));
                 }
             $nama_akte_kelahiran = 'akte_kelahiran/binawa_akte_kelahiran'.date('Ymdhis').'.'.$request->file('akte_kelahiran')->getClientOriginalExtension();
@@ -241,7 +244,7 @@ class BiographyController extends Controller
 
         if($request->file('ktp')!=null){
             $ktp = $request->file('ktp');
-                if($biography->ktp !=null && File::exist(public_path('ktp/',$biography->ktp))){
+                if($biography->ktp !=null && File::exists(public_path('ktp/',$biography->ktp))){
                     File::delete(public_path($biography->ktp));
                 }
             $nama_ktp = 'ktp/binawa_ktp'.date('Ymdhis').'.'.$request->file('ktp')->getClientOriginalExtension();
@@ -254,7 +257,7 @@ class BiographyController extends Controller
 
         if($request->file('rapor')!=null){
             $rapor = $request->file('rapor');
-                if($biography->rapor !=null && File::exist(public_path('rapor/',$biography->rapor))){
+                if($biography->rapor !=null && File::exists(public_path('rapor/',$biography->rapor))){
                     File::delete(public_path($biography->rapor));
                 }
             $nama_rapor = 'rapor/binawa_rapor'.date('Ymdhis').'.'.$request->file('rapor')->getClientOriginalExtension();
