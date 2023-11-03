@@ -42,7 +42,7 @@ export default function Grafik({ auth, pembayaran }) {
         >
             <Head title="Grafik" />
 
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 p-12">
+            <div className="max-w-5xl mx-auto sm:px-6 lg:px-8 p-12">
                 <BarChart chartData={chartData} />
             </div>
         </AuthenticatedLayout>
