@@ -125,11 +125,6 @@ export default function CreatePembayaran({ auth }) {
                                             accept="image/*"
                                             id="tanggalPembayaran"
                                             name="tanggalPembayaran"
-                                            disabled={
-                                                jenisPembayaran == "Tunai"
-                                                    ? 1
-                                                    : 0
-                                            }
                                             onChange={(e) => {
                                                 setBuktiPembayaran(
                                                     e.target.files[0]

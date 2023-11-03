@@ -69,32 +69,46 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Latihan
                                 </NavLink>
-                                <NavLink
-                                    href="/pembayaran"
-                                    active={
-                                        route().current("pembayaran.index") ||
-                                        route().current("pembayaran.create") ||
-                                        route().current("pembayaran.show") ||
-                                        route().current("pembayaran.edit")
-                                    }
-                                >
-                                    Pembayaran
-                                </NavLink>
-                                <NavLink
-                                    href="/langganan"
-                                    active={route().current("langganan")}
-                                >
-                                    Langganan
-                                </NavLink>
-                                {user.roles == "USER" ? (
+                                {user.roles === "PELATIH" ? (
                                     ""
                                 ) : (
+                                    <NavLink
+                                        href="/pembayaran"
+                                        active={
+                                            route().current(
+                                                "pembayaran.index"
+                                            ) ||
+                                            route().current(
+                                                "pembayaran.create"
+                                            ) ||
+                                            route().current(
+                                                "pembayaran.show"
+                                            ) ||
+                                            route().current("pembayaran.edit")
+                                        }
+                                    >
+                                        Pembayaran
+                                    </NavLink>
+                                )}
+                                {user.roles === "PELATIH" ? (
+                                    ""
+                                ) : (
+                                    <NavLink
+                                        href="/langganan"
+                                        active={route().current("langganan")}
+                                    >
+                                        Langganan
+                                    </NavLink>
+                                )}
+                                {user.roles == "ADMIN" ? (
                                     <NavLink
                                         href="/graph"
                                         active={route().current("graph")}
                                     >
                                         Grafik
                                     </NavLink>
+                                ) : (
+                                    ""
                                 )}
                             </div>
                         </div>
@@ -127,6 +141,15 @@ export default function Authenticated({ user, header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        {user.roles == "ADMIN" ? (
+                                            <Dropdown.Link
+                                                href={route("admin.user")}
+                                            >
+                                                User
+                                            </Dropdown.Link>
+                                        ) : (
+                                            ""
+                                        )}
                                         {user.roles == "ADMIN" ? (
                                             <Dropdown.Link
                                                 href={route(
@@ -225,6 +248,13 @@ export default function Authenticated({ user, header, children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
+                            {user.roles == "ADMIN" ? (
+                                <ResponsiveNavLink href={route("admin.user")}>
+                                    User
+                                </ResponsiveNavLink>
+                            ) : (
+                                ""
+                            )}
                             {user.roles == "ADMIN" ? (
                                 <ResponsiveNavLink
                                     href={route("adminlanding.index")}

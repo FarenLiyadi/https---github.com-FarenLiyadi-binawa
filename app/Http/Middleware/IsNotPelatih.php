@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Admin
+class IsNotPelatih
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class Admin
     {
         $user = auth()->user();
 
-        if ($user->roles === 'USER' || $user->roles ==='PELATIH') {
+        if ( $user->roles ==='PELATIH') {
             return back();
         }
         return $next($request);

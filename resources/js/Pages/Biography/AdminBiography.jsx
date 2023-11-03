@@ -66,7 +66,7 @@ export default function AdminBiography(props) {
                                                               .nama_lengkap
                                                             ? e.biography
                                                                   .nama_lengkap
-                                                            : e.user.name
+                                                            : e.name
                                                         : e.name}
                                                 </td>
 
