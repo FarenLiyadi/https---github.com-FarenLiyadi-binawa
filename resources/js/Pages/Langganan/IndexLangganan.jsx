@@ -54,71 +54,111 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                 {auth.user.roles == "USER" ? (
                     <>
                         {checkStatus()}
-                        <div className="py-2">
-                            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                                <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                    <div className="p-6 text-gray-900">
-                                        <h1 className="text-xl font-bold">
-                                            Langganan
-                                        </h1>
-                                        <p className="capitalize">
-                                            {auth.user.name}
-                                        </p>
-                                        <p>
-                                            Status:{" "}
-                                            {auth.user.active ? (
-                                                <span className="text-green-400">
-                                                    Active
-                                                </span>
-                                            ) : (
-                                                <span className="text-red-500">
-                                                    Not Active
-                                                </span>
-                                            )}
-                                        </p>
+                        <div className="overflow-x-auto px-4">
+                            <div className="inline-block min-w-full py-2 px-3">
+                                <div className="overflow-hidden">
+                                    <table className="min-w-full text-left text-sm font-light">
+                                        <thead className="border-b font-medium dark:border-neutral-500">
+                                            <tr>
+                                                <th
+                                                    scope="col"
+                                                    className="px-6 py-4 uppercase"
+                                                >
+                                                    Name
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-6 py-4 uppercase"
+                                                >
+                                                    Status
+                                                </th>
 
-                                        {auth.user.active ? (
-                                            <div className="flex gap-3">
-                                                <button
-                                                    className="bg-slate-500 hover:bg-slate-700 py-1 px-3 my-1 text-white cursor-not-allowed rounded-md"
-                                                    disabled
+                                                <th
+                                                    scope="col"
+                                                    className="text-center px-6 py-4 uppercase"
                                                 >
-                                                    Active
-                                                </button>
-                                                <button
-                                                    onClick={() =>
-                                                        router.get(
-                                                            "/pembayaran/create"
-                                                        )
-                                                    }
-                                                    className="bg-yellow-600 hover:bg-yellow-700 py-1 px-3 my-1 text-white rounded-md"
-                                                >
-                                                    Tambah Pembayaran Lagi
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <div className="">
-                                                <button
-                                                    onClick={handleActivate}
-                                                    className="bg-green-500 hover:bg-green-700 py-1 px-3 my-1 text-white rounded-md"
-                                                >
-                                                    Activate
-                                                </button>
-                                            </div>
-                                        )}
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                className={`border-b hover:bg-neutral-400 dark:border-neutral-500 `}
+                                            >
+                                                <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                    {auth.user.name}
+                                                </td>
+                                                <td className="whitespace-nowrap px-6 py-4">
+                                                    <p>
+                                                        {auth.user.active ? (
+                                                            <span className="text-green-400">
+                                                                Active
+                                                            </span>
+                                                        ) : (
+                                                            <span className="text-red-500">
+                                                                Not Active
+                                                            </span>
+                                                        )}
+                                                    </p>
+                                                </td>
 
-                                        {deactivated ? (
-                                            <div>
-                                                <p className="text-red-500">
-                                                    Akun dinonaktifkan oleh
-                                                    admin!
-                                                </p>
-                                                <p>Silahkan hubungi admin</p>
-                                            </div>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
+                                                <td className="whitespace-nowrap px-6 py-4">
+                                                    <div className="flex flex-col gap-3 items-center justify-center">
+                                                        {auth.user.active ? (
+                                                            <div className="flex gap-3">
+                                                                <button
+                                                                    className="bg-slate-500 hover:bg-slate-700 py-1 px-3 my-1 text-white cursor-not-allowed rounded-md"
+                                                                    disabled
+                                                                >
+                                                                    Active
+                                                                </button>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        router.get(
+                                                                            "/pembayaran/create"
+                                                                        )
+                                                                    }
+                                                                    className="bg-yellow-600 hover:bg-yellow-700 py-1 px-3 my-1 text-white rounded-md"
+                                                                >
+                                                                    Tambah
+                                                                    Pembayaran
+                                                                    Lagi
+                                                                </button>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="">
+                                                                <button
+                                                                    onClick={
+                                                                        handleActivate
+                                                                    }
+                                                                    className="bg-green-500 hover:bg-green-700 py-1 px-3 my-1 text-white rounded-md"
+                                                                >
+                                                                    Activate
+                                                                </button>
+                                                            </div>
+                                                        )}
+
+                                                        {deactivated ? (
+                                                            <div>
+                                                                <p className="text-red-500">
+                                                                    Akun
+                                                                    dinonaktifkan
+                                                                    oleh admin!
+                                                                </p>
+                                                                <p>
+                                                                    Silahkan
+                                                                    hubungi
+                                                                    admin
+                                                                </p>
+                                                            </div>
+                                                        ) : (
+                                                            ""
+                                                        )}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -224,14 +264,11 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                                             })}
                                         </tbody>
                                     </table>
-                                    <div className="flex w-full justify-center pt-10">
-                                        <Pagination
-                                            class="mt-6"
-                                            links={users.meta}
-                                        />
-                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="flex w-full justify-center pt-10">
+                            <Pagination class="mt-6" links={users.meta} />
                         </div>
                     </div>
                 )}

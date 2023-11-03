@@ -100,16 +100,6 @@ export default function Authenticated({ user, header, children }) {
                                         Langganan
                                     </NavLink>
                                 )}
-                                {user.roles == "ADMIN" ? (
-                                    <NavLink
-                                        href="/graph"
-                                        active={route().current("graph")}
-                                    >
-                                        Grafik
-                                    </NavLink>
-                                ) : (
-                                    ""
-                                )}
                             </div>
                         </div>
 
@@ -235,18 +225,73 @@ export default function Authenticated({ user, header, children }) {
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/biography"
+                            active={
+                                route().current("biography.index") ||
+                                route().current("biography.create") ||
+                                route().current("biography.show") ||
+                                route().current("biography.edit")
+                            }
+                        >
+                            Biography
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/event"
+                            active={
+                                route().current("event.index") ||
+                                route().current("event.create") ||
+                                route().current("event.show") ||
+                                route().current("event.edit")
+                            }
+                        >
+                            Event
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/ranking"
+                            active={route().current("ranking")}
+                        >
+                            Ranking
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href="/latihan"
+                            active={
+                                route().current("latihan.index") ||
+                                route().current("latihan.create") ||
+                                route().current("latihan.edit") ||
+                                route().current("latihan.show")
+                            }
+                        >
+                            Latihan
+                        </ResponsiveNavLink>
+                        {user.roles == "PELATIH" ? (
+                            ""
+                        ) : (
+                            <ResponsiveNavLink
+                                href="/pembayaran"
+                                active={
+                                    route().current("pembayaran.index") ||
+                                    route().current("pembayaran.create") ||
+                                    route().current("pembayaran.show") ||
+                                    route().current("pembayaran.edit")
+                                }
+                            >
+                                Pembayaran
+                            </ResponsiveNavLink>
+                        )}
+                        {user.roles == "PELATIH" ? (
+                            ""
+                        ) : (
+                            <ResponsiveNavLink
+                                href="/langganan"
+                                active={route().current("langganan")}
+                            >
+                                Langganan
+                            </ResponsiveNavLink>
+                        )}
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
-                                {user.name}
-                            </div>
-                            <div className="font-medium text-sm text-gray-500">
-                                {user.email}
-                            </div>
-                        </div>
-
                         <div className="mt-3 space-y-1">
                             {user.roles == "ADMIN" ? (
                                 <ResponsiveNavLink href={route("admin.user")}>

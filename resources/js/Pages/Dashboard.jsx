@@ -1,5 +1,8 @@
+import BarChart from "../Components/BarChart";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, router } from "@inertiajs/react";
+import Chart from "chart.js/auto";
+import { CategoryScale } from "chart.js";
 import { useEffect, useState } from "react";
 
 export default function Dashboard({
@@ -10,6 +13,7 @@ export default function Dashboard({
     pertandingan,
     total_member,
     total_member_active,
+    pembayaran_graph,
 }) {
     console.log(pembayaran);
     const [flag, setFlag] = useState(false);
@@ -61,12 +65,42 @@ export default function Dashboard({
         }
     }, []);
 
+    const months = {};
+
+    if (pembayaran_graph) {
+        for (let i = 0; i < pembayaran_graph.length; i++) {
+            let date = new Date(pembayaran_graph[i].tanggal_pembayaran);
+            const month = date.toLocaleString("default", { month: "long" });
+            if (!months[month]) {
+                months[month] = pembayaran_graph[i].nominal;
+            } else {
+                months[month] += pembayaran_graph[i].nominal;
+            }
+        }
+    }
+
+    console.log(months);
+
+    const chartData = {
+        labels: Object.keys(months),
+        datasets: [
+            {
+                label: "Pendapatan",
+                data: Object.values(months),
+                borderWidth: 1,
+            },
+        ],
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard {auth.user.roles == "ADMIN" ? "ADMIN" : ""}
+                <h2 className="font-semibold text-xl text-gray-800 leading-tight uppercase">
+                    Dashboard{" "}
+                    {auth.user.roles == "ADMIN"
+                        ? `ADMIN ${auth.user.name}`
+                        : auth.user.name}
                 </h2>
             }
         >
@@ -110,7 +144,10 @@ export default function Dashboard({
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                            <a
+                                className="w-full md:w-1/2 xl:w-1/3 p-6"
+                                href="/ranking"
+                            >
                                 <div className="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
                                     <div className="flex flex-row items-center">
                                         <div className="flex-shrink pr-4">
@@ -131,8 +168,11 @@ export default function Dashboard({
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                            </a>
+                            <a
+                                className="w-full md:w-1/2 xl:w-1/3 p-6"
+                                href={`/ranking-detail?id=${auth.user.id}`}
+                            >
                                 <div className="bg-gradient-to-b from-yellow-200 to-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-xl p-5">
                                     <div className="flex flex-row items-center">
                                         <div className="flex-shrink pr-4">
@@ -155,7 +195,7 @@ export default function Dashboard({
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div className="flex flex-wrap justify-center">
                             <div className="w-full lg:w-1/2   p-6">
@@ -192,11 +232,14 @@ export default function Dashboard({
                     </div>
                 </div>
             ) : (
-                <div className="">
+                <div className="pb-10">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="mt-4 bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <div className="flex flex-wrap">
-                                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                                <a
+                                    className="w-full md:w-1/2 xl:w-1/3 p-6"
+                                    href="/langganan"
+                                >
                                     <div className="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
                                         <div className="flex flex-row items-center">
                                             <div className="flex-shrink pr-4">
@@ -217,8 +260,11 @@ export default function Dashboard({
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                                </a>
+                                <a
+                                    className="w-full md:w-1/2 xl:w-1/3 p-6"
+                                    href="/langganan"
+                                >
                                     <div className="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
                                         <div className="flex flex-row items-center">
                                             <div className="flex-shrink pr-4">
@@ -239,8 +285,11 @@ export default function Dashboard({
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                                </a>
+                                <a
+                                    className="w-full md:w-1/2 xl:w-1/3 p-6"
+                                    href="/event"
+                                >
                                     <div className="bg-gradient-to-b from-yellow-200 to-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-xl p-5">
                                         <div className="flex flex-row items-center">
                                             <div className="flex-shrink pr-4">
@@ -248,8 +297,9 @@ export default function Dashboard({
                                                     <i className="fas fa-user-plus fa-2x fa-inverse"></i>
                                                 </div>
                                             </div>
+
                                             <div className="flex-1 text-right md:text-center">
-                                                <h5 className="font-bold uppercase text-gray-600">
+                                                <h5 className="font-bold uppercase text-gray-600 ">
                                                     Jumlah Pertandingan
                                                 </h5>
                                                 <h3 className="font-bold text-3xl">
@@ -261,7 +311,7 @@ export default function Dashboard({
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div className="flex flex-wrap justify-center">
                                 <div className="w-full p-6">
@@ -372,6 +422,13 @@ export default function Dashboard({
                                             </div>
                                         </div>
                                     </div>
+                                    {auth.user.roles == "ADMIN" ? (
+                                        <div className="max-w-3xl mx-auto sm:px-6 lg:px-8 p-12">
+                                            <BarChart chartData={chartData} />
+                                        </div>
+                                    ) : (
+                                        ""
+                                    )}
                                 </div>
                             </div>
                         </div>

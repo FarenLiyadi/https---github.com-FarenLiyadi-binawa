@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'faren',
             'email' => 'faren@gmail.com',
             'email_verified_at' => date("Y-m-d"),
-            'roles' => 'USER',
+            'roles' => 'PELATIH',
             'password' => bcrypt('12345678'),
             'active' => false
         ]);
@@ -40,6 +40,14 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'alex',
             'email' => 'alex@gmail.com',
+            'email_verified_at' => date("Y-m-d"),
+            'roles' => 'USER',
+            'password' => bcrypt('12345678'),
+            'active' => false
+        ]);
+        User::create([
+            'name' => 'bryan',
+            'email' => 'bryan@gmail.com',
             'email_verified_at' => date("Y-m-d"),
             'roles' => 'USER',
             'password' => bcrypt('12345678'),

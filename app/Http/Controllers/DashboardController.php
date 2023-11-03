@@ -39,9 +39,10 @@ class DashboardController extends Controller
                 'pertandingan' => $pertandingan
             ]);
         }
-      
+    //   dd(Pembayaran::all());
 
             return Inertia::render('Dashboard', [
+                'pembayaran_graph' => Pembayaran::all(),
                 'total_member_active' => $totalMemberActive,
                 'total_member' => $totalMember,
                 'pertandingan' => $total_pertandingan,
@@ -58,7 +59,5 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function admin_landing(){
-      
-    }
+ 
 }
