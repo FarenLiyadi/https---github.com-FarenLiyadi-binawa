@@ -11,6 +11,19 @@ class Pembayaran extends Model
     protected $guarded = ['id'];
     protected $with = ['user', 'approvedBy'];
 
+    // Search Filter
+    public function scopeSearch($query, $nama)
+    {
+        if ($nama == "") {
+            return $query;
+        } else {
+            return $query->whereHas('user', function ($query) use ($nama) {
+                $query->where('name', 'LIKE', "%$nama%");
+            });
+        };
+    }
+
+    // Relasi
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

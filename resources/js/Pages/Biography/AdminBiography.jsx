@@ -134,7 +134,10 @@ export default function AdminBiography(props) {
                                 </tbody>
                             </table>
                             <div className="flex w-full justify-center pt-10">
-                                <Pagination class="mt-6" links={user.meta} />
+                                <Pagination
+                                    class="mt-6"
+                                    links={searchResults.meta}
+                                />
                             </div>
                         </div>
                     </div>

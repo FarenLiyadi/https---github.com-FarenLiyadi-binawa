@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
 use App\Http\Resources\UsersCollection;
+use Illuminate\Support\Facades\Redis;
 
 class PembayaranController extends Controller
 {
@@ -31,7 +32,7 @@ class PembayaranController extends Controller
         } else {
             return Inertia::render('Pembayaran/IndexPembayaran', [
                 // 'pembayaran' => Pembayaran::all()
-                'pembayaran' => new UsersCollection(Pembayaran::latest()->paginate(1))
+                'pembayaran' => new UsersCollection(Pembayaran::latest()->paginate(5))
             ]);
         }
     }
@@ -137,5 +138,12 @@ class PembayaranController extends Controller
         return Inertia::render('Grafik', [
             'pembayaran' => Pembayaran::all()
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $nama = $request->input('nama');
+        $pemayaran = new UsersCollection(Pembayaran::search($nama)->latest()->paginate(5));
+        return $pemayaran;
     }
 }

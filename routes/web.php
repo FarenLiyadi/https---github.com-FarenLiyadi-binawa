@@ -73,6 +73,7 @@ Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'v
 Route::post('/delete-absen', [AbsenController::class, 'delete'])->middleware(['auth', 'verified']);
 
 Route::get('/biography-search', [BiographyController::class, 'search'])->middleware(['auth', 'verified']);
+Route::get('/pembayaran-search', [PembayaranController::class, 'search'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {
