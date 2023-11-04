@@ -43,7 +43,7 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-        'harga'=>CompanyModel::get(),
+        'harga' => CompanyModel::get(),
     ]);
 });
 
@@ -51,26 +51,28 @@ Route::get('/', function () {
 Route::get('/ranking-detail', [RankingController::class, 'show']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/user', [UserController::class, 'index'])->middleware(['auth', 'verified','admin'])->name('admin.user');
-Route::put('/user/{id}', [UserController::class, 'update'])->middleware(['auth', 'verified','admin']);
-Route::get('/user/{id}/edit', [UserController::class, 'edit'])->middleware(['auth', 'verified','admin'])->name('admin.user.edit');
+Route::get('/user', [UserController::class, 'index'])->middleware(['auth', 'verified', 'admin'])->name('admin.user');
+Route::put('/user/{id}', [UserController::class, 'update'])->middleware(['auth', 'verified', 'admin']);
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->middleware(['auth', 'verified', 'admin'])->name('admin.user.edit');
 // Route::get('/', [DashboardController::class, 'landing'])->name('landing');
 
 Route::resource('/biography', BiographyController::class)->middleware(['auth', 'verified']);
 // Route::get('/adminlanding', [DashboardController::class,'admin_landing'])->middleware(['auth', 'verified','admin'])->name('company');
-Route::resource('/adminlanding', CompanyController::class)->middleware(['auth', 'verified','admin']);
+Route::resource('/adminlanding', CompanyController::class)->middleware(['auth', 'verified', 'admin']);
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
 Route::resource('/peserta', PesertaController::class)->middleware(['auth', 'verified']);
 Route::resource('/latihan', LatihanController::class)->middleware(['auth', 'verified']);
-Route::resource('/pembayaran', PembayaranController::class)->middleware(['auth', 'verified','isNotPelatih']);
+Route::resource('/pembayaran', PembayaranController::class)->middleware(['auth', 'verified', 'isNotPelatih']);
 
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');
-Route::get('/langganan', [LanggananController::class, 'index'])->middleware(['auth','verified','isNotPelatih'])->name('langganan');
-Route::post('/langganan', [LanggananController::class, 'update'])->middleware(['auth','verified']);
+Route::get('/langganan', [LanggananController::class, 'index'])->middleware(['auth', 'verified', 'isNotPelatih'])->name('langganan');
+Route::post('/langganan', [LanggananController::class, 'update'])->middleware(['auth', 'verified']);
 Route::post('/membership', [LanggananController::class, 'membershipEnd']);
 
-Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'verified']);;
+Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'verified']);
 Route::post('/delete-absen', [AbsenController::class, 'delete'])->middleware(['auth', 'verified']);
+
+Route::get('/biography-search', [BiographyController::class, 'search'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {

@@ -1,12 +1,39 @@
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { BsEye, BsTrash3, BsFillPlusCircleFill } from "react-icons/bs";
 import { FaUserEdit } from "react-icons/fa";
 import Pagination from "@/Components/Pagination";
 
 export default function AdminBiography(props) {
     const { user, auth } = props;
-    console.log(user);
+    const [search, setSearch] = useState("");
+    const [searchResults, setSearchResults] = useState(user || [{}]);
+
+    useEffect(() => {
+        console.log(search);
+
+        // Panggil Data pencarian
+        const fetchData = async () => {
+            // Jika kolom search ada
+            if (search) {
+                const response = await fetch(
+                    `/biography-search?nama=${search}`
+                );
+
+                const data = await response.json();
+
+                setSearchResults(data);
+            } else {
+                // jika tidak ada maka kemalikan data awal
+                setSearchResults(user);
+            }
+        };
+
+        fetchData();
+
+        // ditrigger oleh perubahan pada var search
+    }, [search]);
+
     return (
         <Authenticated
             user={auth.user}
@@ -20,6 +47,18 @@ export default function AdminBiography(props) {
                 <div className="overflow-x-auto ">
                     <div className="inline-block min-w-full py-2 px-3">
                         <div className="overflow-hidden">
+                            <div className="mx-4 my-2">
+                                <input
+                                    className="rounded-xl w-full"
+                                    type="text"
+                                    id="search"
+                                    name="search"
+                                    placeholder="Cari nama member"
+                                    onChange={(e) => {
+                                        setSearch(e.target.value);
+                                    }}
+                                />
+                            </div>
                             <table className="min-w-full text-left text-sm font-light">
                                 <thead className="border-b font-medium dark:border-neutral-500">
                                     <tr>
@@ -45,7 +84,7 @@ export default function AdminBiography(props) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {user.data.map((e, index) => {
+                                    {searchResults.data.map((e, index) => {
                                         return (
                                             <tr
                                                 key={index}

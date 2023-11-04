@@ -43,6 +43,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
+    // Search Filter
+    public function scopeSearch($query, $nama)
+    {
+        if ($nama == "") {
+            return $query;
+        } else {
+            return $query->whereHas('biography', function ($query) use ($nama) {
+                $query->where('nama_lengkap', 'LIKE', "%$nama%");
+            })
+                ->orWhere('name', 'LIKE', "%$nama%");
+        };
+    }
+
     // Relasi
     public function event()
     {
