@@ -17,7 +17,7 @@ class Admin
     {
         $user = auth()->user();
 
-        if ($user->roles === 'USER' || $user->roles ==='PELATIH') {
+        if ($user->roles === 'USER') {
             return back();
         }
         return $next($request);

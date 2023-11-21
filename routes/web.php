@@ -66,7 +66,7 @@ Route::resource('/pembayaran', PembayaranController::class)->middleware(['auth',
 
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');
 Route::get('/langganan', [LanggananController::class, 'index'])->middleware(['auth', 'verified', 'isNotPelatih'])->name('langganan');
-Route::post('/langganan', [LanggananController::class, 'update'])->middleware(['auth', 'verified']);
+Route::post('/langganan', [LanggananController::class, 'update'])->middleware(['auth', 'verified','isNotPelatih']);
 Route::post('/membership', [LanggananController::class, 'membershipEnd']);
 
 Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'verified']);

@@ -23,6 +23,7 @@ export default function AdminBiography(props) {
                 const data = await response.json();
 
                 setSearchResults(data);
+                console.log(searchResults);
             } else {
                 // jika tidak ada maka kemalikan data awal
                 setSearchResults(user);

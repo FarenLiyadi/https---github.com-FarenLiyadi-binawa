@@ -286,7 +286,9 @@ class BiographyController extends Controller
 
     public function search(Request $request)
     {
+        
         $nama = $request->input('nama');
+        // dd($request);
         $users = new UsersCollection(User::with(['biography'])->where("roles", "USER")->search($nama)->latest()->paginate(20));
 
         return $users;
