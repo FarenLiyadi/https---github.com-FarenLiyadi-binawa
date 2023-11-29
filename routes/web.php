@@ -11,6 +11,7 @@ use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\BiographyController;
+use App\Http\Controllers\BiographyPelatih;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanggananController;
@@ -62,6 +63,7 @@ Route::resource('/adminlanding', CompanyController::class)->middleware(['auth', 
 Route::resource('/event', EventController::class)->middleware(['auth', 'verified']);
 Route::resource('/peserta', PesertaController::class)->middleware(['auth', 'verified']);
 Route::resource('/latihan', LatihanController::class)->middleware(['auth', 'verified']);
+Route::resource('/biographypelatih', BiographyPelatih::class)->middleware(['auth', 'verified']);
 Route::resource('/pembayaran', PembayaranController::class)->middleware(['auth', 'verified', 'isNotPelatih']);
 
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');

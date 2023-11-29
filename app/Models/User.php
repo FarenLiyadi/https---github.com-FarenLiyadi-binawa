@@ -55,6 +55,17 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->orWhere('name', 'LIKE', "%$nama%");
         };
     }
+    public function scopeSearchh($query, $nama)
+    {
+        if ($nama == "") {
+            return $query;
+        } else {
+            return $query->whereHas('biography_pelatih', function ($query) use ($nama) {
+                $query->where('nama_lengkap', 'LIKE', "%$nama%");
+            })
+                ->orWhere('name', 'LIKE', "%$nama%");
+        };
+    }
 
     // Relasi
     public function event()
@@ -65,6 +76,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function biography()
     {
         return $this->hasOne(Biography::class);
+    }
+    public function biography_pelatih()
+    {
+        return $this->hasOne(BiographyPelatih::class);
     }
 
     public function peserta()

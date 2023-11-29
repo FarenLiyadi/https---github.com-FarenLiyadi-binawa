@@ -151,6 +151,17 @@ export default function Authenticated({ user, header, children }) {
                                         ) : (
                                             ""
                                         )}
+                                        {user.roles !== "USER" ? (
+                                            <Dropdown.Link
+                                                href={route(
+                                                    "biographypelatih.index"
+                                                )}
+                                            >
+                                                Biography Pelatih
+                                            </Dropdown.Link>
+                                        ) : (
+                                            ""
+                                        )}
 
                                         <Dropdown.Link
                                             href={route("profile.edit")}
@@ -305,6 +316,15 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("adminlanding.index")}
                                 >
                                     CompanyProfile
+                                </ResponsiveNavLink>
+                            ) : (
+                                ""
+                            )}
+                            {user.roles !== "USER" ? (
+                                <ResponsiveNavLink
+                                    href={route("biographypelatih.index")}
+                                >
+                                    Biography Pelatih
                                 </ResponsiveNavLink>
                             ) : (
                                 ""
