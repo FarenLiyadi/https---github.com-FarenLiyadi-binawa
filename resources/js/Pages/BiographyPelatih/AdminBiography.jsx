@@ -17,7 +17,7 @@ export default function AdminBiography(props) {
             // Jika kolom search ada
             if (search) {
                 const response = await fetch(
-                    `/biography-search?nama=${search}`
+                    `/biography-pelatih-search?nama=${search}`
                 );
 
                 const data = await response.json();
@@ -54,7 +54,7 @@ export default function AdminBiography(props) {
                                     type="text"
                                     id="search"
                                     name="search"
-                                    placeholder="Cari nama member"
+                                    placeholder="Cari nama pelatih"
                                     onChange={(e) => {
                                         setSearch(e.target.value);
                                     }}
@@ -120,7 +120,7 @@ export default function AdminBiography(props) {
                                                                 e.biography_pelatih ==
                                                                 null
                                                                     ? alert(
-                                                                          "DATA BIOGRAPHY PELATIH BELUM DI ISI OLEH USER"
+                                                                          "DATA BIOGRAPHY PELATIH BELUM DI ISI OLEH PELATIH"
                                                                       )
                                                                     : window.open(
                                                                           `/biographypelatih/${e.biography_pelatih.user_id}`,

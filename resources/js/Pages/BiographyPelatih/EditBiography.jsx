@@ -18,6 +18,7 @@ export default function EditBiography({ biography, auth }) {
         tempat_lahir: biography[0].tempat_lahir,
         tanggal_lahir: biography[0].tanggal_lahir,
         jenis_kelamin: biography[0].jenis_kelamin,
+        tipe_melatih: biography[0].tipe_melatih,
         agama: biography[0].agama,
         asal: biography[0].asal,
         pelatihan: biography[0].pelatihan,
@@ -27,6 +28,7 @@ export default function EditBiography({ biography, auth }) {
         kk: "",
         bukti_pelatih: "",
         ktp: "",
+        pas_foto: "",
     });
 
     const submit = (e) => {
@@ -48,7 +50,7 @@ export default function EditBiography({ biography, auth }) {
         "HINDU",
     ];
 
-    const options3 = ["KANAN", "KIRI"];
+    const options3 = ["SINGLE", "DOUBLE", "MIX"];
     return (
         <Authenticated
             user={auth.user}
@@ -69,26 +71,31 @@ export default function EditBiography({ biography, auth }) {
                     >
                         <div className=" flex justify-center mx-auto">
                             <div className="mt-2">
-                                <label className="" id="ktp">
-                                    Edit Foto KTP
+                                <label className="" id="pas_foto">
+                                    Edit Pas Foto 4 x 6
                                 </label>
-                                {biography[0].ktp != null && (
+                                {biography[0].pas_foto != null && (
                                     <img
                                         className="rounded-t-lg w-64"
-                                        src={`/${biography[0].ktp}`}
+                                        src={
+                                            biography[0].pas_foto == null
+                                                ? `/no-photo.png`
+                                                : `/${biography[0].pas_foto}`
+                                        }
                                         alt=""
                                     />
                                 )}
+
                                 <input
                                     type="file"
                                     className="w-full px-4 py-2"
-                                    name="ktp"
+                                    name="pas_foto"
                                     onChange={(e) =>
-                                        setData("ktp", e.target.files[0])
+                                        setData("pas_foto", e.target.files[0])
                                     }
                                 />
                                 <span className="text-red-600">
-                                    {errors.ktp}
+                                    {errors.pas_foto}
                                 </span>
                             </div>
                         </div>
@@ -285,8 +292,63 @@ export default function EditBiography({ biography, auth }) {
                                 />
                             </div>
                         </div>
+                        <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="jenis_kelamin"
+                                    value="Jenis Kelamin"
+                                />
+                                <ReactDropdown
+                                    options={options2}
+                                    value={biography[0].jenis_kelamin}
+                                    placeholder="Pilih Jenis Kelamin"
+                                    className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
+                                    onChange={(e) =>
+                                        setData("jenis_kelamin", e.value)
+                                    }
+                                />
+                            </div>
+                            <div className="lg:w-1/3">
+                                <InputLabel
+                                    htmlFor="tipe_melatih"
+                                    value="Tipe Melatih"
+                                />
+                                <ReactDropdown
+                                    options={options3}
+                                    value={biography[0].tipe_melatih}
+                                    placeholder="Pilih Tipe Melatih"
+                                    className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
+                                    onChange={(e) =>
+                                        setData("tipe_melatih", e.value)
+                                    }
+                                />
+                            </div>
+                        </div>
 
-                        <div className="flex w-full justify-center flex-col lg:flex-row gap-3">
+                        <div className="flex w-full justify-between flex-col lg:flex-row gap-3">
+                            <div className="mt-2">
+                                <label className="" id="ktp">
+                                    Edit Foto KTP
+                                </label>
+                                {biography[0].ktp != null && (
+                                    <img
+                                        className="rounded-t-lg w-64"
+                                        src={`/${biography[0].ktp}`}
+                                        alt=""
+                                    />
+                                )}
+                                <input
+                                    type="file"
+                                    className="w-full px-4 py-2"
+                                    name="ktp"
+                                    onChange={(e) =>
+                                        setData("ktp", e.target.files[0])
+                                    }
+                                />
+                                <span className="text-red-600">
+                                    {errors.ktp}
+                                </span>
+                            </div>
                             <div className="mt-2 mx-auto">
                                 <label className="" id="bukti_pelatih">
                                     Edit Foto Bukti Pelatih

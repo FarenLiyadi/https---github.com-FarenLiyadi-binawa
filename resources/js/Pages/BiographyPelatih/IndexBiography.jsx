@@ -14,7 +14,7 @@ export default function IndexBiography({ biography, auth, errors }) {
 
     const options = [biography.length > 0 ? biography[0].agama : ""];
 
-    const options3 = [biography.length > 0 ? biography[0].tangan : ""];
+    const options3 = [biography.length > 0 ? biography[0].tipe_melatih : ""];
     return (
         <Authenticated
             user={auth.user}
@@ -45,19 +45,24 @@ export default function IndexBiography({ biography, auth, errors }) {
                             </div>
                             <div className="lg:w-full w-3/4 ">
                                 <div className="flex justify-center mx-auto">
-                                    <div className="mt-2">
-                                        <label className="" id="ktp">
-                                            Foto KTP
+                                    <div className="mt-2 ">
+                                        <label className="" id="pas_foto">
+                                            Pas Foto 4 x 6
                                         </label>
-                                        {biography[0].ktp != null ? (
+                                        {biography[0].pas_foto != null ? (
                                             <img
                                                 className="rounded-t-lg w-64"
-                                                src={`/${biography[0].ktp}`}
+                                                src={
+                                                    biography[0].pas_foto ==
+                                                    null
+                                                        ? `/no-photo.png`
+                                                        : `/${biography[0].pas_foto}`
+                                                }
                                                 alt=""
                                             />
                                         ) : (
                                             <h1 className="text-red-500">
-                                                FOTO KTP BELUM ADA
+                                                PAS FOTO BELUM ADA
                                             </h1>
                                         )}
                                     </div>
@@ -309,8 +314,61 @@ export default function IndexBiography({ biography, auth, errors }) {
                                         />
                                     </div>
                                 </div>
+                                <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
+                                    <div className="lg:w-1/3">
+                                        <InputLabel
+                                            htmlFor="jenis_kelamin"
+                                            value="Jenis Kelamin"
+                                        />
+                                        <ReactDropdown
+                                            options={options2}
+                                            disabled
+                                            value={biography[0].jenis_kelamin}
+                                            placeholder="Pilih Jenis Kelamin"
+                                            className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
+                                            onChange={(e) =>
+                                                setData(
+                                                    "jenis_kelamin",
+                                                    e.value
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                    <div className="lg:w-1/3">
+                                        <InputLabel
+                                            htmlFor="tipe_melatih"
+                                            value="Tipe Melatih"
+                                        />
+                                        <ReactDropdown
+                                            options={options3}
+                                            disabled
+                                            value={biography[0].tipe_melatih}
+                                            placeholder="Pilih Tipe Melatih"
+                                            className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
+                                            onChange={(e) =>
+                                                setData("tipe_melatih", e.value)
+                                            }
+                                        />
+                                    </div>
+                                </div>
 
-                                <div className="flex w-full flex-col lg:flex-row gap-5 mt-2 justify-center">
+                                <div className="flex w-full flex-col lg:flex-row gap-5 mt-2 justify-between">
+                                    <div className="mt-2">
+                                        <label className="" id="ktp">
+                                            Foto KTP
+                                        </label>
+                                        {biography[0].ktp != null ? (
+                                            <img
+                                                className="rounded-t-lg w-64"
+                                                src={`/${biography[0].ktp}`}
+                                                alt=""
+                                            />
+                                        ) : (
+                                            <h1 className="text-red-500">
+                                                FOTO KTP BELUM ADA
+                                            </h1>
+                                        )}
+                                    </div>
                                     <div className="mt-2">
                                         <label className="" id="bukti_pelatih">
                                             Foto Bukti Pelatih

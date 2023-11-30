@@ -19,11 +19,14 @@ export default function CreateBiography({ auth }) {
         asal: "",
         pelatihan: "",
         club_terakhir: "",
+        jenis_kelamin: "",
+        tipe_melatih: "",
 
         karier: "",
         ktp: "",
         bukti_pelatih: "",
         kk: "",
+        pas_foto: "",
     });
 
     const submit = (e) => {
@@ -44,6 +47,8 @@ export default function CreateBiography({ auth }) {
         "BUDDHA",
         "HINDU",
     ];
+
+    const options3 = ["SINGLE", "DOUBLE", "MIX"];
 
     return (
         <Authenticated
@@ -231,6 +236,39 @@ export default function CreateBiography({ auth }) {
                         <InputError message={errors.karier} className="mt-2" />
                     </div>
 
+                    <div className="flex w-full flex-col lg:flex-row gap-3 mt-2">
+                        <div className="lg:w-1/2">
+                            <InputLabel
+                                htmlFor="jenis_kelamin"
+                                value="Jenis Kelamin"
+                            />
+                            <ReactDropdown
+                                options={options2}
+                                value=""
+                                placeholder="Pilih Jenis Kelamin"
+                                className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
+                                onChange={(e) =>
+                                    setData("jenis_kelamin", e.value)
+                                }
+                            />
+                        </div>
+                        <div className="lg:w-1/2">
+                            <InputLabel
+                                htmlFor="tipe_melatih"
+                                value="Tipe Melatih"
+                            />
+                            <ReactDropdown
+                                options={options3}
+                                value=""
+                                placeholder="Pilih Tipe Melatih"
+                                className="mt-1 bg-white p-2 border border-solid border-gray-400 rounded-md"
+                                onChange={(e) =>
+                                    setData("tipe_melatih", e.value)
+                                }
+                            />
+                        </div>
+                    </div>
+
                     {auth.user.roles == "PELATIH" && (
                         <div className="">
                             <div className="mt-2">
@@ -283,6 +321,23 @@ export default function CreateBiography({ auth }) {
                                 />
                                 <span className="text-red-600">
                                     {errors.bukti_pelatih}
+                                </span>
+                            </div>
+                            <div className="mt-2">
+                                <label className="" id="pas_foto">
+                                    Masukkan Pas Foto 4 x 6
+                                </label>
+
+                                <input
+                                    type="file"
+                                    className="w-full px-4 py-2"
+                                    name="pas_foto"
+                                    onChange={(e) =>
+                                        setData("pas_foto", e.target.files[0])
+                                    }
+                                />
+                                <span className="text-red-600">
+                                    {errors.pas_foto}
                                 </span>
                             </div>
                         </div>

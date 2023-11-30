@@ -61,12 +61,16 @@ class BiographyPelatih extends Controller
             'pelatihan' => 'nullable',
             'club_terakhir' => 'nullable',
             'karier' => 'nullable',
+
+            'jenis_kelamin' => 'nullable',
+            'tipe_melatih' => 'nullable',
      
           
         
         ]);
         $request->validate([
             
+            'pas_foto' => 'mimes:jpeg,jpg,png|nullable',
             'bukti_pelatih' => 'mimes:jpeg,jpg,png|nullable',
             'ktp' => 'mimes:jpeg,jpg,png|nullable',
             'kk' => 'mimes:jpeg,jpg,png|nullable',
@@ -100,18 +104,29 @@ class BiographyPelatih extends Controller
             $nama_bukti_pelatih = null;
         }
 
+        $pas_foto = $request->file('pas_foto');
+        if ($request->file('pas_foto')) {
+
+            $nama_pas_foto = 'pas_foto/binawa_pas_foto' . date('Ymdhis') . '.' . $request->file('pas_foto')->getClientOriginalExtension();
+            $pas_foto->move('pas_foto', $nama_pas_foto);
+        } else {
+            $nama_pas_foto = null;
+        }
+
        
 
         $replacement = array('ktp' => $nama_ktp);
         $replacement2 = array('kk' => $nama_kk);
         $replacement3 = array('bukti_pelatih' => $nama_bukti_pelatih);
+        $replacement4 = array('pas_foto' => $nama_pas_foto);
      
         $validatedData2 = array_replace($validatedData, $replacement);
         $validatedData3 = array_replace($validatedData2, $replacement2);
         $validatedData4 = array_replace($validatedData3, $replacement3);
+        $validatedData5 = array_replace($validatedData4, $replacement4);
        
 
-        Biography::create($validatedData4);
+        Biography::create($validatedData5);
 
         return redirect('/biographypelatih');
     }
@@ -157,11 +172,15 @@ class BiographyPelatih extends Controller
             'pelatihan' => 'nullable',
             'club_terakhir' => 'nullable',
             'karier' => 'nullable',
+            'jenis_kelamin' => 'nullable',
+            'tipe_melatih' => 'nullable',
+
           ]);
           $request->validate([
             'bukti_pelatih' => 'mimes:jpeg,jpg,png|nullable',
             'ktp' => 'mimes:jpeg,jpg,png|nullable',
             'kk' => 'mimes:jpeg,jpg,png|nullable',
+            'pas_foto' => 'mimes:jpeg,jpg,png|nullable',
           ]);
   
   
@@ -207,15 +226,30 @@ class BiographyPelatih extends Controller
               $nama_ktp = $biography->ktp;
           }
           $replacement4 = array('ktp' => $nama_ktp);
+
+          if ($request->file('pas_foto') != null) {
+            $pas_foto = $request->file('pas_foto');
+            if ($biography->pas_foto != null && File::exists(public_path('pas_foto/', $biography->pas_foto))) {
+                File::delete(public_path($biography->pas_foto));
+            }
+            $nama_pas_foto = 'pas_foto/binawa_pas_foto' . date('Ymdhis') . '.' . $request->file('pas_foto')->getClientOriginalExtension();
+            $pas_foto->move('pas_foto', $nama_pas_foto);
+            // dd($nama_pas_foto);
+        } else {
+            // dd($biography);
+            $nama_pas_foto = $biography->pas_foto;
+        }
+        $replacement5 = array('pas_foto' => $nama_pas_foto);
   
   
           $validatedData2 = array_replace($validatedData, $replacement2);
           $validatedData3 = array_replace($validatedData2, $replacement3);
           $validatedData4 = array_replace($validatedData3, $replacement4);
+          $validatedData5 = array_replace($validatedData4, $replacement5);
        
   
           Biography::where('id', $id)
-              ->update($validatedData4);
+              ->update($validatedData5);
   
           return redirect('/biographypelatih');
     }
@@ -226,5 +260,15 @@ class BiographyPelatih extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        
+        $nama = $request->input('nama');
+        // dd($request);
+        $users = new UsersCollection(User::with(['biography_pelatih'])->where("roles", "PELATIH")->searchx($nama)->latest()->paginate(20));
+
+        return $users;
     }
 }

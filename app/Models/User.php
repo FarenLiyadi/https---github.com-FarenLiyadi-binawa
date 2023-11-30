@@ -55,7 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->orWhere('name', 'LIKE', "%$nama%");
         };
     }
-    public function scopeSearchh($query, $nama)
+    public function scopeSearchx($query, $nama)
     {
         if ($nama == "") {
             return $query;
