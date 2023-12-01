@@ -14,11 +14,17 @@ export default function Dashboard({
     total_member,
     total_member_active,
     pembayaran_graph,
+    pengeluaran_graph,
 }) {
     console.log(pembayaran);
     const [flag, setFlag] = useState(false);
     const today = new Date();
     const ids = [];
+    let pendapatan = 0;
+    let pengeluaran = 0;
+    let this_month = today.toLocaleDateString("id-ID", {
+        month: "long",
+    });
 
     function subtractDays(date, days) {
         date.setDate(date.getDate() + days);
@@ -65,28 +71,44 @@ export default function Dashboard({
         }
     }, []);
 
-    const months = {};
-
+    // Graph Pembayaran
     if (pembayaran_graph) {
         for (let i = 0; i < pembayaran_graph.length; i++) {
+            // print(pembayaran_graph[i]);
             let date = new Date(pembayaran_graph[i].tanggal_pembayaran);
-            const month = date.toLocaleString("default", { month: "long" });
-            if (!months[month]) {
-                months[month] = pembayaran_graph[i].nominal;
-            } else {
-                months[month] += pembayaran_graph[i].nominal;
+            const month_pembayaran = date.toLocaleDateString("id-ID", {
+                month: "long",
+            });
+            if (this_month == month_pembayaran) {
+                pendapatan += pembayaran_graph[i].nominal;
             }
         }
     }
 
-    console.log(months);
+    // Graph Pengeluaran
+    if (pengeluaran_graph) {
+        for (let i = 0; i < pengeluaran_graph.length; i++) {
+            let date = new Date(pengeluaran_graph[i].tanggal_pengeluaran);
+            const month_pengeluaran = date.toLocaleDateString("id-ID", {
+                month: "long",
+            });
+            if (this_month == month_pengeluaran) {
+                pengeluaran += pengeluaran_graph[i].nominal;
+            }
+        }
+    }
 
     const chartData = {
-        labels: Object.keys(months),
+        labels: [this_month],
         datasets: [
             {
                 label: "Pendapatan",
-                data: Object.values(months),
+                data: [pendapatan],
+                borderWidth: 1,
+            },
+            {
+                label: "Pengeluaran",
+                data: [pengeluaran],
                 borderWidth: 1,
             },
         ],

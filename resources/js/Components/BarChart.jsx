@@ -9,7 +9,7 @@ export default function BarChart({ chartData }) {
                     plugins: {
                         title: {
                             display: true,
-                            text: "Pendapatan per bulan",
+                            text: "Pendapatan & Pengeluaran",
                         },
                         legend: {
                             display: false,

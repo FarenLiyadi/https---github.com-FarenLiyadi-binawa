@@ -72,33 +72,56 @@ export default function Authenticated({ user, header, children }) {
                                 {user.roles === "PELATIH" ? (
                                     ""
                                 ) : (
+                                    <>
+                                        <NavLink
+                                            href="/pembayaran"
+                                            active={
+                                                route().current(
+                                                    "pembayaran.index"
+                                                ) ||
+                                                route().current(
+                                                    "pembayaran.create"
+                                                ) ||
+                                                route().current(
+                                                    "pembayaran.show"
+                                                ) ||
+                                                route().current(
+                                                    "pembayaran.edit"
+                                                )
+                                            }
+                                        >
+                                            Pembayaran
+                                        </NavLink>
+                                        <NavLink
+                                            href="/langganan"
+                                            active={route().current(
+                                                "langganan"
+                                            )}
+                                        >
+                                            Langganan
+                                        </NavLink>
+                                    </>
+                                )}
+                                {user.roles === "ADMIN" ? (
                                     <NavLink
-                                        href="/pembayaran"
+                                        href="/pengeluaran"
                                         active={
                                             route().current(
-                                                "pembayaran.index"
+                                                "pengeluaran.index"
                                             ) ||
                                             route().current(
-                                                "pembayaran.create"
+                                                "pengeluaran.create"
                                             ) ||
                                             route().current(
-                                                "pembayaran.show"
+                                                "pengeluaran.edit"
                                             ) ||
-                                            route().current("pembayaran.edit")
+                                            route().current("pengeluaran.show")
                                         }
                                     >
-                                        Pembayaran
+                                        Pengeluaran
                                     </NavLink>
-                                )}
-                                {user.roles === "PELATIH" ? (
-                                    ""
                                 ) : (
-                                    <NavLink
-                                        href="/langganan"
-                                        active={route().current("langganan")}
-                                    >
-                                        Langganan
-                                    </NavLink>
+                                    ""
                                 )}
                             </div>
                         </div>

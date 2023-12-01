@@ -16,8 +16,10 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LanggananController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\UserController;
 use App\Models\CompanyModel;
+use App\Models\Pengeluaran;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,10 +67,11 @@ Route::resource('/peserta', PesertaController::class)->middleware(['auth', 'veri
 Route::resource('/latihan', LatihanController::class)->middleware(['auth', 'verified']);
 Route::resource('/biographypelatih', BiographyPelatih::class)->middleware(['auth', 'verified']);
 Route::resource('/pembayaran', PembayaranController::class)->middleware(['auth', 'verified', 'isNotPelatih']);
+Route::resource('/pengeluaran', PengeluaranController::class)->middleware(['auth', 'verified', 'admin']);
 
 Route::get('/ranking', [RankingController::class, 'index'])->name('ranking');
 Route::get('/langganan', [LanggananController::class, 'index'])->middleware(['auth', 'verified', 'isNotPelatih'])->name('langganan');
-Route::post('/langganan', [LanggananController::class, 'update'])->middleware(['auth', 'verified','isNotPelatih']);
+Route::post('/langganan', [LanggananController::class, 'update'])->middleware(['auth', 'verified', 'isNotPelatih']);
 Route::post('/membership', [LanggananController::class, 'membershipEnd']);
 
 Route::post('/absen', [AbsenController::class, 'store'])->middleware(['auth', 'verified']);

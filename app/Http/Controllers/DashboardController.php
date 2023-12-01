@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Biography;
-use App\Models\CompanyModel;
-use App\Models\Event;
 use App\Models\User;
 use Inertia\Inertia;
-use App\Models\Pembayaran;
+use App\Models\Event;
 use App\Models\Peserta;
+use App\Models\Biography;
+use App\Models\Pembayaran;
+use App\Models\Pengeluaran;
+use App\Models\CompanyModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,43 +22,41 @@ class DashboardController extends Controller
         // $pembayaran = Pembayaran::where('tanggal_akhir','<',$date2)->orderBy("tanggal_akhir","desc")->get();
         $pembayaran = Pembayaran::orderBy("tanggal_akhir", 'desc')->get();
         $pembayaranUnique = $pembayaran->unique('user_id');
-        $biodata = Biography::where("user_id",Auth::user()->id)->get();
-        $pertandingan = Peserta::where("user_id",Auth::user()->id)->get();
+        $biodata = Biography::where("user_id", Auth::user()->id)->get();
+        $pertandingan = Peserta::where("user_id", Auth::user()->id)->get();
 
-        $totalMemberActive = User::where("roles","USER")->where("active",1)->get();
-        $totalMember = User::where("roles","USER")->get();
+        $totalMemberActive = User::where("roles", "USER")->where("active", 1)->get();
+        $totalMember = User::where("roles", "USER")->get();
         $total_pertandingan = Event::all();
-// dd($biodata);
-     
+        // dd($biodata);
 
-        if(Auth::user()->roles == "USER"){
+
+        if (Auth::user()->roles == "USER") {
 
             return Inertia::render('Dashboard', [
                 'users' => User::where('roles', '=', 'USER')->get(),
-                'pembayaran' =>$pembayaranUnique,
+                'pembayaran' => $pembayaranUnique,
                 'biodata' => $biodata,
                 'pertandingan' => $pertandingan
             ]);
         }
-    //   dd(Pembayaran::all());
+        //   dd(Pembayaran::all());
 
-            return Inertia::render('Dashboard', [
-                'pembayaran_graph' => Pembayaran::all(),
-                'total_member_active' => $totalMemberActive,
-                'total_member' => $totalMember,
-                'pertandingan' => $total_pertandingan,
-                'pembayaran' =>$pembayaranUnique,
-               
-            ]);
-        
+        return Inertia::render('Dashboard', [
+            'pembayaran_graph' => Pembayaran::all(),
+            'pengeluaran_graph' => Pengeluaran::all(),
+            'total_member_active' => $totalMemberActive,
+            'total_member' => $totalMember,
+            'pertandingan' => $total_pertandingan,
+            'pembayaran' => $pembayaranUnique,
+
+        ]);
     }
     public function landing()
     {
         return Inertia::render('LandingPage', [
             'users' => "",
-           
+
         ]);
     }
-
- 
 }
