@@ -2,8 +2,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
 export default function Ranking({ auth, peserta, user }) {
-    console.log(peserta);
-    console.log(user);
+    console.log("peserta", peserta);
+    console.log("user", user);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -36,6 +36,18 @@ export default function Ranking({ auth, peserta, user }) {
                                     <p>{data.event.nama_event}</p>
                                     <p>Keterangan: {data.keterangan}</p>
                                     <p>Poin diperoleh: {data.skor}</p>
+                                    <p>Piagam/Medali:</p>
+                                    <div className="my-2">
+                                        {data.foto_piagam != null ? (
+                                            <img
+                                                className="rounded-t-lg w-64"
+                                                src={`/${data.foto_piagam}`}
+                                                alt={data.keterangan}
+                                            />
+                                        ) : (
+                                            "Foto Piagam/Medali Tidak Ada"
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

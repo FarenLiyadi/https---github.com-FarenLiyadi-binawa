@@ -21,6 +21,8 @@ export default function CreateEvent({ auth }) {
             poster_url: posterUrl,
         };
 
+        console.log(data);
+
         router.post("/event", data);
     }
     return (

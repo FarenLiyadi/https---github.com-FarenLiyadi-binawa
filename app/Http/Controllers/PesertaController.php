@@ -8,6 +8,7 @@ use App\Models\Peserta;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePesertaRequest;
 use App\Http\Requests\UpdatePesertaRequest;
+use Illuminate\Support\Facades\File;
 
 class PesertaController extends Controller
 {
@@ -49,6 +50,7 @@ class PesertaController extends Controller
                     'approve_by' => 'nullable',
                     'skor' => 'required',
                     'keterangan' => 'nullable',
+                    'foto_piagam'  => 'nullable',
                 ])->validate();
 
                 Peserta::create($validatedData);
@@ -61,6 +63,7 @@ class PesertaController extends Controller
                 'approve_by' => 'nullable',
                 'skor' => 'required',
                 'keterangan' => 'nullable',
+                'foto_piagam'  => 'nullable',
             ]);
             Peserta::create($validatedData);
         }
@@ -95,6 +98,7 @@ class PesertaController extends Controller
      */
     public function update(Request $request, Peserta $peserta, $id)
     {
+
         if ($request->has('prevSkor')) {
             $user = User::where('id', $request->user_id)->get();
             $prevSkor = (int)$request->prevSkor;
@@ -112,7 +116,23 @@ class PesertaController extends Controller
             'approve_by' => 'required',
             'skor' => 'required',
             'keterangan' => 'nullable',
+            'foto_piagam'  => 'nullable',
         ]);
+
+        if ($request->file('foto_piagam') != null) {
+            $piagam = $request->file('foto_piagam');
+            $peserta_data = Peserta::where('id', $request->id)->get();
+            // dd($peserta_data[0]);
+            if ($peserta_data[0]->foto_piagam != $piagam) {
+
+                File::delete(public_path($peserta_data[0]->foto_piagam));
+            }
+            // dd($piagam);
+            $nama_foto_piagam = 'foto_piagam/binawa_piagam_' . date('Ymdhis') . '.' . $piagam->getClientOriginalExtension();
+            $piagam->move('foto_piagam', $nama_foto_piagam);
+            // dd($nama_pas_foto);
+            $validatedData['foto_piagam'] = $nama_foto_piagam;
+        }
 
         Peserta::where('id', $id)->update($validatedData);
 

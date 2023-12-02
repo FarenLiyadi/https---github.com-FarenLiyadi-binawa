@@ -63,22 +63,22 @@ class EventController extends Controller
             'tanggal_deadline' => 'required',
         ]);
         $request->validate([
-            'poster_url'=>'mimes:jpeg,jpg,png|nullable',
+            'poster_url' => 'mimes:jpeg,jpg,png|nullable',
         ]);
-        
+
 
         $poster_url = $request->file('poster_url');
-        if($request->file('poster_url')){
+        if ($request->file('poster_url')) {
 
-            $nama_poster_url = 'poster/event_poster'.date('Ymdhis').'.'.$request->file('poster_url')->getClientOriginalExtension();
-            $poster_url->move('poster',$nama_poster_url);
+            $nama_poster_url = 'poster/event_poster' . date('Ymdhis') . '.' . $request->file('poster_url')->getClientOriginalExtension();
+            $poster_url->move('poster', $nama_poster_url);
             // dd($nama_pas_foto);
-        } else{
+        } else {
             $nama_poster_url = null;
         }
 
-        $replacement = array('poster_url'=>$nama_poster_url);
-        $validatedData2 = array_replace($validatedData,$replacement);
+        $replacement = array('poster_url' => $nama_poster_url);
+        $validatedData2 = array_replace($validatedData, $replacement);
         Event::create($validatedData2);
         return redirect('/event')->with([
             'message' => "Event successfully created!",
@@ -113,7 +113,7 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $get_event = Event::where('id', $event->id)->get();
-       
+
         $rules = [
             'last_update_by' => 'required',
             'nama_event' => 'required',
@@ -124,28 +124,28 @@ class EventController extends Controller
         //     'poster_url'=>'mimes:jpeg,jpg,png|nullable',
         // ]);
 
-        if($request->file('poster_url')!=null){
+        if ($request->file('poster_url') != null) {
             // dd($get_event[0]->poster_url);
             $poster_url = $request->file('poster_url');
-                if($get_event[0]->poster_url !=null && File::exists(public_path($get_event[0]->poster_url))){
-                    File::delete(public_path($get_event[0]->poster_url));
-                }
-            $nama_poster_url = 'poster/event_poster'.date('Ymdhis').'.'.$request->file('poster_url')->getClientOriginalExtension();
-            $poster_url->move('poster',$nama_poster_url);
+            if ($get_event[0]->poster_url != null && File::exists(public_path($get_event[0]->poster_url))) {
+                File::delete(public_path($get_event[0]->poster_url));
+            }
+            $nama_poster_url = 'poster/event_poster' . date('Ymdhis') . '.' . $request->file('poster_url')->getClientOriginalExtension();
+            $poster_url->move('poster', $nama_poster_url);
             // dd($nama_poster_url);
-        } else{
+        } else {
             // dd($biography);
             $nama_poster_url = $get_event[0]->poster_url;
         }
-        $replacement = array('poster_url'=>$nama_poster_url);
+        $replacement = array('poster_url' => $nama_poster_url);
 
         // Mengecek apakah slug yang baru(request) tidak sama dengan slug yang lalu
         if ($request->slug != $event->slug) {
             $rules['slug'] = 'required|unique:events';
         }
         $validatedData = $request->validate($rules);
-        $replacement = array('poster_url'=>$nama_poster_url);
-        $validatedData2 = array_replace($validatedData,$replacement);
+        $replacement = array('poster_url' => $nama_poster_url);
+        $validatedData2 = array_replace($validatedData, $replacement);
         Event::where('id', $event->id)->update($validatedData2);
 
         return redirect('/event')->with([

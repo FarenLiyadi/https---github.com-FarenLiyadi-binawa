@@ -1,12 +1,14 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, router } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import { useState } from "react";
 
 export default function EditPeserta({ auth, peserta }) {
     peserta = peserta[0];
-    console.log(peserta);
     const [skor, setSkor] = useState(peserta.skor);
     const [keterangan, setKeterangan] = useState(peserta.keterangan || "");
+    const [piagam, setPiagam] = useState(peserta.foto_piagam || null);
+
+    console.log(piagam);
 
     function submitHandler(e) {
         e.preventDefault();
@@ -17,9 +19,17 @@ export default function EditPeserta({ auth, peserta }) {
             approve: peserta.approve,
             skor: parseInt(skor),
             keterangan: keterangan,
+            foto_piagam: piagam,
         };
+        console.log(data);
 
-        router.put(`/peserta/${peserta.id}?prevSkor=${peserta.skor}`, data);
+        router.post(
+            `/peserta/${peserta.id}?prevSkor=${peserta.skor}&id=${peserta.id}`,
+            {
+                _method: "PUT",
+                ...data,
+            }
+        );
     }
 
     return (
@@ -87,6 +97,28 @@ export default function EditPeserta({ auth, peserta }) {
                                                 onChange={(e) => {
                                                     setKeterangan(
                                                         e.target.value
+                                                    );
+                                                }}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="piagam">
+                                                Foto Piagam
+                                            </label>
+                                            <img
+                                                className="rounded-t-lg w-64"
+                                                src={`/${peserta.foto_piagam}`}
+                                                alt={peserta.keterangan}
+                                            />
+                                            <input
+                                                className="w-full rounded-lg mt-2"
+                                                type="file"
+                                                id="piagam"
+                                                name="piagam"
+                                                placeholder="piagam"
+                                                onChange={(e) => {
+                                                    setPiagam(
+                                                        e.target.files[0]
                                                     );
                                                 }}
                                             />
