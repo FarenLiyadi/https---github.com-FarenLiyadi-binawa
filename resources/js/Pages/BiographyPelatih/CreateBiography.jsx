@@ -5,7 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { router, useForm } from "@inertiajs/react";
-import React from "react";
+import { React, useState } from "react";
 import ReactDropdown from "react-dropdown";
 
 export default function CreateBiography({ auth }) {
@@ -27,15 +27,16 @@ export default function CreateBiography({ auth }) {
         bukti_pelatih: "",
         kk: "",
         pas_foto: "",
+
+        sertifikat: [],
     });
 
-    const submit = (e) => {
-        e.preventDefault();
-        router.post(`/biographypelatih`, {
-            _method: "post",
-            ...data,
-        });
-    };
+    const [sertifikatCount, setSertifikatCount] = useState(0);
+    const [keteranganSertifikatData, setKeteranganSertifikatData] = useState(
+        []
+    );
+    const [isSimpan, setIsSimpan] = useState(false);
+    const [gambarSertifikatData, setGambarSertifikatData] = useState([]);
 
     const options2 = ["PRIA", "WANITA"];
 
@@ -49,6 +50,78 @@ export default function CreateBiography({ auth }) {
     ];
 
     const options3 = ["SINGLE", "DOUBLE", "MIX"];
+
+    function TambahForm() {
+        setSertifikatCount((prevCount) => prevCount + 1);
+        const updatedData = [...keteranganSertifikatData];
+        updatedData.push("");
+        setKeteranganSertifikatData(updatedData);
+
+        const updatedData1 = [...gambarSertifikatData];
+        updatedData1.push("");
+        setGambarSertifikatData(updatedData1);
+
+        setIsSimpan(false);
+    }
+
+    function KurangForm() {
+        setSertifikatCount((prevCount) => prevCount - 1);
+        const updatedData = [...keteranganSertifikatData];
+        updatedData.pop();
+        setKeteranganSertifikatData(updatedData);
+
+        const updatedData1 = [...gambarSertifikatData];
+        updatedData1.pop();
+        setGambarSertifikatData(updatedData1);
+
+        setIsSimpan(false);
+    }
+
+    function handleKeteranganChange(index, e) {
+        const updatedData = [...keteranganSertifikatData];
+        updatedData[index] = e.target.value;
+        setKeteranganSertifikatData(updatedData);
+
+        setIsSimpan(false);
+    }
+
+    function handleGambarChange(index, e) {
+        const updatedData = [...gambarSertifikatData];
+        updatedData[index] = e.target.files[0];
+        setGambarSertifikatData(updatedData);
+
+        setIsSimpan(false);
+    }
+
+    function simpan() {
+        if (sertifikatCount > 0) {
+            const updatedData = [];
+            for (let i = 0; i < sertifikatCount; i++) {
+                const newData = {
+                    keterangan: keteranganSertifikatData[i],
+                    gambar: gambarSertifikatData[i],
+                };
+
+                updatedData.push(newData);
+            }
+            console.log(updatedData);
+            setData("sertifikat", updatedData);
+            setIsSimpan(true);
+        }
+    }
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        console.log(data);
+
+        router.post(`/biographypelatih`, {
+            _method: "post",
+            ...data,
+        });
+    };
+
+    function sendForm() {}
 
     return (
         <Authenticated
@@ -84,6 +157,7 @@ export default function CreateBiography({ auth }) {
                             className="mt-2"
                         />
                     </div>
+
                     <div className="w-full">
                         <InputLabel htmlFor="NIK" value="NIK" />
 
@@ -123,6 +197,7 @@ export default function CreateBiography({ auth }) {
                             className="mt-2"
                         />
                     </div>
+
                     <div className="w-full">
                         <InputLabel
                             htmlFor="tanggal_lahir"
@@ -173,6 +248,7 @@ export default function CreateBiography({ auth }) {
 
                         <InputError message={errors.asal} className="mt-2" />
                     </div>
+
                     <div className="w-full">
                         <InputLabel
                             htmlFor="pelatihan"
@@ -220,6 +296,7 @@ export default function CreateBiography({ auth }) {
                             className="mt-2"
                         />
                     </div>
+
                     <div className="w-full">
                         <InputLabel htmlFor="karier" value="Karier" />
 
@@ -340,15 +417,115 @@ export default function CreateBiography({ auth }) {
                                     {errors.pas_foto}
                                 </span>
                             </div>
+
+                            <div className="mt-2 bg-yellow-30 flex  md:col-span-2 gap-2">
+                                <span
+                                    className="cursor-pointer px-4 py-2 bg-blue-300 hover:bg-blue-400 text-blue-800 font-bold rounded-md text-center"
+                                    onClick={() => TambahForm()}
+                                >
+                                    + Sertifikat
+                                </span>
+
+                                {sertifikatCount > 0 ? (
+                                    <span
+                                        className="cursor-pointer text-center bg-red-300 hover:bg-red-400 text-red-800 font-bold py-2 px-4 rounded-lg"
+                                        onClick={() => KurangForm()}
+                                    >
+                                        - Sertifikat
+                                    </span>
+                                ) : (
+                                    ""
+                                )}
+                            </div>
+
+                            {Array.from({ length: sertifikatCount }).map(
+                                (_, index) => (
+                                    <div
+                                        className="gap-3 col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2"
+                                        key={index}
+                                    >
+                                        <div className="mt-2 flex flex-col mb-3">
+                                            <label
+                                                htmlFor={`sertifikat${
+                                                    index + 1
+                                                }`}
+                                                className="block"
+                                            >
+                                                Sertifikat {index + 1}
+                                            </label>
+
+                                            <input
+                                                type="text"
+                                                required
+                                                className="rounded-md h-8 "
+                                                id={`sertifikat${index + 1}`}
+                                                name={`sertifikat${index + 1}`}
+                                                placeholder="Keterangan"
+                                                value={
+                                                    keteranganSertifikatData[
+                                                        index
+                                                    ] || ""
+                                                }
+                                                onChange={(e) =>
+                                                    handleKeteranganChange(
+                                                        index,
+                                                        e
+                                                    )
+                                                }
+                                            ></input>
+                                        </div>
+
+                                        <div className="flex flex-col mb-3">
+                                            <label
+                                                htmlFor={`gambar${index + 1}`}
+                                                className="block"
+                                            >
+                                                Gambar {index + 1}
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                required
+                                                className="w-full px-4 py-2"
+                                                id={`gambart${index + 1}`}
+                                                name={`gambart${index + 1}`}
+                                                onChange={(e) =>
+                                                    handleGambarChange(index, e)
+                                                }
+                                            />
+                                            <span className="text-red-600">
+                                                {errors.pas_foto}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )
+                            )}
                         </div>
                     )}
 
                     <div className="flex items-center justify-center m-10">
-                        <PrimaryButton disabled={processing}>
-                            Tambah Biography Pelatih
-                        </PrimaryButton>
+                        {isSimpan === true || sertifikatCount == 0 ? (
+                            <PrimaryButton disabled={processing}>
+                                Tambah Biography Pelatih
+                            </PrimaryButton>
+                        ) : (
+                            ""
+                        )}
                     </div>
                 </form>
+                <div className="mb-10">
+                    {sertifikatCount > 0 && isSimpan == false ? (
+                        <button
+                            onClick={(e) => simpan()}
+                            className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ${
+                         'opacity-25'"
+                        >
+                            Simpan
+                        </button>
+                    ) : (
+                        ""
+                    )}
+                </div>
             </div>
         </Authenticated>
     );

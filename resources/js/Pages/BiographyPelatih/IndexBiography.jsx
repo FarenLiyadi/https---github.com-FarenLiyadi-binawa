@@ -401,6 +401,40 @@ export default function IndexBiography({ biography, auth, errors }) {
                                             </h1>
                                         )}
                                     </div>
+                                    <div className="mt-2">
+                                        <label className="">
+                                            Foto Sertifikat
+                                        </label>
+                                        {biography[0].sertifikat.length > 0 ? (
+                                            biography[0].sertifikat.map(
+                                                (data, key) => {
+                                                    return (
+                                                        <div
+                                                            key={key}
+                                                            className="mb-2"
+                                                        >
+                                                            <label>
+                                                                {
+                                                                    data.keterangan
+                                                                }
+                                                            </label>
+                                                            <img
+                                                                className="rounded-t-lg w-64"
+                                                                src={`/${data.gambar}`}
+                                                                alt={
+                                                                    data.keterangan
+                                                                }
+                                                            />
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                        ) : (
+                                            <h1 className="text-red-500">
+                                                FOTO Sertifikat BELUM ADA
+                                            </h1>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

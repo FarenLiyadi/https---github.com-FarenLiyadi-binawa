@@ -5,11 +5,10 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { router, useForm } from "@inertiajs/react";
-import React from "react";
+import { React, useState } from "react";
 import ReactDropdown from "react-dropdown";
 
 export default function EditBiography({ biography, auth }) {
-    console.log(biography[0].nama_lengkap);
     const { data, setData, post, processing, errors, reset } = useForm({
         id: biography[0].id,
         user_id: biography[0].user_id,
@@ -29,15 +28,31 @@ export default function EditBiography({ biography, auth }) {
         bukti_pelatih: "",
         ktp: "",
         pas_foto: "",
+        sertifikat: biography[0].sertifikat,
     });
+    const sertifikat = biography[0]["sertifikat"];
+    console.log(sertifikat);
 
-    const submit = (e) => {
-        e.preventDefault();
-        router.post(`/biographypelatih/${biography[0].id}`, {
-            _method: "PUT",
-            ...data,
-        });
-    };
+    const temp_keterangan = [];
+    const temp_gambar = [];
+    for (let i = 0; i < sertifikat.length; i++) {
+        temp_keterangan.push(sertifikat[i]["keterangan"]);
+        temp_gambar.push(sertifikat[i]["gambar"]);
+    }
+    console.log(temp_keterangan, temp_gambar);
+
+    const [sertifikatCount, setSertifikatCount] = useState(
+        biography[0].sertifikat.length
+    );
+    const [keteranganSertifikatData, setKeteranganSertifikatData] = useState(
+        temp_keterangan || []
+    );
+    const [isSimpan, setIsSimpan] = useState(false);
+    const [gambarSertifikatData, setGambarSertifikatData] = useState(
+        temp_gambar || []
+    );
+
+    console.log("data", data);
 
     const options2 = ["PRIA", "WANITA"];
 
@@ -51,6 +66,76 @@ export default function EditBiography({ biography, auth }) {
     ];
 
     const options3 = ["SINGLE", "DOUBLE", "MIX"];
+
+    function TambahForm() {
+        setSertifikatCount((prevCount) => prevCount + 1);
+        const updatedData = [...keteranganSertifikatData];
+        updatedData.push("");
+        setKeteranganSertifikatData(updatedData);
+
+        const updatedData1 = [...gambarSertifikatData];
+        updatedData1.push("");
+        setGambarSertifikatData(updatedData1);
+
+        setIsSimpan(false);
+    }
+
+    function KurangForm() {
+        setSertifikatCount((prevCount) => prevCount - 1);
+        const updatedData = [...keteranganSertifikatData];
+        updatedData.pop();
+        setKeteranganSertifikatData(updatedData);
+
+        const updatedData1 = [...gambarSertifikatData];
+        updatedData1.pop();
+        setGambarSertifikatData(updatedData1);
+
+        setIsSimpan(false);
+    }
+
+    function handleKeteranganChange(index, e) {
+        const updatedData = [...keteranganSertifikatData];
+        updatedData[index] = e.target.value;
+        setKeteranganSertifikatData(updatedData);
+
+        setIsSimpan(false);
+    }
+
+    function handleGambarChange(index, e) {
+        const updatedData = [...gambarSertifikatData];
+        updatedData[index] = e.target.files[0];
+        setGambarSertifikatData(updatedData);
+
+        setIsSimpan(false);
+    }
+
+    function simpan() {
+        const updatedData = [];
+        for (let i = 0; i < sertifikatCount; i++) {
+            const newData = {
+                keterangan: keteranganSertifikatData[i],
+                gambar: gambarSertifikatData[i],
+            };
+
+            updatedData.push(newData);
+        }
+        console.log(updatedData);
+        setData("sertifikat", updatedData);
+
+        setIsSimpan(true);
+    }
+
+    console.log("simpan", isSimpan);
+    console.log("count", sertifikatCount);
+    const submit = (e) => {
+        e.preventDefault();
+        console.log(data);
+        router.post(`/biographypelatih/${biography[0].id}`, {
+            _method: "PUT",
+            ...data,
+        });
+    };
+
     return (
         <Authenticated
             user={auth.user}
@@ -400,12 +485,113 @@ export default function EditBiography({ biography, auth }) {
                             </div>
                         </div>
 
+                        {/* Sertifikat */}
+                        <label className="mt-2" id="kk">
+                            Edit Foto Sertifikat
+                        </label>
+                        <div className="mt-2 bg-yellow-30 flex  md:col-span-2 gap-2">
+                            <span
+                                className="cursor-pointer px-4 py-2 bg-blue-300 hover:bg-blue-400 text-blue-800 font-bold rounded-md text-center"
+                                onClick={() => TambahForm()}
+                            >
+                                + Sertifikat
+                            </span>
+
+                            {sertifikatCount > 0 ? (
+                                <span
+                                    className="cursor-pointer text-center bg-red-300 hover:bg-red-400 text-red-800 font-bold py-2 px-4 rounded-lg"
+                                    onClick={() => KurangForm()}
+                                >
+                                    - Sertifikat
+                                </span>
+                            ) : (
+                                ""
+                            )}
+                        </div>
+
+                        {Array.from({ length: sertifikatCount }).map(
+                            (_, index) => (
+                                <div
+                                    className="gap-3 col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2"
+                                    key={index}
+                                >
+                                    <div className="mt-2 flex flex-col mb-3">
+                                        <label
+                                            htmlFor={`sertifikat${index + 1}`}
+                                            className="block"
+                                        >
+                                            Sertifikat {index + 1}
+                                        </label>
+                                        <img
+                                            className="rounded-t-lg w-64 mb-2"
+                                            src={`/${gambarSertifikatData[index]}`}
+                                            alt={data.keterangan}
+                                        />
+
+                                        <input
+                                            type="text"
+                                            className="rounded-md h-8 "
+                                            id={`sertifikat${index + 1}`}
+                                            name={`sertifikat${index + 1}`}
+                                            placeholder="Keterangan"
+                                            value={
+                                                keteranganSertifikatData[
+                                                    index
+                                                ] || ""
+                                            }
+                                            onChange={(e) =>
+                                                handleKeteranganChange(index, e)
+                                            }
+                                        ></input>
+                                    </div>
+
+                                    <div className="flex flex-col mb-3">
+                                        <label
+                                            htmlFor={`gambar${index + 1}`}
+                                            className="block"
+                                        >
+                                            Gambar {index + 1}
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            className="w-full px-4 py-2"
+                                            id={`gambart${index + 1}`}
+                                            name={`gambart${index + 1}`}
+                                            onChange={(e) =>
+                                                handleGambarChange(index, e)
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                            )
+                        )}
+
                         <div className="flex items-center justify-center m-10">
-                            <PrimaryButton disabled={processing}>
-                                Edit Biography Pelatih
-                            </PrimaryButton>
+                            {(isSimpan === true && sertifikatCount == 0) ||
+                            (isSimpan === true && sertifikatCount > 0) ? (
+                                <PrimaryButton disabled={processing}>
+                                    Edit Biography Pelatih
+                                </PrimaryButton>
+                            ) : (
+                                ""
+                            )}
                         </div>
                     </form>
+                    <div className="mb-10">
+                        {(sertifikatCount > 0 && isSimpan == false) ||
+                        isSimpan == false ? (
+                            <button
+                                onClick={(e) => simpan()}
+                                className="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150 ${
+                         'opacity-25'"
+                            >
+                                Simpan
+                            </button>
+                        ) : (
+                            ""
+                        )}
+                    </div>
                 </div>
             </div>
         </Authenticated>
