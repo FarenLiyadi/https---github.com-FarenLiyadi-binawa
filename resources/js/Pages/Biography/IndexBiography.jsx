@@ -8,13 +8,14 @@ import React from "react";
 import ReactDropdown from "react-dropdown";
 import NavLink from "@/Components/NavLink";
 
-export default function IndexBiography({ biography, auth, errors }) {
-    console.log(biography);
+export default function IndexBiography({ biography, auth, errors, peserta }) {
+    console.log(peserta);
     const options2 = [biography.length > 0 ? biography[0].jenis_kelamin : ""];
 
     const options = [biography.length > 0 ? biography[0].agama : ""];
 
     const options3 = [biography.length > 0 ? biography[0].tangan : ""];
+
     return (
         <Authenticated
             user={auth.user}
@@ -43,6 +44,7 @@ export default function IndexBiography({ biography, auth, errors }) {
                                     Edit Biodata KAMU
                                 </PrimaryButton>
                             </div>
+
                             <div className="lg:w-full w-3/4 ">
                                 <div className="flex justify-center mx-auto">
                                     <div className="mt-2 ">
@@ -554,6 +556,37 @@ export default function IndexBiography({ biography, auth, errors }) {
                                                 FOTO RAPOR BELUM ADA
                                             </h1>
                                         )}
+                                    </div>
+                                </div>
+                                <div className="flex w-full flex-col lg:flex-row gap-5 mt-2">
+                                    <div className="mt-2 text-center ">
+                                        <label
+                                            className="font-bold text-lg mt-5"
+                                            id="kartu_keluarga"
+                                        >
+                                            Foto Piagam
+                                        </label>
+                                        <div className="flex flex-wrap gap-5 mt-10">
+                                            {peserta.length > 0 ? (
+                                                peserta.map((e) =>
+                                                    e.foto_piagam.map(
+                                                        (a, index) => {
+                                                            return (
+                                                                <img
+                                                                    key={index}
+                                                                    src={`/${a}`}
+                                                                    className="max-w-xs"
+                                                                />
+                                                            );
+                                                        }
+                                                    )
+                                                )
+                                            ) : (
+                                                <h1 className="text-red-500">
+                                                    Tidak ada Piagam
+                                                </h1>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

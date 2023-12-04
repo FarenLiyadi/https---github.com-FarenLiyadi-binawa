@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UsersCollection;
 use App\Models\Biography;
 use App\Models\User;
+use App\Models\Peserta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -21,14 +22,23 @@ class BiographyController extends Controller
     public function index()
     {
         if (Auth::user()->roles == "USER") {
+$id = Auth::user()->id;
+            $biography = Biography::with('user')->where("user_id", $id)->get();
+            $peserta = Peserta::where("user_id",$biography[0]->user_id)->get();
+            // dd($peserta);
+           
+
+
             return Inertia::render('Biography/IndexBiography', [
                 'biography' => Biography::with('user')->where("user_id", Auth::user()->id)->get(),
+                'peserta' => $peserta
             ]);
         } else {
             $users = new UsersCollection(User::with(['biography'])->where("roles", "USER")->latest()->paginate(20));
             // dd($users);
             return Inertia::render('Biography/AdminBiography', [
-                'user' => $users
+                'user' => $users,
+                'peserta'=>[]
             ]);
         }
     }
@@ -142,8 +152,12 @@ class BiographyController extends Controller
      */
     public function show(string $id)
     {
+        $biography = Biography::with('user')->where("user_id", $id)->get();
+        $peserta = Peserta::where("user_id",$biography[0]->user_id)->get();
+        // dd($peserta);
         return Inertia::render('Biography/IndexBiography', [
             'biography' => Biography::with('user')->where("user_id", $id)->get(),
+            'peserta' => $peserta
         ]);
     }
 
@@ -152,7 +166,7 @@ class BiographyController extends Controller
      */
     public function edit(string $id)
     {
-        // dd($id);
+        
 
         return Inertia::render('Biography/EditBiography', [
             'biography' => Biography::with('user')->where("id", $id)->get(),
