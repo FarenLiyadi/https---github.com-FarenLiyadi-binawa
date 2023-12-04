@@ -28,7 +28,7 @@ export default function IndexPengeluaran({ auth, pengeluaran }) {
                                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full "
                                         href="/pengeluaran/create"
                                     >
-                                        Masukan Pengeluaran
+                                        Tambah Pengeluaran
                                     </Link>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@ export default function IndexPengeluaran({ auth, pengeluaran }) {
                                 type="text"
                                 id="search"
                                 name="search"
-                                placeholder="Cari nama member"
+                                placeholder="Cari pengeluaran"
                                 onChange={(e) => {
                                     setSearch(e.target.value);
                                 }}
@@ -53,8 +53,12 @@ export default function IndexPengeluaran({ auth, pengeluaran }) {
                                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                             <div className="p-6 text-gray-900">
-                                                <p>{data.keterangan}</p>
-                                                <p>Rp.{data.nominal}</p>
+                                                <p className="text-xl uppercase font-bold">
+                                                    {data.keterangan}
+                                                </p>
+                                                <p className="text-lg">
+                                                    Rp. {data.nominal}
+                                                </p>
                                                 <p>
                                                     {new Date(
                                                         data.tanggal_pengeluaran

@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Event;
 use App\Models\Peserta;
 use App\Models\Biography;
+use App\Models\BiographyPelatih;
 use App\Models\Pembayaran;
 use App\Models\Pengeluaran;
 use App\Models\CompanyModel;
@@ -23,6 +24,7 @@ class DashboardController extends Controller
         $pembayaran = Pembayaran::orderBy("tanggal_akhir", 'desc')->get();
         $pembayaranUnique = $pembayaran->unique('user_id');
         $biodata = Biography::where("user_id", Auth::user()->id)->get();
+        $biodataPelatih = BiographyPelatih::where("user_id", Auth::user()->id)->get();
         $pertandingan = Peserta::where("user_id", Auth::user()->id)->get();
 
         $totalMemberActive = User::where("roles", "USER")->where("active", 1)->get();
@@ -49,6 +51,7 @@ class DashboardController extends Controller
             'total_member' => $totalMember,
             'pertandingan' => $total_pertandingan,
             'pembayaran' => $pembayaranUnique,
+            'biodata' => $biodataPelatih,
 
         ]);
     }

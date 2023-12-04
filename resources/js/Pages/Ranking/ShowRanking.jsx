@@ -33,20 +33,35 @@ export default function Ranking({ auth, peserta, user }) {
                         >
                             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                 <div className="p-6 text-gray-900">
-                                    <p>{data.event.nama_event}</p>
-                                    <p>Keterangan: {data.keterangan}</p>
-                                    <p>Poin diperoleh: {data.skor}</p>
+                                    <p className="text-xl font-bold uppercase">
+                                        {data.event.nama_event}
+                                    </p>
+                                    <p className="text-lg">
+                                        Keterangan: {data.keterangan}
+                                    </p>
+                                    <p className="text-lg">
+                                        Poin diperoleh: {data.skor}
+                                    </p>
                                     <p>Piagam/Medali:</p>
-                                    <div className="my-2">
-                                        {data.foto_piagam != null ? (
-                                            <img
-                                                className="rounded-t-lg w-64"
-                                                src={`/${data.foto_piagam}`}
-                                                alt={data.keterangan}
-                                            />
-                                        ) : (
-                                            "Foto Piagam/Medali Tidak Ada"
-                                        )}
+                                    <div className="my-2 flex flex-row gap-5">
+                                        {data.foto_piagam.length > 0
+                                            ? data.foto_piagam.map(
+                                                  (dt, index) => {
+                                                      return (
+                                                          <div className="my-2">
+                                                              <img
+                                                                  key={index}
+                                                                  className="rounded-t-lg w-64"
+                                                                  src={`/${dt}`}
+                                                                  alt={
+                                                                      data.keterangan
+                                                                  }
+                                                              />
+                                                          </div>
+                                                      );
+                                                  }
+                                              )
+                                            : "Foto Piagam/Medali Tidak Ada"}
                                     </div>
                                 </div>
                             </div>

@@ -119,19 +119,74 @@ class PesertaController extends Controller
             'foto_piagam'  => 'nullable',
         ]);
 
-        if ($request->file('foto_piagam') != null) {
-            $piagam = $request->file('foto_piagam');
-            $peserta_data = Peserta::where('id', $request->id)->get();
-            // dd($peserta_data[0]);
-            if ($peserta_data[0]->foto_piagam != $piagam) {
 
-                File::delete(public_path($peserta_data[0]->foto_piagam));
+
+        $piagam = $request->foto_piagam;
+        $updated_data = [];
+        $peserta_data = Peserta::where('id', $request->id)->get();
+        // dd($request->file('foto_piagam'));
+        if (count($piagam) > 0) {
+            if (count($piagam) < count($peserta_data[0]->foto_piagam)) {
+                // dd("databerubah");
+                for ($i = 0; $i < count($peserta_data[0]->foto_piagam); $i++) {
+                    if (!isset($piagam[$i])) {
+                        // dd("datany tidak ada");
+                        // dd($peserta_data[0]->foto_piagam[$i]);
+                        File::delete(public_path($peserta_data[0]->foto_piagam[$i]));
+                    }
+                }
             }
             // dd($piagam);
-            $nama_foto_piagam = 'foto_piagam/binawa_piagam_' . date('Ymdhis') . '.' . $piagam->getClientOriginalExtension();
-            $piagam->move('foto_piagam', $nama_foto_piagam);
-            // dd($nama_pas_foto);
-            $validatedData['foto_piagam'] = $nama_foto_piagam;
+            for ($i = 0; $i < count($piagam); $i++) {
+                // dd($peserta_data[0]->foto_piagam[$i]);
+                // Cek apakah ada data di database
+                if (isset($peserta_data[0]->foto_piagam[$i])) {
+                    // Ada
+                    // dd("ada");
+                    // Cek apakah datanya sama, ad perubahan atau tidak
+                    if ($peserta_data[0]->foto_piagam[$i] == $piagam[$i]) {
+                        // dd("Sama");
+                        array_push($updated_data, $piagam[$i]);
+                    } else {
+                        // terdapat perubahan data
+                        // dd("Berubah");
+                        // Hapus file lama 
+                        File::delete(public_path($peserta_data[0]->foto_piagam[$i]));
+
+                        // Buat Data baru
+                        $nama_foto_piagam = 'foto_piagam/binawa_piagam_' . $i . "_" . date('Ymdhis') . '.' . $piagam[$i]->getClientOriginalExtension();
+                        $piagam[$i]->move('foto_piagam', $nama_foto_piagam);
+                        $piagam[$i] = $nama_foto_piagam;
+                        array_push($updated_data, $piagam[$i]);
+                    }
+                } else {
+                    // Buat data baru
+                    // dd("Buat Baru");
+                    $nama_foto_piagam = 'foto_piagam/binawa_piagam_' . $i . "_" . date('Ymdhis') . '.' . $piagam[$i]->getClientOriginalExtension();
+                    $piagam[$i]->move('foto_piagam', $nama_foto_piagam);
+                    $piagam[$i] = $nama_foto_piagam;
+                    array_push($updated_data, $piagam[$i]);
+                }
+            }
+
+            // dd($updated_data);
+
+            // if ($peserta_data[0]->foto_piagam != $piagam) {
+
+            //     File::delete(public_path($peserta_data[0]->foto_piagam));
+            // }
+
+            $validatedData['foto_piagam'] = $updated_data;
+        } else {
+            // Kosong
+            // dd("Kosong");
+            if (count($peserta_data[0]->foto_piagam) > 0) {
+                foreach ($peserta_data[0]->foto_piagam as $foto) {
+                    // Hapus file
+                    // dd($foto);
+                    File::delete(public_path($foto));
+                }
+            }
         }
 
         Peserta::where('id', $id)->update($validatedData);

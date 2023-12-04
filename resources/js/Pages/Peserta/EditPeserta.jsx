@@ -6,12 +6,46 @@ export default function EditPeserta({ auth, peserta }) {
     peserta = peserta[0];
     const [skor, setSkor] = useState(peserta.skor);
     const [keterangan, setKeterangan] = useState(peserta.keterangan || "");
-    const [piagam, setPiagam] = useState(peserta.foto_piagam || null);
+    // const [piagam, setPiagam] = useState(peserta.foto_piagam || null);
 
-    console.log(piagam);
+    console.log(peserta);
+    const [fotoCount, setFotoCount] = useState(peserta.foto_piagam.length || 0);
+    const [fotoData, setFotoData] = useState(peserta.foto_piagam || []);
+    const [isSimpan, setIsSimpan] = useState(false);
+
+    // console.log(piagam);
+
+    function TambahForm() {
+        setFotoCount((prevCount) => prevCount + 1);
+        const updatedData = [...fotoData];
+        updatedData.push("");
+        setFotoData(updatedData);
+
+        setIsSimpan(false);
+    }
+
+    function KurangForm() {
+        setFotoCount((prevCount) => prevCount - 1);
+        const updatedData = [...fotoData];
+        updatedData.pop();
+        setFotoData(updatedData);
+
+        setIsSimpan(false);
+    }
+
+    function handleFotoChange(index, e) {
+        const updatedData = [...fotoData];
+        updatedData[index] = e.target.files[0];
+        setFotoData(updatedData);
+
+        setIsSimpan(false);
+    }
+
+    console.log(fotoData);
 
     function submitHandler(e) {
         e.preventDefault();
+        console.log(fotoCount);
         const data = {
             user_id: peserta.user_id,
             event_id: peserta.event_id,
@@ -19,7 +53,7 @@ export default function EditPeserta({ auth, peserta }) {
             approve: peserta.approve,
             skor: parseInt(skor),
             keterangan: keterangan,
-            foto_piagam: piagam,
+            foto_piagam: fotoData,
         };
         console.log(data);
 
@@ -105,7 +139,74 @@ export default function EditPeserta({ auth, peserta }) {
                                             <label htmlFor="piagam">
                                                 Foto Piagam
                                             </label>
-                                            <img
+                                            <div className="my-2 bg-yellow-30 flex  md:col-span-2 gap-2">
+                                                <span
+                                                    className="cursor-pointer px-4 py-2 bg-blue-300 hover:bg-blue-400 text-blue-800 font-bold rounded-md text-center"
+                                                    onClick={() => TambahForm()}
+                                                >
+                                                    + Foto
+                                                </span>
+
+                                                {fotoCount > 0 ? (
+                                                    <span
+                                                        className="cursor-pointer text-center bg-red-300 hover:bg-red-400 text-red-800 font-bold py-2 px-4 rounded-lg"
+                                                        onClick={() =>
+                                                            KurangForm()
+                                                        }
+                                                    >
+                                                        - Foto
+                                                    </span>
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </div>
+
+                                            {Array.from({
+                                                length: fotoCount,
+                                            }).map((_, index) => (
+                                                <div
+                                                    className="gap-3 col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2"
+                                                    key={index}
+                                                >
+                                                    <div className="flex flex-col mb-3">
+                                                        <label
+                                                            htmlFor={`gambar${
+                                                                index + 1
+                                                            }`}
+                                                            className="block"
+                                                        >
+                                                            Gambar {index + 1}
+                                                        </label>
+
+                                                        <img
+                                                            className="rounded-t-lg w-64 mb-2"
+                                                            src={`/${fotoData[index]}`}
+                                                            alt={
+                                                                peserta.keterangan
+                                                            }
+                                                        />
+
+                                                        <input
+                                                            type="file"
+                                                            className="w-full px-4 py-2"
+                                                            id={`gambart${
+                                                                index + 1
+                                                            }`}
+                                                            name={`gambart${
+                                                                index + 1
+                                                            }`}
+                                                            onChange={(e) =>
+                                                                handleFotoChange(
+                                                                    index,
+                                                                    e
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
+
+                                            {/* <img
                                                 className="rounded-t-lg w-64"
                                                 src={`/${peserta.foto_piagam}`}
                                                 alt={peserta.keterangan}
@@ -121,7 +222,7 @@ export default function EditPeserta({ auth, peserta }) {
                                                         e.target.files[0]
                                                     );
                                                 }}
-                                            />
+                                            /> */}
                                         </div>
 
                                         <button

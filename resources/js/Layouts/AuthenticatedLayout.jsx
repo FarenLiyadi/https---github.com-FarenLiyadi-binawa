@@ -11,7 +11,7 @@ export default function Authenticated({ user, header, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+            <nav className="bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -30,17 +30,56 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
-                                <NavLink
-                                    href="/biography"
-                                    active={
-                                        route().current("biography.index") ||
-                                        route().current("biography.create") ||
-                                        route().current("biography.show") ||
-                                        route().current("biography.edit")
-                                    }
-                                >
-                                    Biography
-                                </NavLink>
+                                <div className="hidden sm:flex sm:items-center sm:ml-6">
+                                    <div className="">
+                                        <Dropdown>
+                                            <Dropdown.Trigger>
+                                                <span className="inline-flex rounded-md">
+                                                    <button
+                                                        type="button"
+                                                        className="inline-flex items-center  py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                    >
+                                                        Biography
+                                                        <svg
+                                                            className="ml-1 -mr-0.5 h-4 w-4"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 20 20"
+                                                            fill="currentColor"
+                                                        >
+                                                            <path
+                                                                fillRule="evenodd"
+                                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                clipRule="evenodd"
+                                                            />
+                                                        </svg>
+                                                    </button>
+                                                </span>
+                                            </Dropdown.Trigger>
+
+                                            <Dropdown.Content>
+                                                <Dropdown.Link
+                                                    href={route(
+                                                        "biography.index"
+                                                    )}
+                                                >
+                                                    Biography Atlet
+                                                </Dropdown.Link>
+                                                {user.roles !== "USER" ? (
+                                                    <Dropdown.Link
+                                                        href={route(
+                                                            "biographypelatih.index"
+                                                        )}
+                                                    >
+                                                        Biography Pelatih
+                                                    </Dropdown.Link>
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </Dropdown.Content>
+                                        </Dropdown>
+                                    </div>
+                                </div>
+
                                 <NavLink
                                     href="/event"
                                     active={
@@ -174,17 +213,6 @@ export default function Authenticated({ user, header, children }) {
                                         ) : (
                                             ""
                                         )}
-                                        {user.roles !== "USER" ? (
-                                            <Dropdown.Link
-                                                href={route(
-                                                    "biographypelatih.index"
-                                                )}
-                                            >
-                                                Biography Pelatih
-                                            </Dropdown.Link>
-                                        ) : (
-                                            ""
-                                        )}
 
                                         <Dropdown.Link
                                             href={route("profile.edit")}
@@ -270,6 +298,25 @@ export default function Authenticated({ user, header, children }) {
                         >
                             Biography
                         </ResponsiveNavLink>
+
+                        {user.roles !== "USER" ? (
+                            <ResponsiveNavLink
+                                href={route("biographypelatih.index")}
+                                active={
+                                    route().current("biographypelatih.index") ||
+                                    route().current(
+                                        "biographypelatih.create"
+                                    ) ||
+                                    route().current("biographypelatih.show") ||
+                                    route().current("biographypelatih.edit")
+                                }
+                            >
+                                Biography Pelatih
+                            </ResponsiveNavLink>
+                        ) : (
+                            ""
+                        )}
+
                         <ResponsiveNavLink
                             href="/event"
                             active={
@@ -339,15 +386,6 @@ export default function Authenticated({ user, header, children }) {
                                     href={route("adminlanding.index")}
                                 >
                                     CompanyProfile
-                                </ResponsiveNavLink>
-                            ) : (
-                                ""
-                            )}
-                            {user.roles !== "USER" ? (
-                                <ResponsiveNavLink
-                                    href={route("biographypelatih.index")}
-                                >
-                                    Biography Pelatih
                                 </ResponsiveNavLink>
                             ) : (
                                 ""

@@ -11,9 +11,33 @@ export default {
     ],
 
     theme: {
+        screens: {
+            xs: "360px",
+            sm: "480px",
+            md: "768px",
+            lg: "976px",
+            xl: "1440px",
+        },
+        container: {
+            center: true,
+            padding: {
+                DEFAULT: "1rem",
+                sm: "2rem",
+                md: "3rem",
+                lg: "4rem",
+                xl: "5rem",
+                "2xl": "6rem",
+            },
+        },
         extend: {
             fontFamily: {
-                sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                poppins: ["Poppins", "sans-serif"],
+            },
+            colors: {
+                primary: "#F97316",
+                black: "#222222",
+                gray: "#666666",
+                lightgray: "#DDDDDD",
             },
         },
     },

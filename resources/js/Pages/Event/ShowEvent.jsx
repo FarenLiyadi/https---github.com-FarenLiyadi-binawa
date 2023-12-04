@@ -133,6 +133,7 @@ export default function ShowEvent({ auth, event, users }) {
             approve: true,
             skor: parseInt(peserta.skor),
             keterangan: peserta.keterangan,
+            foto_piagam: peserta.foto_piagam,
         };
 
         router.put(`/peserta/${peserta.id}`, data);
@@ -157,6 +158,7 @@ export default function ShowEvent({ auth, event, users }) {
                 approve_by: auth.user.id,
                 skor: 0,
                 keterangan: "",
+                foto_piagam: [],
             };
             data.push(peserta);
         }

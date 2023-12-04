@@ -20,6 +20,7 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\UserController;
 use App\Models\CompanyModel;
 use App\Models\Pengeluaran;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,15 +33,17 @@ use App\Models\Pengeluaran;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
 Route::get('/', function () {
+    return Inertia::render('Landing', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+        'harga' => CompanyModel::get(),
+        'user' => Auth::user(),
+    ]);
+});
+Route::get('/qw', function () {
     return view('landing', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),

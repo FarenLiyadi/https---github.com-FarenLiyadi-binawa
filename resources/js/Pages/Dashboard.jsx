@@ -16,7 +16,7 @@ export default function Dashboard({
     pembayaran_graph,
     pengeluaran_graph,
 }) {
-    console.log(pembayaran);
+    console.log(biodata);
     const [flag, setFlag] = useState(false);
     const today = new Date();
     const ids = [];
@@ -335,6 +335,43 @@ export default function Dashboard({
                                     </div>
                                 </a>
                             </div>
+                            {auth.user.roles == "PELATIH" ? (
+                                <div className="flex flex-wrap justify-center">
+                                    <div className="w-full lg:w-1/2   p-6">
+                                        <div className="bg-gradient-to-b from-blue-200 to-blue-100 border-b-4 border-blue-500 rounded-lg shadow-xl p-5">
+                                            <div className="flex flex-col lg:flex-row items-center">
+                                                <div className="flex-shrink">
+                                                    <img
+                                                        src={
+                                                            biodata.length > 0
+                                                                ? biodata[0]
+                                                                      .pas_foto
+                                                                    ? biodata[0]
+                                                                          .pas_foto
+                                                                    : "/no-photo.png"
+                                                                : "/no-photo.png"
+                                                        }
+                                                        className="w-60 rounded-full"
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <div className="flex-1 text-right md:text-center">
+                                                    <h3 className="font-bold text-3xl uppercase">
+                                                        {auth.user.name}
+                                                    </h3>
+                                                    <h3 className="font-bold text-3xl uppercase">
+                                                        {biodata.length > 0
+                                                            ? usia() + " Tahun"
+                                                            : "NOT SET"}{" "}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                ""
+                            )}
                             <div className="flex flex-wrap justify-center">
                                 <div className="w-full p-6">
                                     <div className="w-full bg-gradient-to-b from-blue-200 to-blue-100 border-b-4 border-blue-500 rounded-lg shadow-xl p-5">
