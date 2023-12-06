@@ -7,7 +7,7 @@ import { GiShuttlecock } from "react-icons/gi";
 
 export default function Footer() {
     return (
-        <footer className="">
+        <footer className="" id="contact">
             <div className="container px-0 border-y border-lightgray py-6">
                 <div className="grid lg:grid-cols-3 xl:grid-cols-3">
                     <div className="px-6 md:flex md:justify-between items-center md:border-r border-lightgray mr-2">

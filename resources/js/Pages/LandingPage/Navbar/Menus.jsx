@@ -20,13 +20,18 @@ export default function Menus() {
                 </a>
             </div>
             <div className="w-full">
+                <a href="#atlet" className="hover:text-orange-950 py-2 block">
+                    ATLET
+                </a>
+            </div>
+            <div className="w-full">
                 <a href="#service" className="hover:text-orange-950 py-2 block">
                     SERVICE
                 </a>
             </div>
             <div className="w-full">
-                <a href="#package" className="hover:text-orange-950 py-2 block">
-                    PACKAGE
+                <a href="#pelatih" className="hover:text-orange-950 py-2 block">
+                    PELATIH
                 </a>
             </div>
             <div className="w-full">
