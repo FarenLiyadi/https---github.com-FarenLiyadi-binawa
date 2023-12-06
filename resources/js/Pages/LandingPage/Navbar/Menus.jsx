@@ -8,7 +8,7 @@ export default function Menus() {
                     href="#about"
                     className="hover:text-orange-950 py-2 block whitespace-nowrap"
                 >
-                    ABOUT US
+                    HOME
                 </a>
             </div>
             <div className="w-full">
