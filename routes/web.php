@@ -20,6 +20,7 @@ use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\UserController;
 use App\Models\CompanyModel;
 use App\Models\Pengeluaran;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -41,17 +42,20 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
         'harga' => CompanyModel::get(),
         'user' => Auth::user(),
+        'atlet' => User::with('biography')->where("roles","USER")->where("total_skor" ,">", 0)->get(),
+        'pelatih' => User::with('biography_pelatih')->where("roles","PELATIH")->get(),
+
     ]);
 });
-Route::get('/qw', function () {
-    return view('landing', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-        'harga' => CompanyModel::get(),
-    ]);
-});
+// Route::get('/qw', function () {
+//     return view('landing', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//         'harga' => CompanyModel::get(),
+//     ]);
+// });
 
 // Route::get('/graph', [PembayaranController::class, 'grafik'])->middleware(['auth', 'verified', 'admin','isNotPelatih'])->name("graph");
 Route::get('/ranking-detail', [RankingController::class, 'show']);

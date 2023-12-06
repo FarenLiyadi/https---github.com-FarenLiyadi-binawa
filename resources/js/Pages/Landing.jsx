@@ -4,14 +4,21 @@ import Layout from "./LandingPage/Layout";
 import BackToTopSection from "./LandingPage/sections/BackToTopSection";
 import Binawa from "./LandingPage/sections/Binawa";
 
-export default function Landing({ auth, laravelVersion, phpVersion, user }) {
-    console.log(user);
+export default function Landing({
+    auth,
+    laravelVersion,
+    phpVersion,
+    user,
+    harga,
+    atlet,
+    pelatih,
+}) {
     return (
         <>
             <Head title="PB Binawa" />
             <Layout user={user}>
                 <Whatsapp />
-                <Binawa />
+                <Binawa harga={harga} atlet={atlet} pelatih={pelatih} />
                 <BackToTopSection />
             </Layout>
         </>

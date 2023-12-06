@@ -95,3 +95,8 @@ body {
 .lemon {
     font-family: lemon;
 }
+
+.image-gallery-description {
+    position: relative !important;
+    text-transform: uppercase !important;
+}

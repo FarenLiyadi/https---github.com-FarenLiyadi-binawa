@@ -564,7 +564,7 @@ export default function IndexBiography({ biography, auth, errors, peserta }) {
                                             className="font-bold text-lg mt-5"
                                             id="kartu_keluarga"
                                         >
-                                            Foto Piagam
+                                            Foto Piagam Atlet
                                         </label>
                                         <div className="flex flex-wrap gap-5 mt-10">
                                             {peserta.length > 0 ? (
