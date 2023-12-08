@@ -30,7 +30,7 @@ class LatihanController extends Controller
         } else {
             return Inertia::render("Latihan/IndexLatihan", [
                 // "latihan" => Latihan::orderBy("tanggal", 'asc')->get()
-                'latihan' => new UsersCollection(Latihan::orderBy('tanggal', 'desc')->paginate(1))
+                'latihan' => new UsersCollection(Latihan::orderBy('tanggal', 'desc')->paginate(10))
             ]);
         }
     }

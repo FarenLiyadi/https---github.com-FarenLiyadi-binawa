@@ -384,18 +384,18 @@ export default function Dashboard({
                                                     <div className="inline-block min-w-full py-2 px-3">
                                                         <div className="overflow-hidden">
                                                             <table className="min-w-full text-left text-sm font-light">
-                                                                <thead className="border-b font-medium dark:border-neutral-500">
+                                                                <thead className="border font-medium dark:border-neutral-500">
                                                                     <tr>
                                                                         <th
                                                                             scope="col"
-                                                                            className="px-6 py-4 uppercase"
+                                                                            className="px-6 py-4 uppercase border-r border-neutral-500 "
                                                                         >
                                                                             Nama
                                                                             User
                                                                         </th>
                                                                         <th
                                                                             scope="col"
-                                                                            className="px-6 py-4 uppercase"
+                                                                            className="px-6 py-4 uppercase border-r border-neutral-500 "
                                                                         >
                                                                             Nama
                                                                         </th>
@@ -425,7 +425,7 @@ export default function Dashboard({
                                                                                     key={
                                                                                         index
                                                                                     }
-                                                                                    className={`border-b hover:bg-neutral-400 ${
+                                                                                    className={`border hover:bg-neutral-400 ${
                                                                                         tanggal_reminder >
                                                                                         new Date(
                                                                                             e.tanggal_akhir
@@ -441,14 +441,14 @@ export default function Dashboard({
                                                                                             : "bg-white"
                                                                                     }`}
                                                                                 >
-                                                                                    <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                                                    <td className="whitespace-nowrap px-6 py-4 font-medium border-r border-neutral-500 ">
                                                                                         {
                                                                                             e
                                                                                                 .user
                                                                                                 .email
                                                                                         }
                                                                                     </td>
-                                                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                                                    <td className="whitespace-nowrap px-6 py-4 border-r border-neutral-500 ">
                                                                                         {
                                                                                             e
                                                                                                 .user

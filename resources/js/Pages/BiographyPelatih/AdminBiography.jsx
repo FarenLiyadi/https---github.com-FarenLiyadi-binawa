@@ -61,17 +61,17 @@ export default function AdminBiography(props) {
                                 />
                             </div>
                             <table className="min-w-full text-left text-sm font-light">
-                                <thead className="border-b font-medium dark:border-neutral-500">
+                                <thead className="border font-medium border-neutral-500">
                                     <tr>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 uppercase"
+                                            className="px-6 py-4 uppercase border-r border-neutral-500"
                                         >
                                             Email
                                         </th>
                                         <th
                                             scope="col"
-                                            className="px-6 py-4 uppercase"
+                                            className="px-6 py-4 uppercase border-r border-neutral-500"
                                         >
                                             Nama Lengkap
                                         </th>
@@ -90,18 +90,18 @@ export default function AdminBiography(props) {
                                         return (
                                             <tr
                                                 key={index}
-                                                className={`border-b hover:bg-neutral-400 dark:border-neutral-500  ${
+                                                className={`border hover:bg-neutral-400 border-neutral-500  ${
                                                     (index + 1) % 2 == 0
                                                         ? "bg-neutral-200"
                                                         : "bg-white"
                                                 }`}
                                             >
-                                                <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                <td className="whitespace-nowrap px-6 py-4 font-medium border-r border-neutral-500">
                                                     {e.email !== null
                                                         ? e.email
                                                         : "NOT SET"}
                                                 </td>
-                                                <td className="whitespace-nowrap px-6 py-4">
+                                                <td className="whitespace-nowrap px-6 py-4 border-r border-neutral-500">
                                                     {e.biography_pelatih !==
                                                     null
                                                         ? e.biography_pelatih

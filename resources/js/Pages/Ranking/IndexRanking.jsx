@@ -18,7 +18,7 @@ export default function Ranking({ auth, users }) {
                     return (
                         <div
                             key={index}
-                            className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-3"
+                            className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-3 border border-neutral-300 mb-5 rounded-md shadow-md"
                         >
                             <div
                                 className={` overflow-hidden shadow-sm sm:rounded-lg ${

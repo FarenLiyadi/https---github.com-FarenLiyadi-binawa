@@ -30,7 +30,7 @@ export default function IndexLatihan({ auth, latihan, absen }) {
                             return (
                                 <div
                                     key={index}
-                                    className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2"
+                                    className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2 border border-neutral-300 rounded-md shadow-md mb-5"
                                 >
                                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                         <div className="p-6 text-gray-900 grid grid-row gap-1">
@@ -69,7 +69,7 @@ export default function IndexLatihan({ auth, latihan, absen }) {
                             return (
                                 <div
                                     key={index}
-                                    className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2"
+                                    className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2 border border-neutral-300 rounded-md shadow-md mb-5"
                                 >
                                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                         <div className="p-6 text-gray-900 grid grid-row gap-1">

@@ -58,17 +58,17 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                             <div className="inline-block min-w-full py-2 px-3">
                                 <div className="overflow-hidden">
                                     <table className="min-w-full text-left text-sm font-light">
-                                        <thead className="border-b font-medium dark:border-neutral-500">
+                                        <thead className="border font-medium border-neutral-500">
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    className="px-6 py-4 uppercase"
+                                                    className="px-6 py-4 uppercase border-r border-neutral-500 "
                                                 >
                                                     Name
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    className="px-6 py-4 uppercase"
+                                                    className="px-6 py-4 uppercase border-r border-neutral-500"
                                                 >
                                                     Status
                                                 </th>
@@ -83,12 +83,12 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                                         </thead>
                                         <tbody>
                                             <tr
-                                                className={`border-b hover:bg-neutral-400 dark:border-neutral-500 `}
+                                                className={`border hover:bg-neutral-400 border-neutral-500 `}
                                             >
-                                                <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                <td className="whitespace-nowrap px-6 py-4 font-medium border-r border-neutral-500">
                                                     {auth.user.name}
                                                 </td>
-                                                <td className="whitespace-nowrap px-6 py-4">
+                                                <td className="whitespace-nowrap px-6 py-4 border-r border-neutral-500">
                                                     <p>
                                                         {auth.user.active ? (
                                                             <span className="text-green-400">
@@ -169,17 +169,17 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                             <div className="inline-block min-w-full py-2 px-3">
                                 <div className="overflow-hidden">
                                     <table className="min-w-full text-left text-sm font-light">
-                                        <thead className="border-b font-medium dark:border-neutral-500">
+                                        <thead className="border font-medium border-neutral-500">
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    className="px-6 py-4 uppercase"
+                                                    className="px-6 py-4 uppercase border-r border-neutral-500"
                                                 >
                                                     Name
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    className="px-6 py-4 uppercase"
+                                                    className="px-6 py-4 uppercase border-r border-neutral-500"
                                                 >
                                                     Status
                                                 </th>
@@ -197,18 +197,18 @@ export default function IndexLangganan({ auth, users, pembayaran }) {
                                                 return (
                                                     <tr
                                                         key={index}
-                                                        className={`border-b hover:bg-neutral-400 dark:border-neutral-500  ${
+                                                        className={`border hover:bg-neutral-400 border-neutral-500  ${
                                                             (index + 1) % 2 == 0
                                                                 ? "bg-neutral-200"
                                                                 : "bg-white"
                                                         }`}
                                                     >
-                                                        <td className="whitespace-nowrap px-6 py-4 font-medium">
+                                                        <td className="whitespace-nowrap px-6 py-4 font-medium border-r border-neutral-500">
                                                             {user.name !== null
                                                                 ? user.name
                                                                 : "NOT SET"}
                                                         </td>
-                                                        <td className="whitespace-nowrap px-6 py-4">
+                                                        <td className="whitespace-nowrap px-6 py-4 border-r border-neutral-500">
                                                             <p>
                                                                 {user.active ? (
                                                                     <span className="text-green-400 font-bold">

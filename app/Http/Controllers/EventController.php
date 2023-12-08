@@ -36,7 +36,7 @@ class EventController extends Controller
         // dd(new UsersCollection(Event::orderBy('tanggal_deadline', 'asc')->paginate(1)));
         return Inertia::render('Event/IndexEvent', [
             // 'event' => Event::orderBy('tanggal_deadline', 'asc')->get()
-            'event' => new UsersCollection(Event::orderBy('tanggal_deadline', 'desc')->paginate(1))
+            'event' => new UsersCollection(Event::orderBy('tanggal_deadline', 'desc')->paginate(10))
             // $users = new UsersCollection(User::with(['biography'])->where("roles","USER")->latest()->paginate(20));
         ]);
     }
