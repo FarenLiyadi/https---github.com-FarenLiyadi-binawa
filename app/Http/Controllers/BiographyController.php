@@ -24,7 +24,13 @@ class BiographyController extends Controller
         if (Auth::user()->roles == "USER") {
 $id = Auth::user()->id;
             $biography = Biography::with('user')->where("user_id", $id)->get();
-            $peserta = Peserta::where("user_id",$biography[0]->user_id)->get();
+            // dd($biography);
+            if(count($biography) >0){
+
+                $peserta = Peserta::where("user_id",$biography[0]->user_id)->get();
+            } else{
+                $peserta = [];
+            }
             // dd($peserta);
            
 
