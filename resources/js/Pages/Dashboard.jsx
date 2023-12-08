@@ -18,13 +18,16 @@ export default function Dashboard({
 }) {
     console.log(biodata);
     const [flag, setFlag] = useState(false);
-    const today = new Date();
+    const [tanggal, setTanggal] = useState(new Date());
+    const today = tanggal;
+    // new Date("2023-11-01")
     const ids = [];
     let pendapatan = 0;
     let pengeluaran = 0;
     let this_month = today.toLocaleDateString("id-ID", {
         month: "long",
     });
+    console.log(this_month);
 
     function subtractDays(date, days) {
         date.setDate(date.getDate() + days);
@@ -483,6 +486,27 @@ export default function Dashboard({
                                     </div>
                                     {auth.user.roles == "ADMIN" ? (
                                         <div className="max-w-3xl mx-auto sm:px-6 lg:px-8 p-12">
+                                            <div>
+                                                <label htmlFor="tanggalPembayaran">
+                                                    Set Tanggal
+                                                </label>
+                                                <input
+                                                    className="w-full rounded-lg mt-2"
+                                                    type="date"
+                                                    id="tanggal"
+                                                    name="tanggal"
+                                                    defaultValue={
+                                                        new Date(tanggal)
+                                                    }
+                                                    onChange={(e) => {
+                                                        setTanggal(
+                                                            new Date(
+                                                                e.target.value
+                                                            )
+                                                        );
+                                                    }}
+                                                />
+                                            </div>
                                             <BarChart chartData={chartData} />
                                         </div>
                                     ) : (
