@@ -22,15 +22,13 @@ class BiographyController extends Controller
     public function index()
     {
         if (Auth::user()->roles == "USER") {
-$id = Auth::user()->id;
+            $id = Auth::user()->id;
             $biography = Biography::with('user')->where("user_id", $id)->get();
-            $peserta = Peserta::where("user_id",$biography[0]->user_id)->get();
-            // dd($peserta);
-           
+            $peserta = Peserta::where("user_id", $id)->get();
 
 
             return Inertia::render('Biography/IndexBiography', [
-                'biography' => Biography::with('user')->where("user_id", Auth::user()->id)->get(),
+                'biography' => $biography,
                 'peserta' => $peserta
             ]);
         } else {
@@ -38,7 +36,7 @@ $id = Auth::user()->id;
             // dd($users);
             return Inertia::render('Biography/AdminBiography', [
                 'user' => $users,
-                'peserta'=>[]
+                'peserta' => []
             ]);
         }
     }
@@ -75,6 +73,7 @@ $id = Auth::user()->id;
             'tangan' => 'nullable',
             'alamat' => 'nullable',
             'no_telp' => 'nullable',
+            'sertifikat' => 'nullable',
         ]);
         $request->validate([
             'pas_foto' => 'mimes:jpeg,jpg,png|nullable',
@@ -130,6 +129,22 @@ $id = Auth::user()->id;
             $nama_rapor = null;
         }
 
+        $gambarSertifikat =  $request->file('sertifikat');
+        $updated_data = [];
+        if ($gambarSertifikat) {
+            for ($i = 0; $i < count($gambarSertifikat); $i++) {
+                $sertifikat = $request->sertifikat[$i];
+                // dd($sertifikat);
+                # code...
+                $foto_sertifikat = $gambarSertifikat[$i];
+                $nama_foto_sertifikat = 'sertifikat_atlet/binawa_foto_sertifikat_' . $i . '_' . date('Ymdhis') . '.' . $foto_sertifikat['gambar']->getClientOriginalExtension();
+                $foto_sertifikat['gambar']->move('sertifikat_atlet', $nama_foto_sertifikat);
+                $sertifikat['gambar'] = $nama_foto_sertifikat;
+                array_push($updated_data, $sertifikat);
+            }
+        }
+        $validatedData['sertifikat'] = $updated_data;
+
         $replacement = array('pas_foto' => $nama_pas_foto);
         $replacement2 = array('kartu_keluarga' => $nama_kartu_keluarga);
         $replacement3 = array('akte_kelahiran' => $nama_akte_kelahiran);
@@ -153,7 +168,7 @@ $id = Auth::user()->id;
     public function show(string $id)
     {
         $biography = Biography::with('user')->where("user_id", $id)->get();
-        $peserta = Peserta::where("user_id",$biography[0]->user_id)->get();
+        $peserta = Peserta::where("user_id", $biography[0]->user_id)->get();
         // dd($peserta);
         return Inertia::render('Biography/IndexBiography', [
             'biography' => Biography::with('user')->where("user_id", $id)->get(),
@@ -166,7 +181,7 @@ $id = Auth::user()->id;
      */
     public function edit(string $id)
     {
-        
+
 
         return Inertia::render('Biography/EditBiography', [
             'biography' => Biography::with('user')->where("id", $id)->get(),
@@ -200,6 +215,7 @@ $id = Auth::user()->id;
             'tangan' => 'nullable',
             'alamat' => 'nullable',
             'no_telp' => 'nullable',
+            'sertifikat' => 'nullable',
         ]);
         $request->validate([
             'pas_foto' => 'mimes:jpeg,jpg,png|nullable',
@@ -278,6 +294,57 @@ $id = Auth::user()->id;
         }
         $replacement5 = array('rapor' => $nama_rapor);
 
+        $gambarSertifikat =  $request->sertifikat;
+        $updated_data = [];
+        // dd($gambarSertifikat);
+
+
+        if (count($gambarSertifikat) > 0) {
+
+            for ($i = 0; $i < count($gambarSertifikat); $i++) {
+
+                $sertifikat = $request->sertifikat[$i];
+                $foto_sertifikat = $gambarSertifikat[$i];
+
+                // Cek apakah data sebelumnya ada atau tidak
+                if (isset($biography->sertifikat[$i])) {
+
+                    // Cek apakah data diubah atau tidak
+                    if ($biography->sertifikat[$i]['gambar'] == $foto_sertifikat['gambar']) {
+                        // Sama
+                        array_push($updated_data, $foto_sertifikat);
+                    } else {
+                        // Jika Berubah maka hapus file path lama
+                        File::delete(public_path($biography->sertifikat[$i]['gambar']));
+
+                        // Upload file yang berubah
+                        $nama_foto_sertifikat = 'sertifikat_atlet/binawa_foto_sertifikat_' . $i . '_' . date('Ymdhis') . '.' . $foto_sertifikat['gambar']->getClientOriginalExtension();
+                        $foto_sertifikat['gambar']->move('sertifikat_atlet', $nama_foto_sertifikat);
+                        $sertifikat['gambar'] = $nama_foto_sertifikat;
+                        array_push($updated_data, $sertifikat);
+                    }
+                    // dd("ada");
+                } else {
+                    // dd("Tidak Ada");
+                    // Tidak ada
+                    // Upload File Baru
+                    $nama_foto_sertifikat = 'sertifikat_atlet/binawa_foto_sertifikat_' . $i . '_' . date('Ymdhis') . '.' . $foto_sertifikat['gambar']->getClientOriginalExtension();
+                    $foto_sertifikat['gambar']->move('sertifikat_atlet', $nama_foto_sertifikat);
+                    $sertifikat['gambar'] = $nama_foto_sertifikat;
+                    array_push($updated_data, $sertifikat);
+                }
+            }
+            $validatedData['sertifikat'] = $updated_data;
+        } else {
+            // Kosong
+            // dd("Kosong");
+            foreach ($biography->sertifikat as $sertifikat) {
+                // Hapus file
+                File::delete(public_path($sertifikat['gambar']));
+            }
+        }
+
+
         $validatedData2 = array_replace($validatedData, $replacement);
         $validatedData3 = array_replace($validatedData2, $replacement2);
         $validatedData4 = array_replace($validatedData3, $replacement3);
@@ -300,7 +367,7 @@ $id = Auth::user()->id;
 
     public function search(Request $request)
     {
-        
+
         $nama = $request->input('nama');
         // dd($request);
         $users = new UsersCollection(User::with(['biography'])->where("roles", "USER")->search($nama)->latest()->paginate(20));

@@ -9,6 +9,7 @@ import ReactDropdown from "react-dropdown";
 import NavLink from "@/Components/NavLink";
 
 export default function IndexBiography({ biography, auth, errors, peserta }) {
+    console.log(biography);
     console.log(peserta);
     const options2 = [biography.length > 0 ? biography[0].jenis_kelamin : ""];
 
@@ -554,6 +555,40 @@ export default function IndexBiography({ biography, auth, errors, peserta }) {
                                         ) : (
                                             <h1 className="text-red-500">
                                                 FOTO RAPOR BELUM ADA
+                                            </h1>
+                                        )}
+                                    </div>
+                                    <div className="mt-2">
+                                        <label className="">
+                                            Foto Sertifikat
+                                        </label>
+                                        {biography[0].sertifikat.length ? (
+                                            biography[0].sertifikat.map(
+                                                (data, key) => {
+                                                    return (
+                                                        <div
+                                                            key={key}
+                                                            className="mb-2"
+                                                        >
+                                                            <label>
+                                                                {
+                                                                    data.keterangan
+                                                                }
+                                                            </label>
+                                                            <img
+                                                                className="rounded-t-lg w-64"
+                                                                src={`/${data.gambar}`}
+                                                                alt={
+                                                                    data.keterangan
+                                                                }
+                                                            />
+                                                        </div>
+                                                    );
+                                                }
+                                            )
+                                        ) : (
+                                            <h1 className="text-red-500">
+                                                FOTO Sertifikat BELUM ADA
                                             </h1>
                                         )}
                                     </div>
