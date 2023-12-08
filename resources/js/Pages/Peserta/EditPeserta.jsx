@@ -9,7 +9,13 @@ export default function EditPeserta({ auth, peserta }) {
     // const [piagam, setPiagam] = useState(peserta.foto_piagam || null);
 
     console.log(peserta);
-    const [fotoCount, setFotoCount] = useState(peserta.foto_piagam.length || 0);
+    const [fotoCount, setFotoCount] = useState(
+        peserta.foto_piagam
+            ? peserta.foto_piagam.length
+                ? peserta.foto_piagam.length
+                : 0
+            : 0
+    );
     const [fotoData, setFotoData] = useState(peserta.foto_piagam || []);
     const [isSimpan, setIsSimpan] = useState(false);
 
