@@ -124,8 +124,9 @@ class BiographyPelatih extends Controller
                 $sertifikat['gambar'] = $nama_foto_sertifikat;
                 array_push($updated_data, $sertifikat);
             }
-            $validatedData['sertifikat'] = $updated_data;
         }
+        $validatedData['sertifikat'] = $updated_data;
+
 
         $replacement = array('ktp' => $nama_ktp);
         $replacement2 = array('kk' => $nama_kk);
@@ -252,48 +253,51 @@ class BiographyPelatih extends Controller
         $gambarSertifikat =  $request->sertifikat;
         $updated_data = [];
         // dd($gambarSertifikat);
-        if (count($gambarSertifikat) > 0) {
+        if ($request->sertifikat != null) {
 
-            for ($i = 0; $i < count($gambarSertifikat); $i++) {
+            if (count($gambarSertifikat) > 0) {
 
-                $sertifikat = $request->sertifikat[$i];
-                $foto_sertifikat = $gambarSertifikat[$i];
+                for ($i = 0; $i < count($gambarSertifikat); $i++) {
 
-                // Cek apakah data sebelumnya ada atau tidak
-                if (isset($biography->sertifikat[$i])) {
+                    $sertifikat = $request->sertifikat[$i];
+                    $foto_sertifikat = $gambarSertifikat[$i];
 
-                    // Cek apakah data diubah atau tidak
-                    if ($biography->sertifikat[$i]['gambar'] == $foto_sertifikat['gambar']) {
-                        // Sama
-                        array_push($updated_data, $foto_sertifikat);
+                    // Cek apakah data sebelumnya ada atau tidak
+                    if (isset($biography->sertifikat[$i])) {
+
+                        // Cek apakah data diubah atau tidak
+                        if ($biography->sertifikat[$i]['gambar'] == $foto_sertifikat['gambar']) {
+                            // Sama
+                            array_push($updated_data, $foto_sertifikat);
+                        } else {
+                            // Jika Berubah maka hapus file path lama
+                            File::delete(public_path($biography->sertifikat[$i]['gambar']));
+
+                            // Upload file yang berubah
+                            $nama_foto_sertifikat = 'sertifikat_pelatih/binawa_foto_sertifikat_' . $i . '_' . date('Ymdhis') . '.' . $foto_sertifikat['gambar']->getClientOriginalExtension();
+                            $foto_sertifikat['gambar']->move('sertifikat_pelatih', $nama_foto_sertifikat);
+                            $sertifikat['gambar'] = $nama_foto_sertifikat;
+                            array_push($updated_data, $sertifikat);
+                        }
+                        // dd("ada");
                     } else {
-                        // Jika Berubah maka hapus file path lama
-                        File::delete(public_path($biography->sertifikat[$i]['gambar']));
-
-                        // Upload file yang berubah
+                        // dd("Tidak Ada");
+                        // Tidak ada
+                        // Upload File Baru
                         $nama_foto_sertifikat = 'sertifikat_pelatih/binawa_foto_sertifikat_' . $i . '_' . date('Ymdhis') . '.' . $foto_sertifikat['gambar']->getClientOriginalExtension();
                         $foto_sertifikat['gambar']->move('sertifikat_pelatih', $nama_foto_sertifikat);
                         $sertifikat['gambar'] = $nama_foto_sertifikat;
                         array_push($updated_data, $sertifikat);
                     }
-                    // dd("ada");
-                } else {
-                    // dd("Tidak Ada");
-                    // Tidak ada
-                    // Upload File Baru
-                    $nama_foto_sertifikat = 'sertifikat_pelatih/binawa_foto_sertifikat_' . $i . '_' . date('Ymdhis') . '.' . $foto_sertifikat['gambar']->getClientOriginalExtension();
-                    $foto_sertifikat['gambar']->move('sertifikat_pelatih', $nama_foto_sertifikat);
-                    $sertifikat['gambar'] = $nama_foto_sertifikat;
-                    array_push($updated_data, $sertifikat);
                 }
-            }
-            $validatedData['sertifikat'] = $updated_data;
-        } else {
-            // Kosong
-            // dd("Kosong");
-            foreach ($biography->sertifikat as $sertifikat) {
-                // Hapus file
-                File::delete(public_path($sertifikat['gambar']));
+                $validatedData['sertifikat'] = $updated_data;
+            } else {
+                // Kosong
+                // dd("Kosong");
+                foreach ($biography->sertifikat as $sertifikat) {
+                    // Hapus file
+                    File::delete(public_path($sertifikat['gambar']));
+                }
             }
         }
 

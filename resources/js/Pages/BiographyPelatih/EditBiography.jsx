@@ -35,6 +35,7 @@ export default function EditBiography({ biography, auth }) {
 
     const temp_keterangan = [];
     const temp_gambar = [];
+
     for (let i = 0; i < sertifikat.length; i++) {
         temp_keterangan.push(sertifikat[i]["keterangan"]);
         temp_gambar.push(sertifikat[i]["gambar"]);
@@ -42,8 +43,9 @@ export default function EditBiography({ biography, auth }) {
     console.log(temp_keterangan, temp_gambar);
 
     const [sertifikatCount, setSertifikatCount] = useState(
-        biography[0].sertifikat.length
+        sertifikat.length || 0
     );
+
     const [keteranganSertifikatData, setKeteranganSertifikatData] = useState(
         temp_keterangan || []
     );

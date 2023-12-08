@@ -405,7 +405,7 @@ export default function IndexBiography({ biography, auth, errors }) {
                                         <label className="">
                                             Foto Sertifikat
                                         </label>
-                                        {biography[0].sertifikat.length > 0 ? (
+                                        {biography[0].sertifikat.length ? (
                                             biography[0].sertifikat.map(
                                                 (data, key) => {
                                                     return (
