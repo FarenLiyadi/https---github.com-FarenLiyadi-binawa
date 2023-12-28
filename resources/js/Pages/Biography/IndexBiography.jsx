@@ -562,7 +562,7 @@ export default function IndexBiography({ biography, auth, errors, peserta }) {
                                         <label className="">
                                             Foto Sertifikat
                                         </label>
-                                        {biography[0].sertifikat.length ? (
+                                        {biography[0].sertifikat ? (
                                             biography[0].sertifikat.map(
                                                 (data, key) => {
                                                     return (
@@ -604,17 +604,21 @@ export default function IndexBiography({ biography, auth, errors, peserta }) {
                                         <div className="flex flex-wrap gap-5 mt-10">
                                             {peserta.length > 0 ? (
                                                 peserta.map((e) =>
-                                                    e.foto_piagam.map(
-                                                        (a, index) => {
-                                                            return (
-                                                                <img
-                                                                    key={index}
-                                                                    src={`/${a}`}
-                                                                    className="max-w-xs"
-                                                                />
-                                                            );
-                                                        }
-                                                    )
+                                                    e.foto_piagam
+                                                        ? e.foto_piagam.map(
+                                                              (a, index) => {
+                                                                  return (
+                                                                      <img
+                                                                          key={
+                                                                              index
+                                                                          }
+                                                                          src={`/${a}`}
+                                                                          className="max-w-xs"
+                                                                      />
+                                                                  );
+                                                              }
+                                                          )
+                                                        : ""
                                                 )
                                             ) : (
                                                 <h1 className="text-red-500">

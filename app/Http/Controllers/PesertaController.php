@@ -182,13 +182,16 @@ class PesertaController extends Controller
             } else {
                 // Kosong
                 // dd("Kosong");
-                if (count($peserta_data[0]->foto_piagam) > 0) {
-                    foreach ($peserta_data[0]->foto_piagam as $foto) {
-                        // Hapus file
-                        // dd($foto);
-                        File::delete(public_path($foto));
+               
+    
+                    if (count($peserta_data[0]->foto_piagam) > 0) {
+                        foreach ($peserta_data[0]->foto_piagam as $foto) {
+                            // Hapus file
+                            // dd($foto);
+                            File::delete(public_path($foto));
+                        }
                     }
-                }
+                
             }
         }
 

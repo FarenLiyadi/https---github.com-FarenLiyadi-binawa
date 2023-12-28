@@ -29,7 +29,7 @@ class EventController extends Controller
         if ($user->roles == "USER") {
             return Inertia::render('Event/IndexEvent', [
                 // 'event' => Event::filter()->get(),
-                'event' => new UsersCollection(Event::filter()->paginate(2)),
+                'event' => new UsersCollection(Event::filter()->paginate(10)),
                 'peserta' => Peserta::where('user_id', $user->id)->get()
             ]);
         };

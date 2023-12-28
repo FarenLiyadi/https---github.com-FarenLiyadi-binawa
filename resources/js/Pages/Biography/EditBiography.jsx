@@ -43,14 +43,16 @@ export default function EditBiography({ biography, auth }) {
     const temp_keterangan = [];
     const temp_gambar = [];
 
-    for (let i = 0; i < sertifikat.length; i++) {
-        temp_keterangan.push(sertifikat[i]["keterangan"]);
-        temp_gambar.push(sertifikat[i]["gambar"]);
+    if (sertifikat) {
+        for (let i = 0; i < sertifikat.length; i++) {
+            temp_keterangan.push(sertifikat[i]["keterangan"]);
+            temp_gambar.push(sertifikat[i]["gambar"]);
+        }
     }
     console.log(temp_keterangan, temp_gambar);
 
     const [sertifikatCount, setSertifikatCount] = useState(
-        sertifikat.length || 0
+        sertifikat ? sertifikat.length : 0 || 0
     );
 
     const [keteranganSertifikatData, setKeteranganSertifikatData] = useState(

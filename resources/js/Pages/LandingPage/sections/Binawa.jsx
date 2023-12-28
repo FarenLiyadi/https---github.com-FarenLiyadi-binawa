@@ -8,8 +8,8 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import { array } from "prop-types";
 
-export default function Binawa({ harga, atlet, pelatih }) {
-    console.log(pelatih);
+export default function Binawa({ harga, atlet, pelatih, event }) {
+    console.log(event);
 
     const imagess = [];
     atlet.map((e) => {
@@ -158,9 +158,8 @@ export default function Binawa({ harga, atlet, pelatih }) {
                 <section className="bg-slate-200 bg-cover bg-top" id="atlet">
                     <div className="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-9 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
                         <div className=" place-self-center lg:col-span-7">
-                            <h1 className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl text-gray-900">
-                                Jadilah juara <br />
-                                bersama <br />
+                            <h1 className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl text-gray-900 uppercase">
+                                Jadilah juara bersama <br />
                                 PB BINAWA
                             </h1>
                             <p className="max-w-2xl mb-6 font-light text-gray-400 lg:mb-8 md:text-lg lg:text-xl ">
@@ -292,7 +291,7 @@ export default function Binawa({ harga, atlet, pelatih }) {
                 </section>
             </Fade>
             <Fade up>
-                <section className="bg-white dark:bg-gray-900" id="pelatih">
+                <section className="bg-white " id="pelatih">
                     <div className="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
                         <div className="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
                             <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 ">
@@ -329,23 +328,82 @@ export default function Binawa({ harga, atlet, pelatih }) {
                                                     : "Karier Not Set"}
                                             </p>
                                             <div className="flex items-baseline justify-center my-8">
-                                                <img
-                                                    src={
-                                                        items.biography_pelatih !=
-                                                        null
-                                                            ? items
-                                                                  .biography_pelatih
-                                                                  .pas_foto
+                                                <div className="">
+                                                    <img
+                                                        src={
+                                                            items.biography_pelatih !=
+                                                            null
                                                                 ? items
                                                                       .biography_pelatih
                                                                       .pas_foto
+                                                                    ? items
+                                                                          .biography_pelatih
+                                                                          .pas_foto
+                                                                    : "no-photo.png"
                                                                 : "no-photo.png"
-                                                            : "no-photo.png"
-                                                    }
-                                                    alt=""
-                                                    className="w-60 rounded-lg"
-                                                />
+                                                        }
+                                                        alt=""
+                                                        className="w-60  rounded-lg"
+                                                    />
+                                                </div>
                                             </div>
+                                        </div>
+                                    </Fade>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </section>
+            </Fade>
+            <Fade up>
+                <section className="bg-slate-300" id="pelatih">
+                    <div className="max-w-screen-xl px-4 py-8 mx-auto lg:py-24 lg:px-6">
+                        <div className="max-w-screen-md mx-auto mb-8 text-center lg:mb-12">
+                            <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 ">
+                                Event di PB Binawa
+                            </h2>
+                            <p className="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">
+                                Event-event seru yang akan mendatang!
+                            </p>
+                        </div>
+                        <div className="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
+                            {event.map((items) => {
+                                return (
+                                    <Fade up>
+                                        <div className="flex min-w-full  flex-col max-w-lg p-6 mx-auto text-center text-gray-900 border border-slate-200 bg-white  rounded-lg shadow-lg  xl:p-8 dark:bg-gray-800">
+                                            <h3 className="mb-4 text-2xl font-semibold uppercase">
+                                                {items.nama_event}
+                                            </h3>
+                                            <div className="flex items-baseline justify-center my-8">
+                                                <div className="">
+                                                    <img
+                                                        src={
+                                                            items.poster_url
+                                                                ? items.poster_url
+                                                                : "no-photo.png"
+                                                        }
+                                                        alt=""
+                                                        className="w-60  rounded-lg"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                                                LOKASI: {items.tempat_event}
+                                            </p>
+                                            <p className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+                                                <span className="text-red-500">
+                                                    BATAS PENDAFTARAN
+                                                </span>
+                                                <br />
+                                                {new Date(
+                                                    items.tanggal_deadline
+                                                ).toLocaleDateString("id-ID", {
+                                                    weekday: "long",
+                                                    day: "2-digit",
+                                                    month: "long",
+                                                    year: "numeric",
+                                                })}
+                                            </p>
                                         </div>
                                     </Fade>
                                 );

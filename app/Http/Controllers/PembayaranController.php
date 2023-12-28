@@ -27,12 +27,13 @@ class PembayaranController extends Controller
 
         if ($user->roles === 'USER') {
             return Inertia::render('Pembayaran/IndexPembayaran', [
-                'pembayaran' => Pembayaran::where('user_id', '=', $user->id)->orderBy("tanggal_pembayaran", 'desc')->get()
+                // 'pembayaran' => Pembayaran::where('user_id', '=', $user->id)->orderBy("tanggal_pembayaran", 'desc')->get(),
+                'pembayaran' => new UsersCollection(Pembayaran::where('user_id', '=', $user->id)->orderBy("tanggal_pembayaran", 'desc')->get())
             ]);
         } else {
             return Inertia::render('Pembayaran/IndexPembayaran', [
                 // 'pembayaran' => Pembayaran::all()
-                'pembayaran' => new UsersCollection(Pembayaran::latest()->paginate(5))
+                'pembayaran' => new UsersCollection(Pembayaran::latest()->paginate(10))
             ]);
         }
     }
@@ -142,8 +143,11 @@ class PembayaranController extends Controller
 
     public function search(Request $request)
     {
-        $nama = $request->input('nama');
-        $pemayaran = new UsersCollection(Pembayaran::search($nama)->latest()->paginate(5));
-        return $pemayaran;
+        $search = $request->input('search');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $pembayaran = new UsersCollection(Pembayaran::search($search, $startDate, $endDate)->latest()->paginate(5));
+        return $pembayaran;
     }
 }

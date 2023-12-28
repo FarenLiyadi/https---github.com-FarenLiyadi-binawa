@@ -132,129 +132,167 @@ export default function Dashboard({
             <Head title="Dashboard" />
 
             {auth.user.roles == "USER" ? (
-                <div className="flex flex-col md:flex-row">
-                    <div className="px-5 flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
-                        <div className="flex flex-wrap">
-                            <div className="w-full md:w-1/2 xl:w-1/3 p-6">
-                                <div className="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
-                                    <div className="flex flex-row items-center">
-                                        <div className="flex-shrink pr-4">
-                                            <div className="rounded-full p-5 bg-green-600">
-                                                <i className="fa fa-wallet fa-2x fa-inverse"></i>
+                <div className="">
+                    <div className="flex flex-col md:flex-row">
+                        <div className="px-5 flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
+                            <div className="flex flex-wrap">
+                                <div className="w-full md:w-1/2 xl:w-1/3 p-6">
+                                    <div className="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5">
+                                        <div className="flex flex-row items-center">
+                                            <div className="flex-shrink pr-4">
+                                                <div className="rounded-full p-5 bg-green-600">
+                                                    <i className="fa fa-wallet fa-2x fa-inverse"></i>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className="flex-1 text-right md:text-center">
-                                            <h5 className="font-bold uppercase text-gray-600">
-                                                Member Sejak
-                                            </h5>
-                                            <h3 className="font-bold text-2xl">
-                                                {auth.user.created_at
-                                                    ? new Date(
-                                                          auth.user.created_at
-                                                      ).toLocaleDateString(
-                                                          "id-ID",
-                                                          {
-                                                              //   weekday: "long",
-                                                              day: "2-digit",
-                                                              month: "long",
-                                                              year: "numeric",
-                                                          }
-                                                      )
-                                                    : ""}
-                                                <span className="text-green-500">
-                                                    <i className="fas fa-caret-up"></i>
-                                                </span>
-                                            </h3>
+                                            <div className="flex-1 text-right md:text-center">
+                                                <h5 className="font-bold uppercase text-gray-600">
+                                                    Member Sejak
+                                                </h5>
+                                                <h3 className="font-bold text-2xl">
+                                                    {auth.user.created_at
+                                                        ? new Date(
+                                                              auth.user.created_at
+                                                          ).toLocaleDateString(
+                                                              "id-ID",
+                                                              {
+                                                                  //   weekday: "long",
+                                                                  day: "2-digit",
+                                                                  month: "long",
+                                                                  year: "numeric",
+                                                              }
+                                                          )
+                                                        : ""}
+                                                    <span className="text-green-500">
+                                                        <i className="fas fa-caret-up"></i>
+                                                    </span>
+                                                </h3>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <a
+                                    className="w-full md:w-1/2 xl:w-1/3 p-6"
+                                    href="/ranking"
+                                >
+                                    <div className="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
+                                        <div className="flex flex-row items-center">
+                                            <div className="flex-shrink pr-4">
+                                                <div className="rounded-full p-5 bg-pink-600">
+                                                    <i className="fas fa-users fa-2x fa-inverse"></i>
+                                                </div>
+                                            </div>
+                                            <div className="flex-1 text-right md:text-center">
+                                                <h5 className="font-bold uppercase text-gray-600">
+                                                    Total Poin
+                                                </h5>
+                                                <h3 className="font-bold text-2xl">
+                                                    {auth.user.total_skor}
+                                                    <span className="text-pink-500">
+                                                        <i className="fas fa-exchange-alt"></i>
+                                                    </span>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a
+                                    className="w-full md:w-1/2 xl:w-1/3 p-6"
+                                    href={`/ranking-detail?id=${auth.user.id}`}
+                                >
+                                    <div className="bg-gradient-to-b from-yellow-200 to-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-xl p-5">
+                                        <div className="flex flex-row items-center">
+                                            <div className="flex-shrink pr-4">
+                                                <div className="rounded-full p-5 bg-yellow-600">
+                                                    <i className="fas fa-user-plus fa-2x fa-inverse"></i>
+                                                </div>
+                                            </div>
+                                            <div className="flex-1 text-right md:text-center">
+                                                <h5 className="font-bold uppercase text-gray-600">
+                                                    Jumlah Pertandingan
+                                                </h5>
+                                                <h3 className="font-bold text-3xl">
+                                                    {pertandingan
+                                                        ? pertandingan.length
+                                                        : "0"}
+                                                    <span className="text-yellow-600">
+                                                        <i className="fas fa-caret-up"></i>
+                                                    </span>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
-                            <a
-                                className="w-full md:w-1/2 xl:w-1/3 p-6"
-                                href="/ranking"
-                            >
-                                <div className="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
-                                    <div className="flex flex-row items-center">
-                                        <div className="flex-shrink pr-4">
-                                            <div className="rounded-full p-5 bg-pink-600">
-                                                <i className="fas fa-users fa-2x fa-inverse"></i>
-                                            </div>
-                                        </div>
-                                        <div className="flex-1 text-right md:text-center">
-                                            <h5 className="font-bold uppercase text-gray-600">
-                                                Total Poin
-                                            </h5>
-                                            <h3 className="font-bold text-2xl">
-                                                {auth.user.total_skor}
-                                                <span className="text-pink-500">
-                                                    <i className="fas fa-exchange-alt"></i>
-                                                </span>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a
-                                className="w-full md:w-1/2 xl:w-1/3 p-6"
-                                href={`/ranking-detail?id=${auth.user.id}`}
-                            >
-                                <div className="bg-gradient-to-b from-yellow-200 to-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-xl p-5">
-                                    <div className="flex flex-row items-center">
-                                        <div className="flex-shrink pr-4">
-                                            <div className="rounded-full p-5 bg-yellow-600">
-                                                <i className="fas fa-user-plus fa-2x fa-inverse"></i>
-                                            </div>
-                                        </div>
-                                        <div className="flex-1 text-right md:text-center">
-                                            <h5 className="font-bold uppercase text-gray-600">
-                                                Jumlah Pertandingan
-                                            </h5>
-                                            <h3 className="font-bold text-3xl">
-                                                {pertandingan
-                                                    ? pertandingan.length
-                                                    : "0"}
-                                                <span className="text-yellow-600">
-                                                    <i className="fas fa-caret-up"></i>
-                                                </span>
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div className="flex flex-wrap justify-center">
-                            <div className="w-full lg:w-1/2   p-6">
-                                <div className="bg-gradient-to-b from-blue-200 to-blue-100 border-b-4 border-blue-500 rounded-lg shadow-xl p-5">
-                                    <div className="flex flex-col lg:flex-row items-center">
-                                        <div className="flex-shrink">
-                                            <img
-                                                src={
-                                                    biodata.length > 0
-                                                        ? biodata[0].pas_foto
+                            <div className="flex flex-wrap justify-center">
+                                <div className="w-full lg:w-1/2   p-6">
+                                    <div className="bg-gradient-to-b from-blue-200 to-blue-100 border-b-4 border-blue-500 rounded-lg shadow-xl p-5">
+                                        <div className="flex flex-col lg:flex-row items-center">
+                                            <div className="flex-shrink">
+                                                <img
+                                                    src={
+                                                        biodata.length > 0
                                                             ? biodata[0]
                                                                   .pas_foto
+                                                                ? biodata[0]
+                                                                      .pas_foto
+                                                                : "/no-photo.png"
                                                             : "/no-photo.png"
-                                                        : "/no-photo.png"
-                                                }
-                                                className="w-60 rounded-full"
-                                                alt=""
-                                            />
-                                        </div>
-                                        <div className="flex-1 text-right md:text-center">
-                                            <h3 className="font-bold text-3xl uppercase">
-                                                {auth.user.name}
-                                            </h3>
-                                            <h3 className="font-bold text-3xl uppercase">
-                                                {biodata.length > 0
-                                                    ? usia() + " Tahun"
-                                                    : "NOT SET"}{" "}
-                                            </h3>
+                                                    }
+                                                    className="w-60 rounded-full"
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div className="flex-1 text-right md:text-center">
+                                                <h3 className="font-bold text-3xl uppercase">
+                                                    {auth.user.name}
+                                                </h3>
+                                                <h3 className="font-bold text-3xl uppercase">
+                                                    {biodata.length > 0
+                                                        ? usia() + " Tahun"
+                                                        : "NOT SET"}{" "}
+                                                </h3>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {pembayaran.length > 0 ? (
+                        pembayaran.map((e, index) => {
+                            console.log(e);
+                            const tanggal_reminder = subtractDays(
+                                new Date(),
+                                3
+                            );
+                            return (
+                                <div
+                                    key={index}
+                                    className={`text-center m-4 p-4 rounded-md  text-2xl ${
+                                        tanggal_reminder >
+                                        new Date(e.tanggal_akhir)
+                                            ? "text-red-700 bg-red-200"
+                                            : "text-black bg-blue-200"
+                                    }`}
+                                >
+                                    MEMBERSHIP ANDA BERAKHIR PADA <br />
+                                    {new Date(
+                                        e.tanggal_akhir
+                                    ).toLocaleDateString("id-ID", {
+                                        weekday: "long",
+                                        day: "2-digit",
+                                        month: "long",
+                                        year: "numeric",
+                                    })}
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <h1 className="text-center text-red-600  ">
+                            SILAHKAN MELAKUKAN PEMBAYARAN TERLEBIH DAHULU DAN
+                            HUBUNGI ADMIN
+                        </h1>
+                    )}
                 </div>
             ) : (
                 <div className="pb-10">
@@ -290,10 +328,36 @@ export default function Dashboard({
                                     className="w-full md:w-1/2 xl:w-1/3 p-6"
                                     href="/langganan"
                                 >
-                                    <div className="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
+                                    <div className="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500  rounded-lg shadow-xl p-5">
                                         <div className="flex flex-row items-center">
                                             <div className="flex-shrink pr-4">
                                                 <div className="rounded-full p-5 bg-pink-600">
+                                                    <i className="fa fa-wallet fa-2x fa-inverse"></i>
+                                                </div>
+                                            </div>
+                                            <div className="flex-1 text-right md:text-center">
+                                                <h5 className="font-bold uppercase text-gray-600">
+                                                    Jumlah Member Tidak Aktif
+                                                </h5>
+                                                <h3 className="font-bold text-2xl">
+                                                    {total_member.length -
+                                                        total_member_active.length}
+                                                    <span className="text-pink-500">
+                                                        <i className="fas fa-caret-up"></i>
+                                                    </span>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a
+                                    className="w-full md:w-1/2 xl:w-1/3 p-6"
+                                    href="/langganan"
+                                >
+                                    <div className="bg-gradient-to-b from-blue-200 to-blue-100 border-b-4 border-blue-500 rounded-lg shadow-xl p-5">
+                                        <div className="flex flex-row items-center">
+                                            <div className="flex-shrink pr-4">
+                                                <div className="rounded-full p-5 bg-blue-600">
                                                     <i className="fas fa-users fa-2x fa-inverse"></i>
                                                 </div>
                                             </div>
@@ -303,7 +367,7 @@ export default function Dashboard({
                                                 </h5>
                                                 <h3 className="font-bold text-2xl">
                                                     {total_member.length}
-                                                    <span className="text-pink-500">
+                                                    <span className="text-blue-500">
                                                         <i className="fas fa-exchange-alt"></i>
                                                     </span>
                                                 </h3>
@@ -488,11 +552,11 @@ export default function Dashboard({
                                         <div className="max-w-3xl mx-auto sm:px-6 lg:px-8 p-12">
                                             <div>
                                                 <label htmlFor="tanggalPembayaran">
-                                                    Set Tanggal
+                                                    Pilih bulan
                                                 </label>
                                                 <input
                                                     className="w-full rounded-lg mt-2"
-                                                    type="date"
+                                                    type="month"
                                                     id="tanggal"
                                                     name="tanggal"
                                                     defaultValue={

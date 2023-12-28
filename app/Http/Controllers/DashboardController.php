@@ -21,7 +21,7 @@ class DashboardController extends Controller
         // $date1 = date("Y-m-d");
         // $date2 = date('Y-m-d', strtotime('-3 days', strtotime($date1)));
         // $pembayaran = Pembayaran::where('tanggal_akhir','<',$date2)->orderBy("tanggal_akhir","desc")->get();
-        $pembayaran = Pembayaran::orderBy("tanggal_akhir", 'desc')->get();
+        $pembayaran = Pembayaran::where("tanggal_akhir","!=",null)->orderBy("tanggal_akhir", 'desc')->get();
         $pembayaranUnique = $pembayaran->unique('user_id');
         $biodata = Biography::where("user_id", Auth::user()->id)->get();
         $biodataPelatih = BiographyPelatih::where("user_id", Auth::user()->id)->get();
@@ -34,7 +34,8 @@ class DashboardController extends Controller
 
 
         if (Auth::user()->roles == "USER") {
-
+            $pembayaran = Pembayaran::where("tanggal_akhir","!=",null)->where('user_id',Auth::user()->id)->orderBy("tanggal_akhir", 'desc')->get();
+            $pembayaranUnique = $pembayaran->unique('user_id');
             return Inertia::render('Dashboard', [
                 'users' => User::where('roles', '=', 'USER')->get(),
                 'pembayaran' => $pembayaranUnique,

@@ -16,7 +16,7 @@ export default function Ranking({ auth, peserta, user }) {
             <Head title="Detail Ranking" />
 
             <div className="py-6">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-3">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-3 border border-neutral-300 rounded-md shadow-md mb-5">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             <h1 className="text-xl font-bold">
@@ -29,7 +29,7 @@ export default function Ranking({ auth, peserta, user }) {
                     return (
                         <div
                             key={index}
-                            className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-3"
+                            className="max-w-7xl mx-auto sm:px-6 lg:px-8 py-3 border border-neutral-300 rounded-md shadow-md mb-5"
                         >
                             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                                 <div className="p-6 text-gray-900">
@@ -44,7 +44,7 @@ export default function Ranking({ auth, peserta, user }) {
                                     </p>
                                     <p>Piagam/Medali:</p>
                                     <div className="my-2 flex flex-row gap-5">
-                                        {data.foto_piagam.length > 0
+                                        {data.foto_piagam
                                             ? data.foto_piagam.map(
                                                   (dt, index) => {
                                                       return (

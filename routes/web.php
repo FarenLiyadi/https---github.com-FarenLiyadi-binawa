@@ -21,6 +21,7 @@ use App\Http\Controllers\UserController;
 use App\Models\CompanyModel;
 use App\Models\Pengeluaran;
 use App\Models\User;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -44,6 +45,7 @@ Route::get('/', function () {
         'user' => Auth::user(),
         'atlet' => User::with('biography')->where("roles","USER")->where("total_skor" ,">", 0)->get(),
         'pelatih' => User::with('biography_pelatih')->where("roles","PELATIH")->get(),
+        'event'=> Event::orderBy("id", 'desc')->get()->take(6),
 
     ]);
 });
@@ -87,6 +89,7 @@ Route::post('/delete-absen', [AbsenController::class, 'delete'])->middleware(['a
 Route::get('/biography-search', [BiographyController::class, 'search'])->middleware(['auth', 'verified']);
 Route::get('/biography-pelatih-search', [BiographyPelatih::class, 'search'])->middleware(['auth', 'verified']);
 Route::get('/pembayaran-search', [PembayaranController::class, 'search'])->middleware(['auth', 'verified']);
+Route::get('/pengeluaran-search', [PengeluaranController::class, 'search'])->middleware(['auth', 'verified']);
 
 
 Route::middleware('auth')->group(function () {

@@ -80,4 +80,13 @@ class PengeluaranController extends Controller
     {
         //
     }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $pengeluaran = new UsersCollection(Pengeluaran::search($search, $startDate, $endDate)->latest()->with(["user"])->paginate(5));
+        return $pengeluaran;
+    }
 }

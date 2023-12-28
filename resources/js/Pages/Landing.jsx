@@ -12,13 +12,20 @@ export default function Landing({
     harga,
     atlet,
     pelatih,
+    event,
 }) {
+    // console.log(event);
     return (
         <>
             <Head title="PB Binawa" />
             <Layout user={user}>
                 <Whatsapp />
-                <Binawa harga={harga} atlet={atlet} pelatih={pelatih} />
+                <Binawa
+                    harga={harga}
+                    atlet={atlet}
+                    pelatih={pelatih}
+                    event={event}
+                />
                 <BackToTopSection />
             </Layout>
         </>
